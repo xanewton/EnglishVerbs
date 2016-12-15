@@ -1,0 +1,77 @@
+<resources>
+    <string name="app_name">English Verbs</string>
+
+    <!-- Label for overflow menu option that inserts fake verb data into the app [CHAR LIMIT=20] -->
+    <string name="action_insert_dummy_data">Insert Dummy Data</string>
+    <!-- Label for overflow menu option that deletes all verb data in the app [CHAR LIMIT=20] -->
+    <string name="action_delete_all_entries">Delete All Verbs</string>
+
+    <!-- Label for editor menu option to save verb and leave editor [CHAR LIMIT=20] -->
+    <string name="action_save">Save</string>
+    <!-- Label for editor overflow menu option that deletes the current verb [CHAR LIMIT=20] -->
+    <string name="action_delete">Delete</string>
+
+
+    <!-- Label for overview category of attributes in the editor [CHAR LIMIT=30] -->
+    <string name="category_overview">Overview</string>
+    <!-- Label for type category of attributes in the editor [CHAR LIMIT=30] -->
+    <string name="category_type">Type</string>
+
+    <!-- Title for the activity to add a new verb [CHAR LIMIT=20] -->
+    <string name="editor_activity_title_new_verb">Add a Verb</string>
+
+    <!-- Title for the activity to edit an existing verb [CHAR LIMIT=20] -->
+    <string name="editor_activity_title_edit_verb">Edit Verb</string>
+
+    <!-- Text hint for definition field in the editor [CHAR LIMIT=30] -->
+    <string name="hint_definition">Definition</string>
+    <!-- Text hint for infinitive field in the editor [CHAR LIMIT=30] -->
+    <string name="hint_infinitive">Infinitive</string>
+    <!-- Text hint for Samples field in the editor [CHAR LIMIT=30] -->
+    <string name="hint_samples">Samples</string>
+    <!-- Text hint for Simple Past field in the editor [CHAR LIMIT=30] -->
+    <string name="hint_simple_past">Simple Past</string>
+    <!-- Text hint for Past Participle field in the editor [CHAR LIMIT=30] -->
+    <string name="hint_past_participle">Past Participle</string>
+
+    <!-- Label for dropdown menu option if the verb is regular [CHAR LIMIT=20] -->
+    <string name="type_regular">Regular</string>
+    <!-- Label for dropdown menu option if the verb is irregular [CHAR LIMIT=20] -->
+    <string name="type_irregular">Irregular</string>
+
+    <!-- Dialog message when user is leaving editor but hasn't saved changes [CHAR LIMIT=NONE] -->
+    <string name="unsaved_changes_dialog_msg">Discard your changes and quit editing?</string>
+
+    <!-- Dialog button text for the option to discard a user's changes [CHAR LIMIT=20] -->
+    <string name="discard">Discard</string>
+
+    <!-- Dialog button text for the option to keep editing the current verb [CHAR LIMIT=20] -->
+    <string name="keep_editing">Keep Editing</string>
+
+    <!-- Toast message in editor when current verb was successfully deleted [CHAR LIMIT=NONE] -->
+    <string name="editor_delete_verb_successful">Verb deleted</string>
+
+    <!-- Toast message in editor when current verb has failed to be deleted [CHAR LIMIT=NONE] -->
+    <string name="editor_delete_verb_failed">Error with deleting verb</string>
+
+    <!-- Dialog message to ask the user to confirm deleting the current verb [CHAR LIMIT=NONE] -->
+    <string name="delete_dialog_msg">Delete this verb?</string>
+
+    <!-- Toast message in editor when new verb has been successfully inserted [CHAR LIMIT=NONE] -->
+    <string name="editor_insert_verb_successful">Verb saved</string>
+
+    <!-- Toast message in editor when new verb has failed to be inserted [CHAR LIMIT=NONE] -->
+    <string name="editor_insert_verb_failed">Error with saving verb</string>
+
+    <!-- Toast message in editor when current verb was successfully updated [CHAR LIMIT=NONE] -->
+    <string name="editor_update_verb_successful">Verb updated</string>
+
+    <!-- Toast message in editor when current verb has failed to be updated [CHAR LIMIT=NONE] -->
+    <string name="editor_update_verb_failed">Error with updating verb</string>
+
+    <!-- Dialog button text for the option to confirm deleting the current verb [CHAR LIMIT=20] -->
+    <string name="delete">Delete</string>
+
+    <!-- Dialog button text for the option to cancel deletion of the current verb [CHAR LIMIT=20] -->
+    <string name="cancel">Cancel</string>
+</resources>
