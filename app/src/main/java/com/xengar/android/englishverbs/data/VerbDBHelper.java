@@ -38,7 +38,7 @@ public class VerbDBHelper extends SQLiteOpenHelper {
      */
     @Override
     public void onCreate(SQLiteDatabase db) {
-        // Create a String that contains the SQL statement to create the pets table
+        // Create a String that contains the SQL statement to create the verbs table
         String SQL_CREATE_VERBS_TABLE =  "CREATE TABLE " + VerbEntry.TABLE_NAME + " ("
                 + VerbEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + VerbEntry.COLUMN_INFINITIVE + " TEXT NOT NULL, "

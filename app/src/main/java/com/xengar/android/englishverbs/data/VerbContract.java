@@ -1,11 +1,8 @@
 package com.xengar.android.englishverbs.data;
 
-import android.net.Uri;
 import android.content.ContentResolver;
+import android.net.Uri;
 import android.provider.BaseColumns;
-
-import static android.text.style.TtsSpan.GENDER_FEMALE;
-import static android.text.style.TtsSpan.GENDER_MALE;
 
 /**
  * API Contract for the Verbs
@@ -32,15 +29,15 @@ public final class VerbContract {
         /** The content URI to access the pet data in the provider */
         public static final Uri CONTENT_URI = Uri.withAppendedPath(BASE_CONTENT_URI, PATH_VERBS);
 
-        /** The MIME type of the {@link #CONTENT_URI} for a list of pets. */
+        /** The MIME type of the {@link #CONTENT_URI} for a list of verbs. */
         public static final String CONTENT_LIST_TYPE =
                 ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_VERBS;
 
-        /** The MIME type of the {@link #CONTENT_URI} for a single pet. */
+        /** The MIME type of the {@link #CONTENT_URI} for a single verb. */
         public static final String CONTENT_ITEM_TYPE =
                 ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_VERBS;
 
-        /** Name of database table for pets */
+        /** Name of database table for verbs */
         public final static String TABLE_NAME = "VERBS_TBL";
 
         /** Unique ID number for the pet (only for use in the database table). - Type: INTEGER */
