@@ -38,6 +38,15 @@ public class VerbDBHelper extends SQLiteOpenHelper {
      */
     @Override
     public void onCreate(SQLiteDatabase db) {
+        createSchemaVersion1(db);
+    }
+
+    /**
+     * Creates the schema for version 1.
+     * NOTE: If the version changes, add code for the upgrade also.
+     * @param db SQLiteDatabase
+     */
+    private void createSchemaVersion1(SQLiteDatabase db){
         // Create a String that contains the SQL statement to create the verbs table
         String SQL_CREATE_VERBS_TABLE =  "CREATE TABLE " + VerbEntry.TABLE_NAME + " ("
                 + VerbEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -63,7 +72,28 @@ public class VerbDBHelper extends SQLiteOpenHelper {
      * This is called when the database needs to be upgraded.
      */
     @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-        // The database is still at version 1, so there's nothing to do be done here.
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        String query;
+        if (oldVersion > newVersion) {
+            // This should not happen, version numbers should increment. Start clean.
+            query = "DROP TABLE IF EXISTS " +  VerbEntry.TABLE_NAME ;
+            db.execSQL(query);
+        }
+
+        // Update version by version using a method for the update. See sample below.
+        switch(oldVersion) {
+            /* Sample
+            case 3:
+                switch (oldVersion){
+                    case 1:
+                        updateSchemaToVersion2(db);
+                    case 2:
+                        updateSchemaToVersion3(db);
+                        break;
+                }
+                break*/
+            default:
+                break;
+        }
     }
 }
