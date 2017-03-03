@@ -38,9 +38,13 @@ import com.xengar.android.englishverbs.adapters.VerbCursorAdapter;
 import com.xengar.android.englishverbs.data.Verb;
 import com.xengar.android.englishverbs.data.VerbContract.VerbEntry;
 
+import static com.xengar.android.englishverbs.utils.Constants.LOG;
+
 
 public class CatalogActivity extends AppCompatActivity implements
         LoaderManager.LoaderCallbacks<Cursor>{
+
+    private static final String TAG = CatalogActivity.class.getSimpleName();
 
     /** Identifier for the verb data loader */
     private static final int VERB_LOADER = 0;
@@ -223,7 +227,9 @@ public class CatalogActivity extends AppCompatActivity implements
      */
     private void deleteAllVerbs() {
         int rowsDeleted = getContentResolver().delete(VerbEntry.CONTENT_URI, null, null);
-        Log.v("CatalogActivity", rowsDeleted + " rows deleted from pet database");
+        if (LOG) {
+            Log.v(TAG, rowsDeleted + " rows deleted from pet database");
+        }
     }
 
     @Override

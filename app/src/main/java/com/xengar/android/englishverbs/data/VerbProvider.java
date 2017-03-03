@@ -27,6 +27,8 @@ import android.util.Log;
 
 import com.xengar.android.englishverbs.data.VerbContract.VerbEntry;
 
+import static com.xengar.android.englishverbs.utils.Constants.LOG;
+
 
 /**
  * {@link ContentProvider} for Verbs app.
@@ -34,7 +36,7 @@ import com.xengar.android.englishverbs.data.VerbContract.VerbEntry;
 public class VerbProvider extends ContentProvider{
 
     /** Tag for the log messages */
-    public static final String LOG_TAG = VerbProvider.class.getSimpleName();
+    public static final String TAG = VerbProvider.class.getSimpleName();
 
     /** URI matcher code for the content URI for the verbs table */
     private static final int VERBS = 100;
@@ -260,7 +262,9 @@ public class VerbProvider extends ContentProvider{
         // Insert the new verb with the given values
         long id = database.insert(VerbEntry.TABLE_NAME, null, values);
         if (id == -1) {
-            Log.e(LOG_TAG, "Failed to insert row for " + uri);
+            if (LOG) {
+                Log.e(TAG, "Failed to insert row for " + uri);
+            }
             return null;
         }
 
