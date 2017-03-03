@@ -8,7 +8,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="@dimen/activity_vertical_margin"
-    tools:context=".EditorActivity">
+    tools:context=".ui.EditorActivity">
 
     <!-- Overview category -->
     <LinearLayout

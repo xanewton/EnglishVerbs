@@ -1,3 +1,18 @@
+/*
+ * Copyright (C) 2017 Angel Garcia
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.xengar.android.englishverbs.data;
 
 import android.content.ContentProvider;
@@ -84,6 +99,7 @@ public class VerbProvider extends ContentProvider{
                 cursor = database.query(VerbEntry.TABLE_NAME, projection, selection, selectionArgs,
                         null, null, sortOrder);
                 break;
+
             case VERB_ID:
                 // For the VERB_ID code, extract out the ID from the URI.
                 // For an example URI such as "content://com.xengar.android.englishverbs/verbs/3",
@@ -101,6 +117,7 @@ public class VerbProvider extends ContentProvider{
                 cursor = database.query(VerbEntry.TABLE_NAME, projection, selection, selectionArgs,
                         null, null, sortOrder);
                 break;
+
             default:
                 throw new IllegalArgumentException("Cannot query unknown URI " + uri);
         }

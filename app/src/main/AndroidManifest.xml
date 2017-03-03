@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".CatalogActivity"
+            android:name=".ui.CatalogActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -18,13 +18,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".EditorActivity"
+            android:name=".ui.EditorActivity"
             android:theme="@style/EditorTheme"
-            android:parentActivityName=".CatalogActivity">
+            android:parentActivityName=".ui.CatalogActivity">
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".CatalogActivity" />
+                android:value=".ui.CatalogActivity" />
         </activity>
         <provider
             android:name=".data.VerbProvider"
