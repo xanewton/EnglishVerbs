@@ -41,13 +41,12 @@
 
         <activity
             android:name=".ui.EditorActivity"
-            android:parentActivityName=".ui.CatalogActivity"
+            android:parentActivityName=".ui.MainActivity"
             android:theme="@style/EditorTheme">
-
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.CatalogActivity" />
+                android:value=".ui.MainActivity" />
         </activity>
 
         <provider
