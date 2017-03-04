@@ -95,4 +95,22 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+
+
+    <!-- Slide menu options -->
+    <string name="menu_option_home">Home</string>
+    <string name="menu_option_regular">Regular</string>
+    <string name="menu_option_irregular">Irregular</string>
+    <string name="menu_option_settings">Settings</string>
+    <string name="menu_option_help">Help</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <!-- error messages -->
+    <string name="network_not_available_message">Network is not available!</string>
+    <string name="network_error">Cannot connect to the Internet.</string>
+    <string name="database_error">Cannot connect to the Database.</string>
+
 </resources>

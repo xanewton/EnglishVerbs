@@ -32,4 +32,14 @@ public final class Constants {
      */
     public static final boolean LOG = true;
 
+    public static final String LAST_ACTIVITY = "last_activity";
+    public static final String MAIN_ACTIVITY = "main_activity";
+
+    public static final String SHARED_PREF_NAME = "com.xengar.android.englishverbs";
+    public static final String ITEM_CATEGORY = "item_category";
+    public static final String PAGE_HOME = "Home";
+    public static final String PAGE_REGULAR = "Regular";
+    public static final String PAGE_IRREGULAR = "Irregular";
+
+
 }

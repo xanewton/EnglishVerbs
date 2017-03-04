@@ -22,6 +22,7 @@ import static com.xengar.android.englishverbs.data.VerbContract.VerbEntry;
  */
 public class Verb {
 
+    private long id;
     private String infinitive;
     private String simplePast;
     private String pastParticiple;
@@ -36,9 +37,10 @@ public class Verb {
     private String translationFR = "";
 
     /*** Constructor */
-    public Verb(String infinitive, String simplePast, String pastParticiple,
+    public Verb(long id, String infinitive, String simplePast, String pastParticiple,
                 String definition, String samples, int common, int regular, int color,
                 int score, String data, String translationES, String translationFR){
+        this.id = id;
         this.infinitive = infinitive;
         this.simplePast = simplePast;
         this.pastParticiple = pastParticiple;
@@ -54,6 +56,9 @@ public class Verb {
     }
 
     /* Getters and Setters */
+    public long getId() { return id; }
+    public void setId(long id) { this.id = id; }
+
     public String getInfinitive() { return infinitive; }
     public void setInfinitive(String infinitive) { this.infinitive = infinitive; }
 

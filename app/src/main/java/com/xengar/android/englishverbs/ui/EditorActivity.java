@@ -319,9 +319,9 @@ public class EditorActivity extends AppCompatActivity implements
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu options from the res/menu/menu_editor.xml file.
+        // Inflate the menu options from the res/menu/editorfile.
         // This adds menu items to the app bar.
-        getMenuInflater().inflate(R.menu.menu_editor, menu);
+        getMenuInflater().inflate(R.menu.editor, menu);
         return true;
     }
 

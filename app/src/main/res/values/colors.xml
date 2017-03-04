@@ -50,4 +50,7 @@
     <!-- Color for user configuration 9 -->
     <color name="color9">#D93218</color>
 
+
+    <color name="colorRed">#F44336</color>
+
 </resources>

@@ -13,7 +13,7 @@
      See the License for the specific language governing permissions and
      limitations under the License.
  -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -37,7 +37,7 @@
         <item name="android:layout_weight">1</item>
         <item name="android:paddingTop">16dp</item>
         <item name="android:textColor">@color/colorAccent</item>
-        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:fontFamily" tools:targetApi="16">sans-serif-medium</item>
         <item name="android:textAppearance">?android:textAppearanceSmall</item>
     </style>
 
@@ -45,7 +45,7 @@
     <style name="EditorFieldStyle">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>
-        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:fontFamily" tools:targetApi="16">sans-serif-light</item>
         <item name="android:textAppearance">?android:textAppearanceSmall</item>
     </style>
 
@@ -67,5 +67,14 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="InCircularProgressBar" parent="Theme.SmoothProgressBarDefaults">
+        <item name="cpb_color">@color/colorRed</item>
+        <item name="cpb_stroke_width">4dp</item>
+        <item name="cpb_min_sweep_angle">10</item>
+        <item name="cpb_max_sweep_angle">300</item>
+        <item name="cpb_sweep_speed">0.9</item>
+        <item name="cpb_rotation_speed">0.9</item>
+    </style>
 
 </resources>

@@ -55,7 +55,7 @@ public final class VerbContract {
         /** Name of database table for verbs */
         public final static String TABLE_NAME = "VERBS_TBL";
 
-        /** Unique ID number for the pet (only for use in the database table). - Type: INTEGER */
+        /** Unique ID number for the verb (only for use in the database table). - Type: INTEGER */
         public final static String _ID = BaseColumns._ID;
 
         /** Verb in infinitive form. - Type: TEXT  */
