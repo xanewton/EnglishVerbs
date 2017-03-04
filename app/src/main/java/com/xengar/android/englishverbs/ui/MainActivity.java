@@ -153,6 +153,7 @@ public class MainActivity extends AppCompatActivity
                 launchFragment(PAGE_IRREGULAR);
                 break;
             case R.id.nav_settings:
+                ActivityUtils.launchSettingsActivity(getApplicationContext());
                 break;
             case R.id.nav_help:
                 ActivityUtils.launchHelpActivity(getApplicationContext());

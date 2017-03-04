@@ -20,12 +20,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.preference.PreferenceActivity;
 import android.text.Html;
 import android.text.Spanned;
 
+import com.xengar.android.englishverbs.R;
 import com.xengar.android.englishverbs.data.VerbContract;
 import com.xengar.android.englishverbs.ui.EditorActivity;
 import com.xengar.android.englishverbs.ui.HelpActivity;
+import com.xengar.android.englishverbs.ui.SettingsActivity;
 
 import static com.xengar.android.englishverbs.utils.Constants.SHARED_PREF_NAME;
 
@@ -108,6 +111,20 @@ public class ActivityUtils {
      */
     public static void launchHelpActivity(final Context context) {
         Intent intent = new Intent(context, HelpActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+    }
+
+    /**
+     * Launches Settings Activity.
+     * @param context context
+     */
+    public static void launchSettingsActivity(final Context context) {
+        Intent intent = new Intent(context, SettingsActivity.class);
+        intent.putExtra( PreferenceActivity.EXTRA_SHOW_FRAGMENT,
+                SettingsActivity.GeneralPreferenceFragment.class.getName() );
+        intent.putExtra( PreferenceActivity.EXTRA_NO_HEADERS, true );
+        intent.putExtra( PreferenceActivity.EXTRA_SHOW_FRAGMENT_TITLE, R.string.action_settings);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
