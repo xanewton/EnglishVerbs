@@ -97,7 +97,7 @@ public class VerbAdapter extends RecyclerView.Adapter<VerbAdapter.VerbHolder> {
             simplePastTextView.setText(verb.getSimplePast());
             pastParticipleTextView.setText(verb.getPastParticiple());
             definitionTextView.setText(verb.getDefinition());
-            typeTextView.setText((verb.getRegular()  == 1)? "R" : "I");
+            typeTextView.setText((verb.getRegular()  == 0)? "R" : "I");
             scoreTextView.setText(String.format(Locale.ENGLISH, "%d", verb.getScore()));
         }
 

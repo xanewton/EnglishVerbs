@@ -34,6 +34,8 @@ public final class VerbContract {
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
 
     public static final String PATH_VERBS = "verbs";
+    public static final String PATH_REGULAR_VERBS = "irregular_verbs";
+    public static final String PATH_IRREGULAR_VERBS = "regular_verbs";
 
 
     /**
@@ -41,8 +43,12 @@ public final class VerbContract {
      * Each entry in the table represents a single verb.
      */
     public static final class VerbEntry implements BaseColumns {
-        /** The content URI to access the pet data in the provider */
+        /** The content URI to access the verb data in the provider */
         public static final Uri CONTENT_URI = Uri.withAppendedPath(BASE_CONTENT_URI, PATH_VERBS);
+        public static final Uri CONTENT_REGULARS_URI
+                = Uri.withAppendedPath(BASE_CONTENT_URI, PATH_REGULAR_VERBS);
+        public static final Uri CONTENT_IRREGULARS_URI
+                = Uri.withAppendedPath(BASE_CONTENT_URI, PATH_IRREGULAR_VERBS);
 
         /** The MIME type of the {@link #CONTENT_URI} for a list of verbs. */
         public static final String CONTENT_LIST_TYPE =

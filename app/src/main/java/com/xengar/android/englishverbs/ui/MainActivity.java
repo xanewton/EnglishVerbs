@@ -52,6 +52,8 @@ public class MainActivity extends AppCompatActivity
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private HomeFragment homeFragment;
+    private RegularFragment regularFragment;
+    private IrregularFragment irregularFragment;
     private FrameLayout fragmentLayout;
 
 
@@ -86,6 +88,8 @@ public class MainActivity extends AppCompatActivity
 
         fragmentLayout = (FrameLayout) findViewById(R.id.fragment_container);
         homeFragment = new HomeFragment();
+        regularFragment = new RegularFragment();
+        irregularFragment = new IrregularFragment();
 
         showPage(page);
         assignCheckedItem(page);
@@ -173,7 +177,6 @@ public class MainActivity extends AppCompatActivity
                 fragmentTransaction.commit();
                 break;
 
-            /*
             case PAGE_REGULAR:
                 fragmentTransaction.replace(R.id.fragment_container, regularFragment);
                 fragmentTransaction.addToBackStack(null);
@@ -184,7 +187,7 @@ public class MainActivity extends AppCompatActivity
                 fragmentTransaction.replace(R.id.fragment_container, irregularFragment);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
-                break;*/
+                break;
         }
     }
 
@@ -198,6 +201,18 @@ public class MainActivity extends AppCompatActivity
                 getSupportActionBar().setTitle(R.string.menu_option_home);
                 ActivityUtils.saveStringToPreferences(this, ITEM_CATEGORY, PAGE_HOME);
                 launchFragment(PAGE_HOME);
+                break;
+
+            case PAGE_REGULAR:
+                getSupportActionBar().setTitle(R.string.menu_option_regular);
+                ActivityUtils.saveStringToPreferences(this, ITEM_CATEGORY, PAGE_REGULAR);
+                launchFragment(PAGE_REGULAR);
+                break;
+
+            case PAGE_IRREGULAR:
+                getSupportActionBar().setTitle(R.string.menu_option_irregular);
+                ActivityUtils.saveStringToPreferences(this, ITEM_CATEGORY, PAGE_IRREGULAR);
+                launchFragment(PAGE_IRREGULAR);
                 break;
         }
     }

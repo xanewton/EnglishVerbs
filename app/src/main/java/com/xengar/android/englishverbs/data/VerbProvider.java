@@ -27,6 +27,9 @@ import android.util.Log;
 
 import com.xengar.android.englishverbs.data.VerbContract.VerbEntry;
 
+import static com.xengar.android.englishverbs.data.VerbContract.VerbEntry.COLUMN_REGULAR;
+import static com.xengar.android.englishverbs.data.VerbContract.VerbEntry.IRREGULAR;
+import static com.xengar.android.englishverbs.data.VerbContract.VerbEntry.REGULAR;
 import static com.xengar.android.englishverbs.utils.Constants.LOG;
 
 
@@ -43,6 +46,9 @@ public class VerbProvider extends ContentProvider{
 
     /** URI matcher code for the content URI for a single pet in the verbs table */
     private static final int VERB_ID = 101;
+
+    private static final int VERBS_REGULAR = 102;
+    private static final int VERBS_IRREGULAR = 103;
 
     /**
      * UriMatcher object to match a content URI to a corresponding code.
@@ -61,6 +67,8 @@ public class VerbProvider extends ContentProvider{
         // the integer code {@link #VERBS}. This URI is used to provide access to MULTIPLE rows
         // of the verbs table.
         sUriMatcher.addURI(VerbContract.CONTENT_AUTHORITY, VerbContract.PATH_VERBS, VERBS);
+        sUriMatcher.addURI(VerbContract.CONTENT_AUTHORITY, VerbContract.PATH_REGULAR_VERBS, VERBS_REGULAR);
+        sUriMatcher.addURI(VerbContract.CONTENT_AUTHORITY, VerbContract.PATH_IRREGULAR_VERBS, VERBS_IRREGULAR);
 
         // The content URI of the form "content://com.xengar.android.englishverbs/verbs/#" will map
         // to the integer code {@link #VERB_ID}. This URI is used to provide access to ONE single
@@ -91,6 +99,7 @@ public class VerbProvider extends ContentProvider{
         // This cursor will hold the result of the query
         Cursor cursor;
 
+        String columns = "";
         // Figure out if the URI matcher can match the URI to a specific code
         int match = sUriMatcher.match(uri);
         switch (match) {
@@ -120,6 +129,28 @@ public class VerbProvider extends ContentProvider{
                         null, null, sortOrder);
                 break;
 
+            case VERBS_REGULAR:
+                for (int i = 0; i < projection.length; i++) {
+                    if (i > 0){
+                        columns += ",";
+                    }
+                    columns += projection[i];
+                }
+                cursor = database.rawQuery("SELECT " + columns + " FROM " + VerbEntry.TABLE_NAME
+                        + " WHERE " + COLUMN_REGULAR + " =  '" + REGULAR + "'", null);
+                break;
+
+            case VERBS_IRREGULAR:
+                for (int i = 0; i < projection.length; i++) {
+                    if (i > 0){
+                        columns += ",";
+                    }
+                    columns += projection[i];
+                }
+                cursor = database.rawQuery("SELECT " + columns + " FROM " + VerbEntry.TABLE_NAME
+                        + " WHERE " + COLUMN_REGULAR + " =  '" + IRREGULAR + "'", null);
+                break;
+
             default:
                 throw new IllegalArgumentException("Cannot query unknown URI " + uri);
         }
@@ -139,6 +170,8 @@ public class VerbProvider extends ContentProvider{
         final int match = sUriMatcher.match(uri);
         switch (match) {
             case VERBS:
+            case VERBS_REGULAR:
+            case VERBS_IRREGULAR:
                 return VerbEntry.CONTENT_LIST_TYPE;
             case VERB_ID:
                 return VerbEntry.CONTENT_ITEM_TYPE;
@@ -249,7 +282,7 @@ public class VerbProvider extends ContentProvider{
         checkNull(values.getAsString(VerbEntry.COLUMN_PAST_PARTICIPLE), "Verb requires Past Participle");
         checkCommonUsage(values.getAsInteger(VerbEntry.COLUMN_COMMON),
                 "Verb requires valid common usage");
-        checkRegular(values.getAsInteger(VerbEntry.COLUMN_REGULAR),
+        checkRegular(values.getAsInteger(COLUMN_REGULAR),
                 "Verb requires valid regular/irregular value");
         checkNull(values.getAsString(VerbEntry.COLUMN_DEFINITION), "Verb requires a definition");
         checkNull(values.getAsString(VerbEntry.COLUMN_SAMPLES), "Verb requires 3 samples");
@@ -316,7 +349,7 @@ public class VerbProvider extends ContentProvider{
         checkNotNullKeyString(values, VerbEntry.COLUMN_SIMPLE_PAST, "Verb requires Simple Past");
         checkNotNullKeyString(values, VerbEntry.COLUMN_PAST_PARTICIPLE, "Verb requires Past Participle");
         checkCommonUsage(values, VerbEntry.COLUMN_COMMON, "Verb requires valid common usage");
-        checkRegular(values, VerbEntry.COLUMN_REGULAR, "Verb requires valid regular/irregular value");
+        checkRegular(values, COLUMN_REGULAR, "Verb requires valid regular/irregular value");
         checkNotNullKeyString(values, VerbEntry.COLUMN_DEFINITION, "Verb requires a definition");
         checkNotNullKeyString(values, VerbEntry.COLUMN_SAMPLES, "Verb requires 3 samples");
         checkNullAndPositive(values, VerbEntry.COLUMN_COLOR, "Verb requires valid color");

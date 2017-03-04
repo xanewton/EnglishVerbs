@@ -31,6 +31,9 @@ import java.util.List;
 import fr.castorflex.android.circularprogressbar.CircularProgressBar;
 
 import static com.xengar.android.englishverbs.utils.Constants.LOG;
+import static com.xengar.android.englishverbs.utils.Constants.PAGE_HOME;
+import static com.xengar.android.englishverbs.utils.Constants.PAGE_IRREGULAR;
+import static com.xengar.android.englishverbs.utils.Constants.PAGE_REGULAR;
 
 /**
  * FetchVerbs from the database.
@@ -38,14 +41,17 @@ import static com.xengar.android.englishverbs.utils.Constants.LOG;
 public class FetchVerbs extends AsyncTask<Void, Void, ArrayList<Verb>> {
 
     private final String TAG = FetchVerbs.class.getSimpleName();
+    private final String page;
     private final ContentResolver contentResolver;
     private final VerbAdapter adapter;
     private final List<Verb> verbs;
     private final CircularProgressBar progressBar;
 
     // Constructor
-    public FetchVerbs(final VerbAdapter adapter, final ContentResolver contentResolver,
-                      final List<Verb> verbs, final CircularProgressBar progressBar) {
+    public FetchVerbs(final String page, final VerbAdapter adapter,
+                      final ContentResolver contentResolver, final List<Verb> verbs,
+                      final CircularProgressBar progressBar) {
+        this.page = page;
         this.adapter = adapter;
         this.contentResolver = contentResolver;
         this.verbs = verbs;
@@ -65,7 +71,21 @@ public class FetchVerbs extends AsyncTask<Void, Void, ArrayList<Verb>> {
                 VerbEntry.COLUMN_REGULAR,
                 VerbEntry.COLUMN_SCORE };
 
-        final Cursor cursor = contentResolver.query(VerbEntry.CONTENT_URI, columns, null, null, null);
+        Cursor cursor;
+        switch (page){
+            case PAGE_HOME:
+            default:
+                cursor = contentResolver.query(VerbEntry.CONTENT_URI, columns, null, null, null);
+                break;
+
+            case PAGE_REGULAR:
+                cursor = contentResolver.query(VerbEntry.CONTENT_REGULARS_URI, columns, null, null, null);
+                break;
+
+            case PAGE_IRREGULAR:
+                cursor = contentResolver.query(VerbEntry.CONTENT_IRREGULARS_URI, columns, null, null, null);
+                break;
+        }
 
         if (cursor != null && cursor.getCount() != 0) {
             Verb verb;

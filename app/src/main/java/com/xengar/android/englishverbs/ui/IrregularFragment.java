@@ -36,14 +36,12 @@ import java.util.List;
 
 import fr.castorflex.android.circularprogressbar.CircularProgressBar;
 
-import static com.xengar.android.englishverbs.utils.Constants.PAGE_HOME;
+import static com.xengar.android.englishverbs.utils.Constants.PAGE_IRREGULAR;
 
 /**
- * HomeFragment
+ * IrregularFragment for Irregular verbs
  */
-public class HomeFragment extends Fragment {
-
-    private static final String TAG = HomeFragment.class.getSimpleName();
+public class IrregularFragment extends Fragment {
 
     private CustomErrorView mCustomErrorView;
     private RecyclerView mRecyclerView;
@@ -52,9 +50,10 @@ public class HomeFragment extends Fragment {
     private List<Verb> mVerbs;
 
 
-    public HomeFragment() {
+    public IrregularFragment() {
         // Required empty public constructor
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -74,24 +73,8 @@ public class HomeFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-
-        /*
-        if (!FragmentUtils.checkInternetConnection(getActivity())) {
-            if (LOG) {
-                Log.e(TAG, "Network is not available");
-            }
-            onLoadFailed(new Throwable(getString(R.string.network_not_available_message)));
-            return;
-        }*/
-
         mVerbs.clear();
         fillVerbs();
-    }
-
-    private void onLoadFailed(Throwable t) {
-        mCustomErrorView.setError(t);
-        mCustomErrorView.setVisibility(View.VISIBLE);
-        FragmentUtils.updateProgressBar(progressBar, false);
     }
 
     private void fillVerbs(){
@@ -101,7 +84,7 @@ public class HomeFragment extends Fragment {
         FragmentUtils.updateProgressBar(progressBar, true);
 
         FetchVerbs fetch =
-                new FetchVerbs(PAGE_HOME, mAdapter, getActivity().getContentResolver(), mVerbs,
+                new FetchVerbs(PAGE_IRREGULAR, mAdapter, getActivity().getContentResolver(), mVerbs,
                         progressBar);
         fetch.execute();
     }
