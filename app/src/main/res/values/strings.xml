@@ -112,5 +112,107 @@
     <string name="network_not_available_message">Network is not available!</string>
     <string name="network_error">Cannot connect to the Internet.</string>
     <string name="database_error">Cannot connect to the Database.</string>
+    <string name="feedback_email" translatable="false">apps.univerk@gmail.com</string>
+    <!-- Add a legend for non-supported feedback languages
+         Please use english, french or spanish for your feedback.-->
+    <string name="problem_message">
+        "Hi EnglishVerbs Team,\n\n"
+        "I found the following [PROBLEM TITLE HERE] in the English Verbs application.\n"
+        "[PROBLEM DESCRIPTION HERE]\n\n"
+        "I was doing the following when it happened:\n"
+        "1. [ACTION 1]\n"
+        "2. [ACTION 2]\n"
+        "3. [ACTION 3]\n\n"
+        "Could you take a look at this?\n\n"
+        "Thanks,\n"
+        "[USER NAME]"
+    </string>
+    <!-- Add a legend for non-supported feedback languages
+         Please use english, french or spanish for your feedback.-->
+    <string name="feedback_message">
+        "Hi EnglishVerbs Team,\n\n"
+        "I [like/dislike] the application in general.\n"
+        "I think the following [ITEMS HERE] in the English Verbs application could be improved.\n"
+        "[COMMENTS HERE]\n\n"
+        "I was doing the following when I noticed it:\n"
+        "1. [ACTION 1]\n"
+        "2. [ACTION 2]\n"
+        "3. [ACTION 3]\n\n"
+        "Could you take a look at this?\n\n"
+        "Thanks,\n"
+        "[USER NAME]"
+    </string>
+
+    <!-- Help strings -->
+    <string name="help">Help</string>
+    <string name="more">More</string>
+    <string name="report_problem">Report a problem</string>
+    <string name="give_feedback">Give feedback</string>
+    <string name="license">License</string>
+    <string name="version">Version</string>
+
+    <string name="copyright" translatable="false">\@2017 Universk</string>
+    <string name="eula_string" translatable="false">
+        <![CDATA[
+<p><b>END USER LICENSE FOR ANDROID MOVIE GUIDE SOFTWARE</b>
+<br/>Version 1.0, March 2017</p>
+
+<p><br/>PLEASE READ THIS DOCUMENT CAREFULLY BEFORE USING THIS SOFTWARE.
+<br/>THIS LICENSE CONTAINS WARRANTY AND LIABILITY INFORMATION AND GRANTS YOU RIGHTS TO USE THE SOFTWARE.
+<br/>BY USING THE SOFTWARE, YOU ARE ACCEPTING THE SOFTWARE \"AS IS\" AND AGREEING TO BE BOUND BY THE TERMS OF THIS LICENSE AGREEMENT.
+<br/>IN NO EVENT WILL THE AUTHORS BE HELD LIABLE FOR ANY DAMAGES ARISING FROM THE USE OF THIS SOFTWARE.
+<br/>IF YOU DO NOT AGREE WITH THESE TERMS, DO NOT USE THE SOFTWARE.</p>
+
+<p><br/>
+<b>1. Terms of License</b>
+<br/>This license allows you to:
+<br/><b>(a) Installation and Use.</b>
+<br/>Universk grants you the right to install and use copies of the SOFTWARE PRODUCT on your device running the operating system for which the SOFTWARE PRODUCT was designed [e.g., Android].
+<br/><b>(b) Backup Copies.</b>
+<br/>You may also make copies of the SOFTWARE PRODUCT as may be necessary for backup and archival purposes.
+</p>
+
+<p>
+<b>2. Description of other rights and limitations</b>
+<br/><b>(a) Maintenance of Copyright Notices.</b>
+<br/>You must not remove or alter any copyright notices on any and all copies of the SOFTWARE PRODUCT.
+<br/><b>(b) Distribution.</b>
+<br/>You may not distribute registered copies of the SOFTWARE PRODUCT to third parties. Evaluation versions available for download from Universk\'s websites may be freely distributed.
+<br/><b>(c) Prohibition on Reverse Engineering, Decompilation, and Disassembly.</b>
+<br/>You may not reverse engineer, decompile, or disassemble the SOFTWARE PRODUCT, except and only to the extent that such activity is expressly permitted by applicable law notwithstanding this limitation.
+<br/><b>(d) Rental.</b>
+<br/>You may not rent, lease, or lend the SOFTWARE PRODUCT.
+<br/><b>(e) Support Services.</b>
+<br/>Universk may provide you with support services related to the SOFTWARE PRODUCT ("Support Services"). Any supplemental software code provided to you as part of the Support Services shall be considered part of the SOFTWARE PRODUCT and subject to the terms and conditions of this EULA.
+<br/><b>(f) Compliance with Applicable Laws.</b>
+<br/>You must comply with all applicable laws regarding use of the SOFTWARE PRODUCT.
+</p>
+
+<p>
+<b>3. Termination</b>
+<br/>Without prejudice to any other rights, Universk may terminate this EULA if you fail to comply with the terms and conditions of this EULA. In such event, you must destroy all copies of the SOFTWARE PRODUCT in your possession.
+</p>
+
+<p>
+<b>4. Copyright</b>
+<br/>All title, including but not limited to copyrights, in and to the SOFTWARE PRODUCT and any copies thereof are owned by Universk or its suppliers. All title and intellectual property rights in and to the content which may be accessed through use of the SOFTWARE PRODUCT is the property of the respective content owner and may be protected by applicable copyright or other intellectual property laws and treaties. This EULA grants you no rights to use such content. All rights not expressly granted are reserved by Universk.
+</p>
+
+<p>
+<b>5. No warranties</b>
+<br/>Universk expressly disclaims any warranty for the SOFTWARE PRODUCT. The SOFTWARE PRODUCT is provided \'As Is\' without any express or implied warranty of any kind, including but not limited to any warranties of merchantability, noninfringement, or fitness of a particular purpose. Universk does not warrant or assume responsibility for the accuracy or completeness of any information, text, graphics, links or other items contained within the SOFTWARE PRODUCT. Universk further expressly disclaims any warranty or representation to Authorized Users or to any third party.
+</p>
+
+<p>
+<b>6. Limitations of Liability</b>
+<br/>In no event shall Universk be liable for any damages (including, without limitation, lost profits, business interruption, or lost information) rising out of \'Authorized Users\' use of or inability to use the SOFTWARE PRODUCT, even if Universk has been advised of the possibility of such damages. In no event will Universk be liable for loss of data or for indirect, special, incidental, consequential (including lost profit), or other damages based in contract, tort or otherwise. Universk shall have no liability with respect to the content of the SOFTWARE PRODUCT or any part thereof, including but not limited to errors or omissions contained therein, libel, infringements of rights of publicity, privacy, trademark rights, business interruption, personal injury, loss of privacy, moral rights or the disclosure of confidential information.
+</p>
+
+<p>
+<br/>SOME JURISDICTIONS DO NOT ALLOW THE EXCLUSION OF IMPLIED WARRANTIES, SO THE ABOVE EXCLUSION MAY NOT APPLY TO YOU. YOU MAY ALSO HAVE OTHER LEGAL RIGHTS WHICH VARY FROM JURISDICTION TO JURISDICTION.
+</p>
+   ]]>
+    </string>
 
 </resources>
+

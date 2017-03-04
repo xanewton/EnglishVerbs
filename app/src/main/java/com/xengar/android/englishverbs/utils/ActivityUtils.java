@@ -20,9 +20,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.text.Html;
+import android.text.Spanned;
 
 import com.xengar.android.englishverbs.data.VerbContract;
 import com.xengar.android.englishverbs.ui.EditorActivity;
+import com.xengar.android.englishverbs.ui.HelpActivity;
 
 import static com.xengar.android.englishverbs.utils.Constants.SHARED_PREF_NAME;
 
@@ -97,5 +100,32 @@ public class ActivityUtils {
 
         // Launch the {@link EditorActivity} to display the data for the current pet.
         context.startActivity(intent);
+    }
+
+    /**
+     * Launches Help Activity.
+     * @param context context
+     */
+    public static void launchHelpActivity(final Context context) {
+        Intent intent = new Intent(context, HelpActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+    }
+
+    /**
+     * Helper class to handle deprecated method.
+     * Source: http://stackoverflow.com/questions/37904739/html-fromhtml-deprecated-in-android-n
+     * @param html html string
+     * @return Spanned
+     */
+    @SuppressWarnings("deprecation")
+    public static Spanned fromHtml(String html){
+        Spanned result;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            result = Html.fromHtml(html,Html.FROM_HTML_MODE_LEGACY);
+        } else {
+            result = Html.fromHtml(html);
+        }
+        return result;
     }
 }

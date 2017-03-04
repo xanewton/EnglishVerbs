@@ -52,5 +52,6 @@
 
 
     <color name="colorRed">#F44336</color>
+    <color name="colorGray">#FF777777</color>
 
 </resources>

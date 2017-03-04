@@ -155,6 +155,7 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_settings:
                 break;
             case R.id.nav_help:
+                ActivityUtils.launchHelpActivity(getApplicationContext());
                 break;
         }
 
