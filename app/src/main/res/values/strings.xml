@@ -112,11 +112,11 @@
     <string name="network_not_available_message">Network is not available!</string>
     <string name="network_error">Cannot connect to the Internet.</string>
     <string name="database_error">Cannot connect to the Database.</string>
-    <string name="feedback_email" translatable="false">apps.univerk@gmail.com</string>
+    <string name="feedback_email" translatable="false">apps.universk@gmail.com</string>
     <!-- Add a legend for non-supported feedback languages
          Please use english, french or spanish for your feedback.-->
     <string name="problem_message">
-        "Hi EnglishVerbs Team,\n\n"
+        "Hi English Verbs Team,\n\n"
         "I found the following [PROBLEM TITLE HERE] in the English Verbs application.\n"
         "[PROBLEM DESCRIPTION HERE]\n\n"
         "I was doing the following when it happened:\n"
@@ -130,7 +130,7 @@
     <!-- Add a legend for non-supported feedback languages
          Please use english, french or spanish for your feedback.-->
     <string name="feedback_message">
-        "Hi EnglishVerbs Team,\n\n"
+        "Hi English Verbs Team,\n\n"
         "I [like/dislike] the application in general.\n"
         "I think the following [ITEMS HERE] in the English Verbs application could be improved.\n"
         "[COMMENTS HERE]\n\n"
@@ -154,7 +154,7 @@
     <string name="copyright" translatable="false">\@2017 Universk</string>
     <string name="eula_string" translatable="false">
         <![CDATA[
-<p><b>END USER LICENSE FOR ANDROID MOVIE GUIDE SOFTWARE</b>
+<p><b>END USER LICENSE FOR ANDROID ENGLISH VERBS SOFTWARE</b>
 <br/>Version 1.0, March 2017</p>
 
 <p><br/>PLEASE READ THIS DOCUMENT CAREFULLY BEFORE USING THIS SOFTWARE.
