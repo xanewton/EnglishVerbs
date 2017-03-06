@@ -97,9 +97,10 @@ public final class VerbContract {
         /** Possible values for regular verbs. */
         public static final int REGULAR = 0;
         public static final int IRREGULAR = 1;
+        public static final int REGULAR_AND_IRREGULAR = 2;
 
         public static boolean isValidRegular(int value) {
-            if (value == REGULAR || value == IRREGULAR) {
+            if (value == REGULAR || value == IRREGULAR || value == REGULAR_AND_IRREGULAR) {
                 return true;
             }
             return false;
@@ -109,10 +110,17 @@ public final class VerbContract {
         public final static String COLUMN_DEFINITION ="DEFINITION";
 
         /** Examples of the verb. - Type: TEXT  */
-        public final static String COLUMN_SAMPLES ="SAMPLES";
+        public final static String COLUMN_SAMPLE_1 ="SAMPLE1";
+        public final static String COLUMN_SAMPLE_2 ="SAMPLE2";
+        public final static String COLUMN_SAMPLE_3 ="SAMPLE3";
+
+        /** Verb pronunciation in infinitive form. - Type: TEXT  */
+        public final static String COLUMN_PRONUNCIATION_INFINITIVE ="PRONUNCIATION_INFINITIVE";
+        public final static String COLUMN_PRONUNCIATION_SIMPLE_PAST ="PRONUNCIATION_SIMPLE_PAST";
+        public final static String COLUMN_PRONUNCIATION_PAST_PARTICIPLE ="PRONUNCIATION_PAST_PARTICIPLE";
 
         /** Other information for the verb. - Type: TEXT */
-        public final static String COLUMN_DATA ="DATA";
+        public final static String COLUMN_NOTES ="NOTES";
 
         /** Color assigned by the user. - Type: INTEGER */
         public final static String COLUMN_COLOR ="COLOR";

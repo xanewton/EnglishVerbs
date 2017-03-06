@@ -178,7 +178,12 @@ public class EditorActivity extends AppCompatActivity implements
                 VerbEntry.COLUMN_PAST_PARTICIPLE,
                 VerbEntry.COLUMN_REGULAR,
                 VerbEntry.COLUMN_DEFINITION,
-                VerbEntry.COLUMN_SAMPLES};
+                VerbEntry.COLUMN_PRONUNCIATION_INFINITIVE,
+                VerbEntry.COLUMN_PRONUNCIATION_SIMPLE_PAST,
+                VerbEntry.COLUMN_PRONUNCIATION_PAST_PARTICIPLE,
+                VerbEntry.COLUMN_SAMPLE_1,
+                VerbEntry.COLUMN_SAMPLE_2,
+                VerbEntry.COLUMN_SAMPLE_3 };
 
         // This loader will execute the ContentProvider's query method on a background thread
         return new CursorLoader(this,   // Parent activity context
@@ -210,14 +215,14 @@ public class EditorActivity extends AppCompatActivity implements
                     cursor.getString(cursor.getColumnIndex(VerbEntry.COLUMN_DEFINITION)));
 
             // Gender is a dropdown spinner, so map the constant value from the database
-            // into one of the dropdown options (0 is Regular, 1 is Irregular).
+            // into one of the dropdown options (0 is Regular, 1 is Irregular, 2 Both).
             // Then call setSelection() so that option is displayed on screen as the current selection.
             switch (cursor.getInt(cursor.getColumnIndex(VerbEntry.COLUMN_REGULAR))) {
-                case VerbEntry.IRREGULAR:
-                    mRegularSpinner.setSelection(1);
+                case VerbEntry.REGULAR:
+                    mRegularSpinner.setSelection(0);
                     break;
                 default:
-                    mRegularSpinner.setSelection(0);
+                    mRegularSpinner.setSelection(1);
                     break;
             }
         }
@@ -438,14 +443,19 @@ public class EditorActivity extends AppCompatActivity implements
         values.put(VerbEntry.COLUMN_SIMPLE_PAST, simplePast);
         values.put(VerbEntry.COLUMN_PAST_PARTICIPLE, pastParticiple);
         values.put(VerbEntry.COLUMN_DEFINITION, definition);
-        values.put(VerbEntry.COLUMN_SAMPLES, "");
+        values.put(VerbEntry.COLUMN_PRONUNCIATION_INFINITIVE, "");
+        values.put(VerbEntry.COLUMN_PRONUNCIATION_SIMPLE_PAST, "");
+        values.put(VerbEntry.COLUMN_PRONUNCIATION_PAST_PARTICIPLE, "");
+        values.put(VerbEntry.COLUMN_SAMPLE_1, "");
+        values.put(VerbEntry.COLUMN_SAMPLE_2, "");
+        values.put(VerbEntry.COLUMN_SAMPLE_3, "");
         values.put(VerbEntry.COLUMN_COMMON, VerbEntry.OTHER);
         values.put(VerbEntry.COLUMN_REGULAR, mRegular);
         values.put(VerbEntry.COLUMN_COLOR, 0);
         values.put(VerbEntry.COLUMN_SCORE, 0);
-        values.put(VerbEntry.COLUMN_DATA, "");
         values.put(VerbEntry.COLUMN_TRANSLATION_ES, "");
         values.put(VerbEntry.COLUMN_TRANSLATION_FR, "");
+        values.put(VerbEntry.COLUMN_NOTES, "");
 
         // Determine if this is a new or existing verb by checking if mCurrenVerbUri is null or not
         if (mCurrentVerbUri == null) {

@@ -91,8 +91,9 @@ public class FetchVerbs extends AsyncTask<Void, Void, ArrayList<Verb>> {
             Verb verb;
             while (cursor.moveToNext()) {
                 verb = new Verb(cursor.getLong(0), cursor.getString(1), cursor.getString(2),
-                        cursor.getString(3), cursor.getString(4), "", 0, cursor.getInt(5), 0,
-                        cursor.getInt(6), "", "", "");
+                        cursor.getString(3), cursor.getString(4),
+                        "", "", "", "", "", "",
+                        0, cursor.getInt(5), 0, cursor.getInt(6), "", "", "");
                 verbs.add(verb);
             }
         } else {

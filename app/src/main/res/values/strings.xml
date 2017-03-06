@@ -16,9 +16,9 @@
 <resources>
     <string name="app_name">English Verbs</string>
 
-    <!-- Label for overflow menu option that inserts fake verb data into the app [CHAR LIMIT=20] -->
+    <!-- Label for overflow menu option that inserts fake verb notes into the app [CHAR LIMIT=20] -->
     <string name="action_insert_dummy_data">Insert Dummy Data</string>
-    <!-- Label for overflow menu option that deletes all verb data in the app [CHAR LIMIT=20] -->
+    <!-- Label for overflow menu option that deletes all verb notes in the app [CHAR LIMIT=20] -->
     <string name="action_delete_all_entries">Delete All Verbs</string>
 
     <!-- Label for editor menu option to save verb and leave editor [CHAR LIMIT=20] -->
@@ -205,7 +205,7 @@
 
 <p>
 <b>6. Limitations of Liability</b>
-<br/>In no event shall Universk be liable for any damages (including, without limitation, lost profits, business interruption, or lost information) rising out of \'Authorized Users\' use of or inability to use the SOFTWARE PRODUCT, even if Universk has been advised of the possibility of such damages. In no event will Universk be liable for loss of data or for indirect, special, incidental, consequential (including lost profit), or other damages based in contract, tort or otherwise. Universk shall have no liability with respect to the content of the SOFTWARE PRODUCT or any part thereof, including but not limited to errors or omissions contained therein, libel, infringements of rights of publicity, privacy, trademark rights, business interruption, personal injury, loss of privacy, moral rights or the disclosure of confidential information.
+<br/>In no event shall Universk be liable for any damages (including, without limitation, lost profits, business interruption, or lost information) rising out of \'Authorized Users\' use of or inability to use the SOFTWARE PRODUCT, even if Universk has been advised of the possibility of such damages. In no event will Universk be liable for loss of notes or for indirect, special, incidental, consequential (including lost profit), or other damages based in contract, tort or otherwise. Universk shall have no liability with respect to the content of the SOFTWARE PRODUCT or any part thereof, including but not limited to errors or omissions contained therein, libel, infringements of rights of publicity, privacy, trademark rights, business interruption, personal injury, loss of privacy, moral rights or the disclosure of confidential information.
 </p>
 
 <p>

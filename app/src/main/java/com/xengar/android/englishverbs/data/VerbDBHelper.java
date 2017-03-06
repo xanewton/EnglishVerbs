@@ -68,15 +68,20 @@ public class VerbDBHelper extends SQLiteOpenHelper {
                 + VerbEntry.COLUMN_INFINITIVE + " TEXT NOT NULL, "
                 + VerbEntry.COLUMN_SIMPLE_PAST + " TEXT NOT NULL, "
                 + VerbEntry.COLUMN_PAST_PARTICIPLE + " TEXT NOT NULL, "
-                + VerbEntry.COLUMN_DEFINITION + " TEXT NOT NULL, "
-                + VerbEntry.COLUMN_SAMPLES + " TEXT NOT NULL, "
+                + VerbEntry.COLUMN_PRONUNCIATION_INFINITIVE + " TEXT, "
+                + VerbEntry.COLUMN_PRONUNCIATION_SIMPLE_PAST + " TEXT, "
+                + VerbEntry.COLUMN_PRONUNCIATION_PAST_PARTICIPLE + " TEXT, "
+                + VerbEntry.COLUMN_SAMPLE_1 + " TEXT, "
+                + VerbEntry.COLUMN_SAMPLE_2 + " TEXT, "
+                + VerbEntry.COLUMN_SAMPLE_3 + " TEXT, "
                 + VerbEntry.COLUMN_COMMON + " INTEGER NOT NULL DEFAULT 0, "
                 + VerbEntry.COLUMN_REGULAR + " INTEGER NOT NULL DEFAULT 0, "
                 + VerbEntry.COLUMN_COLOR + " INTEGER NOT NULL DEFAULT 0, "
                 + VerbEntry.COLUMN_SCORE + " INTEGER NOT NULL DEFAULT 0, "
-                + VerbEntry.COLUMN_DATA + " TEXT, "
+                + VerbEntry.COLUMN_DEFINITION + " TEXT NOT NULL, "
                 + VerbEntry.COLUMN_TRANSLATION_ES + " TEXT, "
-                + VerbEntry.COLUMN_TRANSLATION_FR + " TEXT);";
+                + VerbEntry.COLUMN_TRANSLATION_FR + " TEXT, "
+                + VerbEntry.COLUMN_NOTES + " TEXT);";
 
         // Execute the SQL statement
         db.execSQL(SQL_CREATE_VERBS_TABLE);

@@ -40,8 +40,8 @@
             android:name=".ui.EditorActivity"
             android:parentActivityName=".ui.MainActivity"
             android:theme="@style/AppTheme">
-            <!-- Parent activity meta-data to support 4.0 and lower -->
-            <meta-data
+            <!-- Parent activity meta-notes to support 4.0 and lower -->
+            <meta-notes
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.MainActivity" />
         </activity>
@@ -49,7 +49,7 @@
             android:name=".ui.HelpActivity"
             android:label="@string/help"
             android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
+            <meta-notes
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.MainActivity" />
         </activity>
@@ -58,7 +58,7 @@
             android:label="@string/title_activity_settings"
             android:parentActivityName=".ui.MainActivity"
             android:theme="@style/AppTheme.Settings">
-            <meta-data
+            <meta-notes
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.MainActivity" />
         </activity>

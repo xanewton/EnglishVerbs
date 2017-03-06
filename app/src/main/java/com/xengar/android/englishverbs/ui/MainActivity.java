@@ -243,54 +243,54 @@ public class MainActivity extends AppCompatActivity
      */
     private void insertSampleVerbs(){
         insertVerb(new Verb(0L, "ask", "asked", "asked", "To question or demand",
-                "He becomes president today." +
-                        "Alice became teacher last year." +
-                        "He has become a new person since he left her.",
+                "He becomes president today.",
+                        "Alice became teacher last year.",
+                        "He has become a new person since he left her.", "", "", "",
                 VerbEntry.TOP_50, VerbEntry.REGULAR, 0, 0, "", "convertir", "devenir"));
         insertVerb(new Verb(0L, "become", "became", "become", "To come into existance",
-                "He becomes president today." +
-                        "Alice became teacher last year." +
-                        "He has become a new person since he left her.",
+                "He becomes president today.",
+                        "Alice became teacher last year.",
+                        "He has become a new person since he left her.", "", "", "",
                 VerbEntry.TOP_25, VerbEntry.IRREGULAR, 0, 0, "", "convertir", "devenir"));
         insertVerb(new Verb(0L, "begin", "began", "begun", "To start something",
-                "He becomes president today." +
-                        "Alice became teacher last year." +
-                        "He has become a new person since he left her.",
+                "He becomes president today.",
+                        "Alice became teacher last year.",
+                        "He has become a new person since he left her.", "", "", "",
                 VerbEntry.TOP_50, VerbEntry.IRREGULAR, 0, 0, "", "convertir", "devenir"));
         insertVerb(new Verb(0L, "call", "called", "called", "To comunicate with someone by phone",
-                "He becomes president today." +
-                        "Alice became teacher last year." +
-                        "He has become a new person since he left her.",
+                "He becomes president today.",
+                        "Alice became teacher last year.",
+                        "He has become a new person since he left her.", "", "", "",
                 VerbEntry.TOP_25, VerbEntry.REGULAR, 0, 0, "", "convertir", "devenir"));
         insertVerb(new Verb(0L, "come", "came", "come", "To arrive into a place",
-                "He becomes president today." +
-                        "Alice became teacher last year." +
-                        "He has become a new person since he left her.",
+                "He becomes president today.",
+                        "Alice became teacher last year.",
+                        "He has become a new person since he left her.", "", "", "",
                 VerbEntry.TOP_25, VerbEntry.IRREGULAR, 0, 0, "", "convertir", "devenir"));
         insertVerb(new Verb(0L, "do", "did", "done", "To come into existance",
-                "He becomes president today." +
-                        "Alice became teacher last year." +
-                        "He has become a new person since he left her.",
+                "He becomes president today.",
+                        "Alice became teacher last year.",
+                        "He has become a new person since he left her.", "", "", "",
                 VerbEntry.TOP_25, VerbEntry.IRREGULAR, 0, 0, "", "convertir", "devenir"));
         insertVerb(new Verb(0L, "feel", "felt", "felt", "To sense something phusically or emotionally",
-                "He becomes president today." +
-                        "Alice became teacher last year." +
-                        "He has become a new person since he left her.",
+                "He becomes president today.",
+                        "Alice became teacher last year.",
+                        "He has become a new person since he left her.", "", "", "",
                 VerbEntry.TOP_25, VerbEntry.IRREGULAR, 0, 0, "", "convertir", "devenir"));
         insertVerb(new Verb(0L, "go", "went", "gone", "To come into existance",
-                "He becomes president today." +
-                        "Alice became teacher last year." +
-                        "He has become a new person since he left her.",
+                "He becomes president today.",
+                        "Alice became teacher last year.",
+                        "He has become a new person since he left her.", "", "", "",
                 VerbEntry.TOP_100, VerbEntry.IRREGULAR, 0, 0, "", "convertir", "devenir"));
         insertVerb(new Verb(0L, "keep", "kept", "kept", "To retain something in our possession",
-                "He becomes president today." +
-                        "Alice became teacher last year." +
-                        "He has become a new person since he left her.",
+                "He becomes president today.",
+                        "Alice became teacher last year.",
+                        "He has become a new person since he left her.", "", "", "",
                 VerbEntry.OTHER, VerbEntry.IRREGULAR, 0, 0, "", "convertir", "devenir"));
         insertVerb(new Verb(0L, "missunderstand", "missunderstood", "missunderstood", "To not get the sense of something",
-                "He becomes president today." +
-                        "Alice became teacher last year." +
-                        "He has become a new person since he left her.",
+                "He becomes president today.",
+                        "Alice became teacher last year.",
+                        "He has become a new person since he left her.", "", "", "",
                 VerbEntry.OTHER, VerbEntry.IRREGULAR, 0, 0, "", "convertir", "devenir"));
     }
 
@@ -305,12 +305,17 @@ public class MainActivity extends AppCompatActivity
         values.put(VerbEntry.COLUMN_SIMPLE_PAST, v.getSimplePast());
         values.put(VerbEntry.COLUMN_PAST_PARTICIPLE, v.getPastParticiple());
         values.put(VerbEntry.COLUMN_DEFINITION, v.getDefinition());
-        values.put(VerbEntry.COLUMN_SAMPLES, v.getSamples());
+        values.put(VerbEntry.COLUMN_PRONUNCIATION_INFINITIVE, v.getPronunciationInfinitive());
+        values.put(VerbEntry.COLUMN_PRONUNCIATION_SIMPLE_PAST, v.getPronunciationSimplePast());
+        values.put(VerbEntry.COLUMN_PRONUNCIATION_PAST_PARTICIPLE, v.getPronunciationPastParticiple());
+        values.put(VerbEntry.COLUMN_SAMPLE_1, v.getSample1());
+        values.put(VerbEntry.COLUMN_SAMPLE_2, v.getSample2());
+        values.put(VerbEntry.COLUMN_SAMPLE_3, v.getSample3());
         values.put(VerbEntry.COLUMN_COMMON, v.getCommon());
         values.put(VerbEntry.COLUMN_REGULAR, v.getRegular());
         values.put(VerbEntry.COLUMN_COLOR, v.getColor());
         values.put(VerbEntry.COLUMN_SCORE, v.getScore());
-        values.put(VerbEntry.COLUMN_DATA, v.getData());
+        values.put(VerbEntry.COLUMN_NOTES, v.getNotes());
         values.put(VerbEntry.COLUMN_TRANSLATION_ES, v.getTranslationES());
         values.put(VerbEntry.COLUMN_TRANSLATION_FR, v.getTranslationFR());
 
