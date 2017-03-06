@@ -17,7 +17,7 @@
 <!-- Background circle for the color value -->
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="oval">
-    <solid android:color="@color/color1" />
+    <solid android:color="@color/backgroundColorRed" />
     <size
         android:width="36dp"
         android:height="36dp" />

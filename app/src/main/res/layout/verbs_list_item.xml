@@ -14,7 +14,8 @@
      limitations under the License.
 -->
 <!-- Layout for a single list item that displays an earthquake -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="?android:attr/listPreferredItemHeightSmall"
@@ -22,20 +23,39 @@
     android:paddingEnd="16dp"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
-    android:paddingStart="16dp">
+    android:paddingStart="16dp"
+    android:background="@color/backgroundColorWhite">
 
-    <TextView
-        android:id="@+id/score"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:background="@drawable/color_circle"
-        android:fontFamily="sans-serif-medium"
-        android:gravity="center"
-        android:textColor="@android:color/white"
-        android:textSize="12sp"
-        tools:text="8.9" />
+        android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:textColor="@color/colorGray"
+            android:fontFamily="sans-serif"
+            android:textAppearance="?android:textAppearanceSmall"
+            android:visibility="visible"
+            tools:text="8.9" />
+
+        <TextView
+            android:id="@+id/type"
+            android:layout_width="wrap_content"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:textColor="@color/colorGray"
+            android:fontFamily="sans-serif"
+            android:textAppearance="?android:textAppearanceSmall"
+            tools:text="R" />
+
+    </LinearLayout>
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -60,9 +80,11 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:textAllCaps="true"
-                android:textColor="@color/textColorVerb"
-                android:textSize="12sp"
-                tools:text="InfinitiveForm" />
+                android:textColor="@color/colorBlack"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif"
+                android:textAppearance="?android:textAppearanceSmall"
+                tools:text="become" />
 
             <TextView
                 android:id="@+id/simple_past"
@@ -73,9 +95,11 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:textAllCaps="true"
-                android:textColor="@color/textColorVerb"
-                android:textSize="12sp"
-                tools:text="SimplePast" />
+                android:textColor="@color/colorBlack"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif"
+                android:textAppearance="?android:textAppearanceSmall"
+                tools:text="became" />
 
             <TextView
                 android:id="@+id/past_participle"
@@ -86,41 +110,37 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:textAllCaps="true"
-                android:textColor="@color/textColorVerb"
-                android:textSize="12sp"
-                tools:text="PastParticiple" />
+                android:textColor="@color/colorBlack"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif"
+                android:textAppearance="?android:textAppearanceSmall"
+                tools:text="become" />
 
         </LinearLayout>
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/definition"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:gravity="center"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:textColor="@color/colorGray"
+            android:fontFamily="sans-serif"
+            android:textAppearance="?android:textAppearanceSmall"
+            tools:text="definition" />
 
-            <TextView
-                android:id="@+id/definition"
-                android:layout_width="0dp"
-                android:layout_weight="9"
-                android:gravity="center"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:fontFamily="sans-serif-medium"
-                android:maxLines="1"
-                android:textColor="@color/textColorVerbDefinition"
-                android:textSize="12sp"
-                tools:text="Verb definition or Translation" />
+        <TextView
+            android:id="@+id/translation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/colorGray"
+            android:fontFamily="sans-serif"
+            android:textAppearance="?android:textAppearanceSmall"
+            tools:text="translation" />
 
-            <TextView
-                android:id="@+id/type"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:textColor="@color/textColorVerbDefinition"
-                android:textSize="12sp"
-                tools:text="R" />
-
-        </LinearLayout>
     </LinearLayout>
 </LinearLayout>
