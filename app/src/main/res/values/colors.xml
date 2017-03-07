@@ -34,5 +34,6 @@
     <color name="colorRed">#F44336</color>
     <color name="colorGreen">#4CAF50</color>
     <color name="colorGray">#9E9E9E</color>
+    <color name="grey_850">#303030</color> <!-- 212121-->
 
 </resources>

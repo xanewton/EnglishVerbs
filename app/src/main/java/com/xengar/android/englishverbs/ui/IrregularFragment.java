@@ -36,7 +36,7 @@ import java.util.List;
 
 import fr.castorflex.android.circularprogressbar.CircularProgressBar;
 
-import static com.xengar.android.englishverbs.utils.Constants.PAGE_IRREGULAR;
+import static com.xengar.android.englishverbs.utils.Constants.IRREGULAR;
 
 /**
  * IrregularFragment for Irregular verbs
@@ -84,7 +84,7 @@ public class IrregularFragment extends Fragment {
         FragmentUtils.updateProgressBar(progressBar, true);
 
         FetchVerbs fetch =
-                new FetchVerbs(PAGE_IRREGULAR, mAdapter, getActivity().getContentResolver(), mVerbs,
+                new FetchVerbs(IRREGULAR, mAdapter, getActivity().getContentResolver(), mVerbs,
                         progressBar);
         fetch.execute();
     }

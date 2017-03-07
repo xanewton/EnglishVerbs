@@ -59,7 +59,7 @@
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Dark" />
 
     <style name="InCircularProgressBar" parent="Theme.SmoothProgressBarDefaults">
         <item name="cpb_color">@color/colorRed</item>
@@ -82,6 +82,17 @@
     <!-- Settings activity theme. -->
     <style name="AppTheme.Settings" parent="@style/AppTheme">
         <item name="android:colorPrimary" tools:targetApi="21">@color/colorAccent</item>
+    </style>
+
+    <style name="MyAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <!-- Used for the buttons -->
+        <item name="colorAccent">@color/colorAccent</item>
+        <!-- Used for the title and text -->
+        <item name="android:textColorPrimary">@color/backgroundColorWhite</item>
+        <!-- List items -->
+        <item name="textColorAlertDialogListItem">@color/backgroundColorWhite</item>
+        <!-- Used for the background -->
+        <item name="android:background">@color/grey_850</item>
     </style>
 
 </resources>

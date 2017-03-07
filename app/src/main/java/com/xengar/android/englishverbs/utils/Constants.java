@@ -38,8 +38,9 @@ public final class Constants {
     public static final String SHARED_PREF_NAME = "com.xengar.android.englishverbs";
     public static final String ITEM_CATEGORY = "item_category";
     public static final String PAGE_HOME = "Home";
-    public static final String PAGE_REGULAR = "Regular";
-    public static final String PAGE_IRREGULAR = "Irregular";
+    public static final String REGULAR = "Regular";
+    public static final String IRREGULAR = "Irregular";
+    public static final String BOTH = "Both";
 
 
 }

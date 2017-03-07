@@ -32,8 +32,8 @@ import fr.castorflex.android.circularprogressbar.CircularProgressBar;
 
 import static com.xengar.android.englishverbs.utils.Constants.LOG;
 import static com.xengar.android.englishverbs.utils.Constants.PAGE_HOME;
-import static com.xengar.android.englishverbs.utils.Constants.PAGE_IRREGULAR;
-import static com.xengar.android.englishverbs.utils.Constants.PAGE_REGULAR;
+import static com.xengar.android.englishverbs.utils.Constants.IRREGULAR;
+import static com.xengar.android.englishverbs.utils.Constants.REGULAR;
 
 /**
  * FetchVerbs from the database.
@@ -78,11 +78,11 @@ public class FetchVerbs extends AsyncTask<Void, Void, ArrayList<Verb>> {
                 cursor = contentResolver.query(VerbEntry.CONTENT_URI, columns, null, null, null);
                 break;
 
-            case PAGE_REGULAR:
+            case REGULAR:
                 cursor = contentResolver.query(VerbEntry.CONTENT_REGULARS_URI, columns, null, null, null);
                 break;
 
-            case PAGE_IRREGULAR:
+            case IRREGULAR:
                 cursor = contentResolver.query(VerbEntry.CONTENT_IRREGULARS_URI, columns, null, null, null);
                 break;
         }

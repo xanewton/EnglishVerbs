@@ -36,7 +36,7 @@ import java.util.List;
 
 import fr.castorflex.android.circularprogressbar.CircularProgressBar;
 
-import static com.xengar.android.englishverbs.utils.Constants.PAGE_REGULAR;
+import static com.xengar.android.englishverbs.utils.Constants.REGULAR;
 
 /**
  * RegularFragment for Regular Verbs
@@ -84,7 +84,7 @@ public class RegularFragment extends Fragment {
         FragmentUtils.updateProgressBar(progressBar, true);
 
         FetchVerbs fetch =
-                new FetchVerbs(PAGE_REGULAR, mAdapter, getActivity().getContentResolver(), mVerbs,
+                new FetchVerbs(REGULAR, mAdapter, getActivity().getContentResolver(), mVerbs,
                         progressBar);
         fetch.execute();
     }

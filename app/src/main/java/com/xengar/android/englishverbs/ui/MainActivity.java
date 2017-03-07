@@ -16,6 +16,7 @@
 package com.xengar.android.englishverbs.ui;
 
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -25,6 +26,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -38,13 +40,14 @@ import com.xengar.android.englishverbs.data.Verb;
 import com.xengar.android.englishverbs.data.VerbContract.VerbEntry;
 import com.xengar.android.englishverbs.utils.ActivityUtils;
 
+import static com.xengar.android.englishverbs.utils.Constants.BOTH;
+import static com.xengar.android.englishverbs.utils.Constants.IRREGULAR;
 import static com.xengar.android.englishverbs.utils.Constants.ITEM_CATEGORY;
 import static com.xengar.android.englishverbs.utils.Constants.LAST_ACTIVITY;
 import static com.xengar.android.englishverbs.utils.Constants.LOG;
 import static com.xengar.android.englishverbs.utils.Constants.MAIN_ACTIVITY;
 import static com.xengar.android.englishverbs.utils.Constants.PAGE_HOME;
-import static com.xengar.android.englishverbs.utils.Constants.PAGE_IRREGULAR;
-import static com.xengar.android.englishverbs.utils.Constants.PAGE_REGULAR;
+import static com.xengar.android.englishverbs.utils.Constants.REGULAR;
 import static com.xengar.android.englishverbs.utils.Constants.SHARED_PREF_NAME;
 
 public class MainActivity extends AppCompatActivity
@@ -56,6 +59,9 @@ public class MainActivity extends AppCompatActivity
     private IrregularFragment irregularFragment;
     private FrameLayout fragmentLayout;
 
+    final String VERB_TYPES[] = {REGULAR, IRREGULAR, BOTH};
+    private final int[] verbSelection = {2};
+    private final String[] verbType = {VERB_TYPES[verbSelection[0]]}; // current verb type list in screen
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,6 +124,10 @@ public class MainActivity extends AppCompatActivity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
+            case R.id.action_show_type:
+                changeVerbType();
+                return true;
+
             // Respond to a click on the "Insert dummy data" menu option
             case R.id.action_insert_dummy_data:
                 insertSampleVerbs();
@@ -129,6 +139,51 @@ public class MainActivity extends AppCompatActivity
         }
         return super.onOptionsItemSelected(item);
     }
+
+    /**
+     * Changes the type of verb (Regular, Irregular, both).
+     */
+    private void changeVerbType(){
+        final CharSequence options[] = new CharSequence[] {
+                getString(R.string.regular), getString(R.string.irregular),
+                getString(R.string.both) };
+
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.MyAlertDialogStyle);
+        builder.setTitle(getString(R.string.select_type_of_verb));
+        builder.setSingleChoiceItems(options, verbSelection[0],
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int item) {
+                        // save the selected verb type
+                        verbSelection[0] = item;
+                        verbType[0] = VERB_TYPES[item];
+                    }
+                });
+        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // TODO: Use a single fragment
+                // Change the selection.
+                switch (verbType[0]){
+                    case REGULAR:
+                        ActivityUtils.saveStringToPreferences(getApplicationContext(), ITEM_CATEGORY, REGULAR);
+                        launchFragment(REGULAR);
+                        break;
+
+                    case IRREGULAR:
+                        ActivityUtils.saveStringToPreferences(getApplicationContext(), ITEM_CATEGORY, IRREGULAR);
+                        launchFragment(IRREGULAR);
+                        break;
+
+                    default:
+                    case BOTH:
+                        ActivityUtils.saveStringToPreferences(getApplicationContext(), ITEM_CATEGORY, PAGE_HOME);
+                        launchFragment(PAGE_HOME);
+                        break;
+                }
+            }
+        });
+        builder.show();
+    }
+
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -144,13 +199,13 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_regular:
                 getSupportActionBar().setTitle(R.string.menu_option_regular);
-                ActivityUtils.saveStringToPreferences(this, ITEM_CATEGORY, PAGE_REGULAR);
-                launchFragment(PAGE_REGULAR);
+                ActivityUtils.saveStringToPreferences(this, ITEM_CATEGORY, REGULAR);
+                launchFragment(REGULAR);
                 break;
             case R.id.nav_irregular:
                 getSupportActionBar().setTitle(R.string.menu_option_irregular);
-                ActivityUtils.saveStringToPreferences(this, ITEM_CATEGORY, PAGE_IRREGULAR);
-                launchFragment(PAGE_IRREGULAR);
+                ActivityUtils.saveStringToPreferences(this, ITEM_CATEGORY, IRREGULAR);
+                launchFragment(IRREGULAR);
                 break;
             case R.id.nav_settings:
                 ActivityUtils.launchSettingsActivity(getApplicationContext());
@@ -179,13 +234,13 @@ public class MainActivity extends AppCompatActivity
                 fragmentTransaction.commit();
                 break;
 
-            case PAGE_REGULAR:
+            case REGULAR:
                 fragmentTransaction.replace(R.id.fragment_container, regularFragment);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
                 break;
 
-            case PAGE_IRREGULAR:
+            case IRREGULAR:
                 fragmentTransaction.replace(R.id.fragment_container, irregularFragment);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
@@ -205,16 +260,16 @@ public class MainActivity extends AppCompatActivity
                 launchFragment(PAGE_HOME);
                 break;
 
-            case PAGE_REGULAR:
+            case REGULAR:
                 getSupportActionBar().setTitle(R.string.menu_option_regular);
-                ActivityUtils.saveStringToPreferences(this, ITEM_CATEGORY, PAGE_REGULAR);
-                launchFragment(PAGE_REGULAR);
+                ActivityUtils.saveStringToPreferences(this, ITEM_CATEGORY, REGULAR);
+                launchFragment(REGULAR);
                 break;
 
-            case PAGE_IRREGULAR:
+            case IRREGULAR:
                 getSupportActionBar().setTitle(R.string.menu_option_irregular);
-                ActivityUtils.saveStringToPreferences(this, ITEM_CATEGORY, PAGE_IRREGULAR);
-                launchFragment(PAGE_IRREGULAR);
+                ActivityUtils.saveStringToPreferences(this, ITEM_CATEGORY, IRREGULAR);
+                launchFragment(IRREGULAR);
                 break;
         }
     }
@@ -227,10 +282,10 @@ public class MainActivity extends AppCompatActivity
             case PAGE_HOME:
                 navigationView.setCheckedItem(R.id.nav_home);
                 break;
-            case PAGE_REGULAR:
+            case REGULAR:
                 navigationView.setCheckedItem(R.id.nav_regular);
                 break;
-            case PAGE_IRREGULAR:
+            case IRREGULAR:
                 navigationView.setCheckedItem(R.id.nav_irregular);
                 break;
         }
