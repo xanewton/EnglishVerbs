@@ -27,9 +27,9 @@ public class Verb {
     private String simplePast;
     private String pastParticiple;
     private String definition;
-    private String pronunciationInfinitive;
-    private String pronunciationSimplePast;
-    private String pronunciationPastParticiple;
+    private String phoneticInfinitive;
+    private String phoneticSimplePast;
+    private String phoneticPastParticiple;
     private String sample1 = "";
     private String sample2 = "";
     private String sample3 = "";
@@ -44,8 +44,8 @@ public class Verb {
     /*** Constructor */
     public Verb(long id, String infinitive, String simplePast, String pastParticiple,
                 String definition, String sample1, String sample2, String sample3,
-                String pronunciationInfinitive, String pronunciationSimplePast,
-                String pronunciationPastParticiple,
+                String phoneticInfinitive, String phoneticSimplePast,
+                String phoneticPastParticiple,
                 int common, int regular, int color, int score, String notes,
                 String translationES, String translationFR){
         this.id = id;
@@ -53,9 +53,9 @@ public class Verb {
         this.simplePast = simplePast;
         this.pastParticiple = pastParticiple;
         this.definition = definition;
-        this.pronunciationInfinitive = pronunciationInfinitive;
-        this.pronunciationSimplePast = pronunciationSimplePast;
-        this.pronunciationPastParticiple = pronunciationPastParticiple;
+        this.phoneticInfinitive = phoneticInfinitive;
+        this.phoneticSimplePast = phoneticSimplePast;
+        this.phoneticPastParticiple = phoneticPastParticiple;
         this.sample1 = sample1;
         this.sample2 = sample2;
         this.sample3 = sample3;
@@ -79,12 +79,12 @@ public class Verb {
     public String getPastParticiple() { return pastParticiple; }
     public void setPastParticiple(String pastParticiple) { this.pastParticiple = pastParticiple; }
 
-    public String getPronunciationInfinitive() { return pronunciationInfinitive; }
-    public void setPronunciationInfinitive(String pronunciationInfinitive) { this.pronunciationInfinitive = pronunciationInfinitive; }
-    public String getPronunciationSimplePast() { return pronunciationSimplePast; }
-    public void setPronunciationSimplePast(String pronunciationSimplePast) { this.pronunciationSimplePast = pronunciationSimplePast; }
-    public String getPronunciationPastParticiple() { return pronunciationPastParticiple; }
-    public void setPronunciationPastParticiple(String pronunciationPastParticiple) { this.pronunciationPastParticiple = pronunciationPastParticiple; }
+    public String getPhoneticInfinitive() { return phoneticInfinitive; }
+    public void setPhoneticInfinitive(String phoneticInfinitive) { this.phoneticInfinitive = phoneticInfinitive; }
+    public String getPhoneticSimplePast() { return phoneticSimplePast; }
+    public void setPhoneticSimplePast(String phoneticSimplePast) { this.phoneticSimplePast = phoneticSimplePast; }
+    public String getPhoneticPastParticiple() { return phoneticPastParticiple; }
+    public void setPhoneticPastParticiple(String phoneticPastParticiple) { this.phoneticPastParticiple = phoneticPastParticiple; }
 
     public String getSample1() { return sample1; }
     public void setSample1(String sample1) { this.sample1 = sample1; }

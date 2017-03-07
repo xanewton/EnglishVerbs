@@ -82,6 +82,11 @@ public final class VerbContract {
         public static final int TOP_100 = 2;
         public static final int TOP_500 = 3;
         public static final int OTHER = 4;
+        public static final String S_TOP_25 = "" + TOP_25;
+        public static final String S_TOP_50 = "" + TOP_50;
+        public static final String S_TOP_100 = "" + TOP_100;
+        public static final String S_TOP_500 = "" + TOP_500;
+        public static final String S_OTHER = "" + OTHER;
 
         public static boolean isValidCommonUsage(int usage) {
             if (usage == TOP_25 || usage == TOP_50 || usage == TOP_100
@@ -98,6 +103,9 @@ public final class VerbContract {
         public static final int REGULAR = 0;
         public static final int IRREGULAR = 1;
         public static final int REGULAR_AND_IRREGULAR = 2;
+        public static final String S_REGULAR = "" + REGULAR;
+        public static final String S_IRREGULAR = "" + IRREGULAR;
+        public static final String S_REGULAR_AND_IRREGULAR = "" + REGULAR_AND_IRREGULAR;
 
         public static boolean isValidRegular(int value) {
             if (value == REGULAR || value == IRREGULAR || value == REGULAR_AND_IRREGULAR) {
@@ -115,9 +123,9 @@ public final class VerbContract {
         public final static String COLUMN_SAMPLE_3 ="SAMPLE3";
 
         /** Verb pronunciation in infinitive form. - Type: TEXT  */
-        public final static String COLUMN_PRONUNCIATION_INFINITIVE ="PRONUNCIATION_INFINITIVE";
-        public final static String COLUMN_PRONUNCIATION_SIMPLE_PAST ="PRONUNCIATION_SIMPLE_PAST";
-        public final static String COLUMN_PRONUNCIATION_PAST_PARTICIPLE ="PRONUNCIATION_PAST_PARTICIPLE";
+        public final static String COLUMN_PHONETIC_INFINITIVE ="PHONETIC_INFINITIVE";
+        public final static String COLUMN_PHONETIC_SIMPLE_PAST ="PHONETIC_SIMPLE_PAST";
+        public final static String COLUMN_PHONETIC_PAST_PARTICIPLE ="PHONETIC_PAST_PARTICIPLE";
 
         /** Other information for the verb. - Type: TEXT */
         public final static String COLUMN_NOTES ="NOTES";

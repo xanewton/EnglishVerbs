@@ -178,9 +178,9 @@ public class EditorActivity extends AppCompatActivity implements
                 VerbEntry.COLUMN_PAST_PARTICIPLE,
                 VerbEntry.COLUMN_REGULAR,
                 VerbEntry.COLUMN_DEFINITION,
-                VerbEntry.COLUMN_PRONUNCIATION_INFINITIVE,
-                VerbEntry.COLUMN_PRONUNCIATION_SIMPLE_PAST,
-                VerbEntry.COLUMN_PRONUNCIATION_PAST_PARTICIPLE,
+                VerbEntry.COLUMN_PHONETIC_INFINITIVE,
+                VerbEntry.COLUMN_PHONETIC_SIMPLE_PAST,
+                VerbEntry.COLUMN_PHONETIC_PAST_PARTICIPLE,
                 VerbEntry.COLUMN_SAMPLE_1,
                 VerbEntry.COLUMN_SAMPLE_2,
                 VerbEntry.COLUMN_SAMPLE_3 };
@@ -443,9 +443,9 @@ public class EditorActivity extends AppCompatActivity implements
         values.put(VerbEntry.COLUMN_SIMPLE_PAST, simplePast);
         values.put(VerbEntry.COLUMN_PAST_PARTICIPLE, pastParticiple);
         values.put(VerbEntry.COLUMN_DEFINITION, definition);
-        values.put(VerbEntry.COLUMN_PRONUNCIATION_INFINITIVE, "");
-        values.put(VerbEntry.COLUMN_PRONUNCIATION_SIMPLE_PAST, "");
-        values.put(VerbEntry.COLUMN_PRONUNCIATION_PAST_PARTICIPLE, "");
+        values.put(VerbEntry.COLUMN_PHONETIC_INFINITIVE, "");
+        values.put(VerbEntry.COLUMN_PHONETIC_SIMPLE_PAST, "");
+        values.put(VerbEntry.COLUMN_PHONETIC_PAST_PARTICIPLE, "");
         values.put(VerbEntry.COLUMN_SAMPLE_1, "");
         values.put(VerbEntry.COLUMN_SAMPLE_2, "");
         values.put(VerbEntry.COLUMN_SAMPLE_3, "");

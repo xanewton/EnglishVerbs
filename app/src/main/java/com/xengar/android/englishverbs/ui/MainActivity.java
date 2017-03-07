@@ -305,9 +305,9 @@ public class MainActivity extends AppCompatActivity
         values.put(VerbEntry.COLUMN_SIMPLE_PAST, v.getSimplePast());
         values.put(VerbEntry.COLUMN_PAST_PARTICIPLE, v.getPastParticiple());
         values.put(VerbEntry.COLUMN_DEFINITION, v.getDefinition());
-        values.put(VerbEntry.COLUMN_PRONUNCIATION_INFINITIVE, v.getPronunciationInfinitive());
-        values.put(VerbEntry.COLUMN_PRONUNCIATION_SIMPLE_PAST, v.getPronunciationSimplePast());
-        values.put(VerbEntry.COLUMN_PRONUNCIATION_PAST_PARTICIPLE, v.getPronunciationPastParticiple());
+        values.put(VerbEntry.COLUMN_PHONETIC_INFINITIVE, v.getPhoneticInfinitive());
+        values.put(VerbEntry.COLUMN_PHONETIC_SIMPLE_PAST, v.getPhoneticSimplePast());
+        values.put(VerbEntry.COLUMN_PHONETIC_PAST_PARTICIPLE, v.getPhoneticPastParticiple());
         values.put(VerbEntry.COLUMN_SAMPLE_1, v.getSample1());
         values.put(VerbEntry.COLUMN_SAMPLE_2, v.getSample2());
         values.put(VerbEntry.COLUMN_SAMPLE_3, v.getSample3());
