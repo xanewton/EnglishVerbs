@@ -30,9 +30,9 @@ import java.util.List;
 
 import fr.castorflex.android.circularprogressbar.CircularProgressBar;
 
-import static com.xengar.android.englishverbs.utils.Constants.LOG;
-import static com.xengar.android.englishverbs.utils.Constants.PAGE_HOME;
+import static com.xengar.android.englishverbs.utils.Constants.BOTH;
 import static com.xengar.android.englishverbs.utils.Constants.IRREGULAR;
+import static com.xengar.android.englishverbs.utils.Constants.LOG;
 import static com.xengar.android.englishverbs.utils.Constants.REGULAR;
 
 /**
@@ -41,17 +41,17 @@ import static com.xengar.android.englishverbs.utils.Constants.REGULAR;
 public class FetchVerbs extends AsyncTask<Void, Void, ArrayList<Verb>> {
 
     private final String TAG = FetchVerbs.class.getSimpleName();
-    private final String page;
+    private final String type; // Verb type (regular, irregular, both)
     private final ContentResolver contentResolver;
     private final VerbAdapter adapter;
     private final List<Verb> verbs;
     private final CircularProgressBar progressBar;
 
     // Constructor
-    public FetchVerbs(final String page, final VerbAdapter adapter,
+    public FetchVerbs(final String type, final VerbAdapter adapter,
                       final ContentResolver contentResolver, final List<Verb> verbs,
                       final CircularProgressBar progressBar) {
-        this.page = page;
+        this.type = type;
         this.adapter = adapter;
         this.contentResolver = contentResolver;
         this.verbs = verbs;
@@ -72,8 +72,8 @@ public class FetchVerbs extends AsyncTask<Void, Void, ArrayList<Verb>> {
                 VerbEntry.COLUMN_SCORE };
 
         Cursor cursor;
-        switch (page){
-            case PAGE_HOME:
+        switch (type){
+            case BOTH:
             default:
                 cursor = contentResolver.query(VerbEntry.CONTENT_URI, columns, null, null, null);
                 break;

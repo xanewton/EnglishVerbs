@@ -36,11 +36,14 @@ public final class Constants {
     public static final String MAIN_ACTIVITY = "main_activity";
 
     public static final String SHARED_PREF_NAME = "com.xengar.android.englishverbs";
-    public static final String ITEM_CATEGORY = "item_category";
-    public static final String PAGE_HOME = "Home";
-    public static final String REGULAR = "Regular";
-    public static final String IRREGULAR = "Irregular";
-    public static final String BOTH = "Both";
+    public static final String VERB_TYPE = "verb_type";
+    public static final String REGULAR = "regular";
+    public static final String IRREGULAR = "irregular";
+    public static final String BOTH = "both (regular, irregular)";
+
+    public static final String CURRENT_PAGE = "current_page";
+    public static final String PAGE_VERBS = "Verbs";
+    public static final String PAGE_CARDS = "Cards";
 
 
 }

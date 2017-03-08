@@ -36,28 +36,40 @@ import java.util.List;
 
 import fr.castorflex.android.circularprogressbar.CircularProgressBar;
 
-import static com.xengar.android.englishverbs.utils.Constants.REGULAR;
+import static com.xengar.android.englishverbs.utils.Constants.BOTH;
+import static com.xengar.android.englishverbs.utils.Constants.VERB_TYPE;
 
 /**
- * RegularFragment for Regular Verbs
+ * UniversalFragment
  */
-public class RegularFragment extends Fragment {
+public class UniversalFragment extends Fragment {
+
+    private static final String TAG = UniversalFragment.class.getSimpleName();
 
     private CustomErrorView mCustomErrorView;
     private RecyclerView mRecyclerView;
     private CircularProgressBar progressBar;
     private VerbAdapter mAdapter;
     private List<Verb> mVerbs;
+    private String verbsType = BOTH;
 
 
-    public RegularFragment() {
+    public UniversalFragment() {
         // Required empty public constructor
     }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        if (getArguments() != null)
+            verbsType = getArguments().getString(VERB_TYPE, BOTH);
+
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_universal, container, false);
 
@@ -70,11 +82,31 @@ public class RegularFragment extends Fragment {
         return view;
     }
 
+    public String getVerbsType(){
+        return verbsType;
+    }
+
     @Override
     public void onResume() {
         super.onResume();
+
+        /*
+        if (!FragmentUtils.checkInternetConnection(getActivity())) {
+            if (LOG) {
+                Log.e(TAG, "Network is not available");
+            }
+            onLoadFailed(new Throwable(getString(R.string.network_not_available_message)));
+            return;
+        }*/
+
         mVerbs.clear();
         fillVerbs();
+    }
+
+    private void onLoadFailed(Throwable t) {
+        mCustomErrorView.setError(t);
+        mCustomErrorView.setVisibility(View.VISIBLE);
+        FragmentUtils.updateProgressBar(progressBar, false);
     }
 
     private void fillVerbs(){
@@ -84,7 +116,7 @@ public class RegularFragment extends Fragment {
         FragmentUtils.updateProgressBar(progressBar, true);
 
         FetchVerbs fetch =
-                new FetchVerbs(REGULAR, mAdapter, getActivity().getContentResolver(), mVerbs,
+                new FetchVerbs(verbsType, mAdapter, getActivity().getContentResolver(), mVerbs,
                         progressBar);
         fetch.execute();
     }

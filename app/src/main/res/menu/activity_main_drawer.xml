@@ -18,17 +18,13 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_home"
-            android:icon="@drawable/ic_home_black_24dp"
-            android:title="@string/menu_option_home" />
+            android:id="@+id/nav_verbs"
+            android:icon="@drawable/ic_view_verbs_black_24dp"
+            android:title="@string/menu_option_verbs" />
         <item
-            android:id="@+id/nav_regular"
+            android:id="@+id/nav_cards"
             android:icon="@drawable/ic_regular_black_24dp"
-            android:title="@string/menu_option_regular" />
-        <item
-            android:id="@+id/nav_irregular"
-            android:icon="@drawable/ic_irregular_black_24dp"
-            android:title="@string/menu_option_irregular" />
+            android:title="@string/menu_option_cards" />
     </group>
 
     <group

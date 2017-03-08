@@ -41,22 +41,24 @@ import com.xengar.android.englishverbs.data.VerbContract.VerbEntry;
 import com.xengar.android.englishverbs.utils.ActivityUtils;
 
 import static com.xengar.android.englishverbs.utils.Constants.BOTH;
+import static com.xengar.android.englishverbs.utils.Constants.CURRENT_PAGE;
 import static com.xengar.android.englishverbs.utils.Constants.IRREGULAR;
-import static com.xengar.android.englishverbs.utils.Constants.ITEM_CATEGORY;
 import static com.xengar.android.englishverbs.utils.Constants.LAST_ACTIVITY;
 import static com.xengar.android.englishverbs.utils.Constants.LOG;
 import static com.xengar.android.englishverbs.utils.Constants.MAIN_ACTIVITY;
-import static com.xengar.android.englishverbs.utils.Constants.PAGE_HOME;
+import static com.xengar.android.englishverbs.utils.Constants.PAGE_CARDS;
+import static com.xengar.android.englishverbs.utils.Constants.PAGE_VERBS;
 import static com.xengar.android.englishverbs.utils.Constants.REGULAR;
 import static com.xengar.android.englishverbs.utils.Constants.SHARED_PREF_NAME;
+import static com.xengar.android.englishverbs.utils.Constants.VERB_TYPE;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
-    private HomeFragment homeFragment;
-    private RegularFragment regularFragment;
-    private IrregularFragment irregularFragment;
+    private UniversalFragment universalFragment;
+    //private RegularFragment regularFragment;
+    //private IrregularFragment irregularFragment;
     private FrameLayout fragmentLayout;
 
     final String VERB_TYPES[] = {REGULAR, IRREGULAR, BOTH};
@@ -90,13 +92,10 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
 
         SharedPreferences prefs = getSharedPreferences(SHARED_PREF_NAME, 0);
-        String page = prefs.getString(ITEM_CATEGORY, PAGE_HOME);
+        String page = prefs.getString(CURRENT_PAGE, PAGE_VERBS);
 
         fragmentLayout = (FrameLayout) findViewById(R.id.fragment_container);
-        homeFragment = new HomeFragment();
-        regularFragment = new RegularFragment();
-        irregularFragment = new IrregularFragment();
-
+        universalFragment = createUniversalFragment(BOTH);
         showPage(page);
         assignCheckedItem(page);
     }
@@ -124,7 +123,7 @@ public class MainActivity extends AppCompatActivity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
-            case R.id.action_show_type:
+            case R.id.action_change_type:
                 changeVerbType();
                 return true;
 
@@ -138,6 +137,14 @@ public class MainActivity extends AppCompatActivity
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private UniversalFragment createUniversalFragment(String verbsType) {
+        UniversalFragment fragment = new UniversalFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(VERB_TYPE, verbsType);
+        fragment.setArguments(bundle);
+        return fragment;
     }
 
     /**
@@ -164,19 +171,15 @@ public class MainActivity extends AppCompatActivity
                 // Change the selection.
                 switch (verbType[0]){
                     case REGULAR:
-                        ActivityUtils.saveStringToPreferences(getApplicationContext(), ITEM_CATEGORY, REGULAR);
-                        launchFragment(REGULAR);
-                        break;
-
                     case IRREGULAR:
-                        ActivityUtils.saveStringToPreferences(getApplicationContext(), ITEM_CATEGORY, IRREGULAR);
-                        launchFragment(IRREGULAR);
+                    case BOTH:
+                        if (!universalFragment.getVerbsType().contentEquals(verbType[0])) {
+                            universalFragment = createUniversalFragment(verbType[0]);
+                            launchFragment(PAGE_VERBS);
+                        }
                         break;
 
                     default:
-                    case BOTH:
-                        ActivityUtils.saveStringToPreferences(getApplicationContext(), ITEM_CATEGORY, PAGE_HOME);
-                        launchFragment(PAGE_HOME);
                         break;
                 }
             }
@@ -192,20 +195,15 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         switch (id){
-            case R.id.nav_home:
-                getSupportActionBar().setTitle(R.string.menu_option_home);
-                ActivityUtils.saveStringToPreferences(this, ITEM_CATEGORY, PAGE_HOME);
-                launchFragment(PAGE_HOME);
+            case R.id.nav_verbs:
+                getSupportActionBar().setTitle(R.string.menu_option_verbs);
+                ActivityUtils.saveStringToPreferences(this, VERB_TYPE, PAGE_VERBS);
+                launchFragment(PAGE_VERBS);
                 break;
-            case R.id.nav_regular:
-                getSupportActionBar().setTitle(R.string.menu_option_regular);
-                ActivityUtils.saveStringToPreferences(this, ITEM_CATEGORY, REGULAR);
-                launchFragment(REGULAR);
-                break;
-            case R.id.nav_irregular:
-                getSupportActionBar().setTitle(R.string.menu_option_irregular);
-                ActivityUtils.saveStringToPreferences(this, ITEM_CATEGORY, IRREGULAR);
-                launchFragment(IRREGULAR);
+            case R.id.nav_cards:
+                getSupportActionBar().setTitle(R.string.menu_option_cards);
+                ActivityUtils.saveStringToPreferences(this, VERB_TYPE, PAGE_CARDS);
+                //launchFragment(PAGE_CARDS);
                 break;
             case R.id.nav_settings:
                 ActivityUtils.launchSettingsActivity(getApplicationContext());
@@ -228,23 +226,16 @@ public class MainActivity extends AppCompatActivity
         android.support.v4.app.FragmentTransaction fragmentTransaction
                 = getSupportFragmentManager().beginTransaction();
         switch (category) {
-            case PAGE_HOME:
-                fragmentTransaction.replace(R.id.fragment_container, homeFragment);
+            case PAGE_VERBS:
+                fragmentTransaction.replace(R.id.fragment_container, universalFragment);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
                 break;
-
-            case REGULAR:
-                fragmentTransaction.replace(R.id.fragment_container, regularFragment);
+            /*case PAGE_CARDS:
+                fragmentTransaction.replace(R.id.fragment_container, cardsFragment);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
-                break;
-
-            case IRREGULAR:
-                fragmentTransaction.replace(R.id.fragment_container, irregularFragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
-                break;
+                break;*/
         }
     }
 
@@ -254,23 +245,16 @@ public class MainActivity extends AppCompatActivity
      */
     public void showPage(String page) {
         switch (page){
-            case PAGE_HOME:
-                getSupportActionBar().setTitle(R.string.menu_option_home);
-                ActivityUtils.saveStringToPreferences(this, ITEM_CATEGORY, PAGE_HOME);
-                launchFragment(PAGE_HOME);
+            case PAGE_VERBS:
+                getSupportActionBar().setTitle(R.string.menu_option_verbs);
+                ActivityUtils.saveStringToPreferences(this, CURRENT_PAGE, PAGE_VERBS);
+                launchFragment(PAGE_VERBS);
                 break;
-
-            case REGULAR:
-                getSupportActionBar().setTitle(R.string.menu_option_regular);
-                ActivityUtils.saveStringToPreferences(this, ITEM_CATEGORY, REGULAR);
-                launchFragment(REGULAR);
-                break;
-
-            case IRREGULAR:
-                getSupportActionBar().setTitle(R.string.menu_option_irregular);
-                ActivityUtils.saveStringToPreferences(this, ITEM_CATEGORY, IRREGULAR);
-                launchFragment(IRREGULAR);
-                break;
+            /*case PAGE_CARDS:
+                getSupportActionBar().setTitle(R.string.menu_option_verbs);
+                ActivityUtils.saveStringToPreferences(this, CURRENT_PAGE, PAGE_CARDS);
+                launchFragment(PAGE_CARDS);
+                break;*/
         }
     }
 
@@ -279,14 +263,11 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         switch (page){
-            case PAGE_HOME:
-                navigationView.setCheckedItem(R.id.nav_home);
+            case PAGE_VERBS:
+                navigationView.setCheckedItem(R.id.nav_verbs);
                 break;
-            case REGULAR:
-                navigationView.setCheckedItem(R.id.nav_regular);
-                break;
-            case IRREGULAR:
-                navigationView.setCheckedItem(R.id.nav_irregular);
+            case PAGE_CARDS:
+                navigationView.setCheckedItem(R.id.nav_cards);
                 break;
         }
     }
