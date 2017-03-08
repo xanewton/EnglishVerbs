@@ -101,6 +101,7 @@
     <!-- Slide menu options -->
     <string name="menu_option_verbs">Verbs</string>
     <string name="menu_option_cards">Cards</string>
+    <string name="menu_option_favorites">Favorites</string>
     <string name="menu_option_settings">Settings</string>
     <string name="menu_option_help">Help</string>
 

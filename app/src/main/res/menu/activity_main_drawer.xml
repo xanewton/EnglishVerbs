@@ -25,6 +25,10 @@
             android:id="@+id/nav_cards"
             android:icon="@drawable/ic_regular_black_24dp"
             android:title="@string/menu_option_cards" />
+        <item
+            android:id="@+id/nav_favorites"
+            android:icon="@drawable/ic_favorite_black_24dp"
+            android:title="@string/menu_option_favorites" />
     </group>
 
     <group

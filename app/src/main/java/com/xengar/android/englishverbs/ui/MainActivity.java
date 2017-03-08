@@ -47,6 +47,7 @@ import static com.xengar.android.englishverbs.utils.Constants.LAST_ACTIVITY;
 import static com.xengar.android.englishverbs.utils.Constants.LOG;
 import static com.xengar.android.englishverbs.utils.Constants.MAIN_ACTIVITY;
 import static com.xengar.android.englishverbs.utils.Constants.PAGE_CARDS;
+import static com.xengar.android.englishverbs.utils.Constants.PAGE_FAVORITES;
 import static com.xengar.android.englishverbs.utils.Constants.PAGE_VERBS;
 import static com.xengar.android.englishverbs.utils.Constants.REGULAR;
 import static com.xengar.android.englishverbs.utils.Constants.SHARED_PREF_NAME;
@@ -197,13 +198,18 @@ public class MainActivity extends AppCompatActivity
         switch (id){
             case R.id.nav_verbs:
                 getSupportActionBar().setTitle(R.string.menu_option_verbs);
-                ActivityUtils.saveStringToPreferences(this, VERB_TYPE, PAGE_VERBS);
+                ActivityUtils.saveStringToPreferences(this, CURRENT_PAGE, PAGE_VERBS);
                 launchFragment(PAGE_VERBS);
                 break;
             case R.id.nav_cards:
                 getSupportActionBar().setTitle(R.string.menu_option_cards);
-                ActivityUtils.saveStringToPreferences(this, VERB_TYPE, PAGE_CARDS);
+                ActivityUtils.saveStringToPreferences(this, CURRENT_PAGE, PAGE_CARDS);
                 //launchFragment(PAGE_CARDS);
+                break;
+            case R.id.nav_favorites:
+                getSupportActionBar().setTitle(R.string.menu_option_favorites);
+                ActivityUtils.saveStringToPreferences(this, CURRENT_PAGE, PAGE_FAVORITES);
+                //launchFragment(PAGE_FAVORITES);
                 break;
             case R.id.nav_settings:
                 ActivityUtils.launchSettingsActivity(getApplicationContext());
@@ -236,6 +242,11 @@ public class MainActivity extends AppCompatActivity
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
                 break;*/
+            /*case PAGE_FAVORITES:
+                fragmentTransaction.replace(R.id.fragment_container, universalFragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+                break;*/
         }
     }
 
@@ -255,6 +266,11 @@ public class MainActivity extends AppCompatActivity
                 ActivityUtils.saveStringToPreferences(this, CURRENT_PAGE, PAGE_CARDS);
                 launchFragment(PAGE_CARDS);
                 break;*/
+            /*case PAGE_FAVORITES:
+                getSupportActionBar().setTitle(R.string.menu_option_favorites);
+                ActivityUtils.saveStringToPreferences(this, CURRENT_PAGE, PAGE_FAVORITES);
+                launchFragment(PAGE_FAVORITES);
+                break;*/
         }
     }
 
@@ -268,6 +284,9 @@ public class MainActivity extends AppCompatActivity
                 break;
             case PAGE_CARDS:
                 navigationView.setCheckedItem(R.id.nav_cards);
+                break;
+            case PAGE_FAVORITES:
+                navigationView.setCheckedItem(R.id.nav_favorites);
                 break;
         }
     }
