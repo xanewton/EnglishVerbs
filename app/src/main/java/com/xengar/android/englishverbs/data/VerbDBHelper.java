@@ -157,7 +157,7 @@ public class VerbDBHelper extends SQLiteOpenHelper {
     // List of pre-loaded verbs.
     public static final String[][] verbs = {
             // TOP25
-            {"be", "was,were", "been", "/bi/", "/wəz/ /wə(r)/", "/biːn/",
+            {"be", "was, were", "been", "/bi/", "/wəz/ /wə(r)/", "/biːn/",
                 "John is a man.",
                 "My birthday was last Thursday.",
                 "I haven't been there for several years.",
