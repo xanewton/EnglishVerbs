@@ -45,5 +45,7 @@ public final class Constants {
     public static final String PAGE_VERBS = "Verbs";
     public static final String PAGE_CARDS = "Cards";
 
+    public static final String VERB_ID = "verb_id";
+    public static final String VERB_NAME = "verb_name";
 
 }

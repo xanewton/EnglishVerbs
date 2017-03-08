@@ -20,6 +20,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.text.Html;
 import android.text.Spanned;
@@ -32,6 +33,8 @@ import com.xengar.android.englishverbs.ui.HelpActivity;
 import com.xengar.android.englishverbs.ui.SettingsActivity;
 
 import static com.xengar.android.englishverbs.utils.Constants.SHARED_PREF_NAME;
+import static com.xengar.android.englishverbs.utils.Constants.VERB_ID;
+import static com.xengar.android.englishverbs.utils.Constants.VERB_NAME;
 
 
 /**
@@ -106,9 +109,15 @@ public class ActivityUtils {
         context.startActivity(intent);
     }
 
-    public static void lauchDetailsActivity(final Context context, final long id) {
+    public static void lauchDetailsActivity(final Context context, final long id, final String verb) {
         Intent intent = new Intent(context, DetailsActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        Bundle bundle = new Bundle();
+        bundle.putLong(VERB_ID, id);
+        bundle.putString(VERB_NAME, verb);
+        intent.putExtras(bundle);
+
         context.startActivity(intent);
     }
 

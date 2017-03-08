@@ -109,7 +109,7 @@ public class VerbAdapter extends RecyclerView.Adapter<VerbAdapter.VerbHolder> {
             if (position != RecyclerView.NO_POSITION) {
                 // TODO: Change id into something bigger, like string
                 //ActivityUtils.launchEditorActivity(mContext, mVerb.getId());
-                ActivityUtils.lauchDetailsActivity(mContext, mVerb.getId());
+                ActivityUtils.lauchDetailsActivity(mContext, mVerb.getId(), mVerb.getInfinitive());
             }
         }
 
