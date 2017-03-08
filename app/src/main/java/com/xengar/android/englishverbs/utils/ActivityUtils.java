@@ -26,6 +26,7 @@ import android.text.Spanned;
 
 import com.xengar.android.englishverbs.R;
 import com.xengar.android.englishverbs.data.VerbContract;
+import com.xengar.android.englishverbs.ui.DetailsActivity;
 import com.xengar.android.englishverbs.ui.EditorActivity;
 import com.xengar.android.englishverbs.ui.HelpActivity;
 import com.xengar.android.englishverbs.ui.SettingsActivity;
@@ -102,6 +103,12 @@ public class ActivityUtils {
         intent.setData(currentVerbUri);
 
         // Launch the {@link EditorActivity} to display the data for the current pet.
+        context.startActivity(intent);
+    }
+
+    public static void lauchDetailsActivity(final Context context, final long id) {
+        Intent intent = new Intent(context, DetailsActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
 

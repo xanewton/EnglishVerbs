@@ -108,7 +108,8 @@ public class VerbAdapter extends RecyclerView.Adapter<VerbAdapter.VerbHolder> {
             // Check if an item was deleted, but the user clicked it before the UI removed it
             if (position != RecyclerView.NO_POSITION) {
                 // TODO: Change id into something bigger, like string
-                ActivityUtils.launchEditorActivity(mContext, mVerb.getId());
+                //ActivityUtils.launchEditorActivity(mContext, mVerb.getId());
+                ActivityUtils.lauchDetailsActivity(mContext, mVerb.getId());
             }
         }
 
