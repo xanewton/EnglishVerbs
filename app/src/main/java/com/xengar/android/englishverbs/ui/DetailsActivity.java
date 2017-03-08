@@ -67,10 +67,6 @@ public class DetailsActivity extends AppCompatActivity implements
         verbID = bundle.getLong(VERB_ID, -1);
         String title = bundle.getString(VERB_NAME);
         getSupportActionBar().setTitle(title);
-        showFavoriteButtons();
-
-        // Initialize a loader to read the verb data from the database and display it
-        getLoaderManager().initLoader(EXISTING_VERB_LOADER, null, this);
 
         // define click listeners
         LinearLayout header = (LinearLayout) findViewById(R.id.play_infinitive);
@@ -99,6 +95,10 @@ public class DetailsActivity extends AppCompatActivity implements
                 }
             }
         });
+
+        // Initialize a loader to read the verb data from the database and display it
+        getLoaderManager().initLoader(EXISTING_VERB_LOADER, null, this);
+        showFavoriteButtons();
     }
 
     /**
