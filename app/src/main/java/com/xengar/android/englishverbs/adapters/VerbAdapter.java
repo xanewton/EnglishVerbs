@@ -164,17 +164,17 @@ public class VerbAdapter extends RecyclerView.Adapter<VerbAdapter.VerbHolder> {
             // Play the sounds
             switch(view.getId()){
                 case R.id.play_infinitive:
-                    ActivityUtils.speak(tts, mVerb.getInfinitive());
+                    ActivityUtils.speak(mContext, tts, mVerb.getInfinitive());
                     Toast.makeText(mContext, mVerb.getInfinitive(),Toast.LENGTH_SHORT).show();
                     break;
 
                 case R.id.play_simple_past:
-                    ActivityUtils.speak(tts, mVerb.getSimplePast());
+                    ActivityUtils.speak(mContext, tts, mVerb.getSimplePast());
                     Toast.makeText(mContext, mVerb.getSimplePast(),Toast.LENGTH_SHORT).show();
                     break;
 
                 case R.id.play_past_participle:
-                    ActivityUtils.speak(tts, mVerb.getPastParticiple());
+                    ActivityUtils.speak(mContext, tts, mVerb.getPastParticiple());
                     Toast.makeText(mContext, mVerb.getPastParticiple(),Toast.LENGTH_SHORT).show();
                     break;
 

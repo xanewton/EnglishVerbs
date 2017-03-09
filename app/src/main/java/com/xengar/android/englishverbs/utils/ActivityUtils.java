@@ -19,6 +19,7 @@ import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -227,7 +228,13 @@ public class ActivityUtils {
      * Text we want to speak.
      * @param text String
      */
-    public static void speak(TextToSpeech tts, String text){
+    public static void speak(final Context context, TextToSpeech tts, String text){
+        // Use the current media player volume
+        AudioManager am = (AudioManager)context.getSystemService(Context.AUDIO_SERVICE);
+        int volume = am.getStreamVolume(am.STREAM_MUSIC);
+        am.setStreamVolume(am.STREAM_MUSIC, volume, 0);
+
+        // Speak
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, null);
         }else{

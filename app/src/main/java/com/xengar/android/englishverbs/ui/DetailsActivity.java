@@ -361,17 +361,17 @@ public class DetailsActivity extends AppCompatActivity implements
         // Play the sounds
         switch(view.getId()){
             case R.id.play_infinitive:
-                ActivityUtils.speak(tts, verb.getInfinitive());
+                ActivityUtils.speak(getApplicationContext(), tts, verb.getInfinitive());
                 Toast.makeText(getApplicationContext(),verb.getInfinitive(),Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.play_simple_past:
-                ActivityUtils.speak(tts, verb.getSimplePast());
+                ActivityUtils.speak(getApplicationContext(), tts, verb.getSimplePast());
                 Toast.makeText(getApplicationContext(),verb.getSimplePast(),Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.play_past_participle:
-                ActivityUtils.speak(tts, verb.getPastParticiple());
+                ActivityUtils.speak(getApplicationContext(), tts, verb.getPastParticiple());
                 Toast.makeText(getApplicationContext(),verb.getPastParticiple(),Toast.LENGTH_SHORT).show();
                 break;
         }
