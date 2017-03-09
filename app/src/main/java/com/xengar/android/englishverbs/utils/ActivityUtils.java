@@ -25,8 +25,11 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.text.Html;
 import android.text.Spanned;
+import android.view.View;
+import android.widget.TextView;
 
 import com.xengar.android.englishverbs.R;
+import com.xengar.android.englishverbs.data.Verb;
 import com.xengar.android.englishverbs.data.VerbContract;
 import com.xengar.android.englishverbs.ui.DetailsActivity;
 import com.xengar.android.englishverbs.ui.EditorActivity;
@@ -195,6 +198,26 @@ public class ActivityUtils {
                 return FRENCH;
             case "es_ES":
                 return SPANISH;
+        }
+    }
+
+    /**
+     * Set the correct translation or hide the view.
+     * @param context Context
+     * @param textView view
+     * @param verb Verb
+     */
+    public static void setTranslation(final Context context, TextView textView, Verb verb) {
+        switch (getPreferenceTranslationLanguage(context)) {
+            case NONE:
+                textView.setVisibility(View.GONE);
+                break;
+            case FRENCH:
+                textView.setText(verb.getTranslationFR());
+                break;
+            case SPANISH:
+                textView.setText(verb.getTranslationES());
+                break;
         }
     }
 }

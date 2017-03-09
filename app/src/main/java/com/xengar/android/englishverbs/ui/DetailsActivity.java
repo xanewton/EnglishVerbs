@@ -45,6 +45,7 @@ import com.xengar.android.englishverbs.R;
 import com.xengar.android.englishverbs.data.Verb;
 import com.xengar.android.englishverbs.data.VerbContract;
 import com.xengar.android.englishverbs.data.VerbContract.VerbEntry;
+import com.xengar.android.englishverbs.utils.ActivityUtils;
 
 import java.util.Locale;
 
@@ -67,7 +68,7 @@ public class DetailsActivity extends AppCompatActivity implements
     private TextToSpeech tts;
     private TextView infinitive, simplePast, pastParticiple;
     private TextView pInfinitive, pSimplePast, pPastParticiple;
-    private TextView definition, sample1, sample2, sample3;
+    private TextView definition, translation, sample1, sample2, sample3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +91,7 @@ public class DetailsActivity extends AppCompatActivity implements
         pSimplePast = (TextView) findViewById(R.id.phonetic_simple_past);
         pPastParticiple = (TextView) findViewById(R.id.phonetic_past_participle);
         definition = (TextView) findViewById(R.id.definition);
+        translation = (TextView) findViewById(R.id.translation);
         sample1 = (TextView) findViewById(R.id.sample1);
         sample2 = (TextView) findViewById(R.id.sample2);
         sample3 = (TextView) findViewById(R.id.sample3);
@@ -332,6 +334,8 @@ public class DetailsActivity extends AppCompatActivity implements
         sample1.setText(verb.getSample1());
         sample2.setText(verb.getSample2());
         sample3.setText(verb.getSample3());
+
+        ActivityUtils.setTranslation(getApplicationContext(), translation, verb);
     }
 
     /**

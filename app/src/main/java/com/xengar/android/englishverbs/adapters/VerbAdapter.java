@@ -29,10 +29,6 @@ import com.xengar.android.englishverbs.utils.ActivityUtils;
 import java.util.List;
 import java.util.Locale;
 
-import static com.xengar.android.englishverbs.utils.Constants.FRENCH;
-import static com.xengar.android.englishverbs.utils.Constants.NONE;
-import static com.xengar.android.englishverbs.utils.Constants.SPANISH;
-
 /**
  * VerbAdapter
  */
@@ -107,17 +103,7 @@ public class VerbAdapter extends RecyclerView.Adapter<VerbAdapter.VerbHolder> {
             }
             typeTextView.setText((verb.getRegular()  == 0)? "R" : "I");
             scoreTextView.setText(String.format(Locale.ENGLISH, "%d", verb.getScore()));
-            switch (ActivityUtils.getPreferenceTranslationLanguage(mContext)) {
-                case NONE:
-                    translationView.setVisibility(View.GONE);
-                    break;
-                case FRENCH:
-                    translationView.setText(verb.getTranslationFR());
-                    break;
-                case SPANISH:
-                    translationView.setText(verb.getTranslationES());
-                    break;
-            }
+            ActivityUtils.setTranslation(mContext, translationView, verb);
         }
 
         // Handles the item click.
