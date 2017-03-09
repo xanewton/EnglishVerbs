@@ -253,6 +253,12 @@ public class VerbProvider extends ContentProvider{
         }
     }
 
+    private void checkNull(Integer value, String message){
+        if (value == null) {
+            throw new IllegalArgumentException(message);
+        }
+    }
+
     private void checkNullAndPositive(Integer value, String message){
         if (value != null && value < 0) {
             throw new IllegalArgumentException(message);
@@ -288,7 +294,7 @@ public class VerbProvider extends ContentProvider{
         /*checkNull(values.getAsString(VerbEntry.COLUMN_SAMPLE_1), "Verb requires sample 1");
         checkNull(values.getAsString(VerbEntry.COLUMN_SAMPLE_2), "Verb requires sample 2");
         checkNull(values.getAsString(VerbEntry.COLUMN_SAMPLE_3), "Verb requires sample 3");*/
-        checkNullAndPositive(values.getAsInteger(VerbEntry.COLUMN_COLOR), "Verb requires valid color");
+        checkNull(values.getAsInteger(VerbEntry.COLUMN_COLOR), "Verb requires valid color");
         checkNullAndPositive(values.getAsInteger(VerbEntry.COLUMN_SCORE), "Verb requires valid score");
 
         // Get writable database
@@ -356,7 +362,7 @@ public class VerbProvider extends ContentProvider{
         /*checkNotNullKeyString(values, VerbEntry.COLUMN_SAMPLE_1, "Verb requires sample 1");
         checkNotNullKeyString(values, VerbEntry.COLUMN_SAMPLE_2, "Verb requires sample 2");
         checkNotNullKeyString(values, VerbEntry.COLUMN_SAMPLE_3, "Verb requires sample 3");*/
-        checkNullAndPositive(values, VerbEntry.COLUMN_COLOR, "Verb requires valid color");
+        checkNotNullKeyString(values, VerbEntry.COLUMN_COLOR, "Verb requires valid color");
         checkNullAndPositive(values, VerbEntry.COLUMN_SCORE, "Verb requires valid score");
 
         // If there are no values to update, then don't try to update the database

@@ -96,6 +96,9 @@ public class VerbAdapter extends RecyclerView.Adapter<VerbAdapter.VerbHolder> {
             infinitiveTextView.setText(verb.getInfinitive());
             simplePastTextView.setText(verb.getSimplePast());
             pastParticipleTextView.setText(verb.getPastParticiple());
+            infinitiveTextView.setTextColor(verb.getColor());
+            simplePastTextView.setTextColor(verb.getColor());
+            pastParticipleTextView.setTextColor(verb.getColor());
             definitionTextView.setText(verb.getDefinition());
             typeTextView.setText((verb.getRegular()  == 0)? "R" : "I");
             scoreTextView.setText(String.format(Locale.ENGLISH, "%d", verb.getScore()));

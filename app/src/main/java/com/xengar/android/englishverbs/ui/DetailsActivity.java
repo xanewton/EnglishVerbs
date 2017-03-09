@@ -17,21 +17,30 @@ package com.xengar.android.englishverbs.ui;
 
 import android.app.LoaderManager;
 import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.colorpicker.ColorPickerPalette;
+import com.android.colorpicker.ColorPickerSwatch;
 import com.xengar.android.englishverbs.R;
 import com.xengar.android.englishverbs.data.Verb;
 import com.xengar.android.englishverbs.data.VerbContract;
@@ -49,11 +58,16 @@ import static com.xengar.android.englishverbs.utils.Constants.VERB_NAME;
 public class DetailsActivity extends AppCompatActivity implements
         LoaderManager.LoaderCallbacks<Cursor>, View.OnClickListener {
 
+    private static final String TAG = DetailsActivity.class.getSimpleName();
+
     private static final int EXISTING_VERB_LOADER = 0;
     private FloatingActionButton fabAdd, fabDel;
     private long verbID;
     private Verb verb;
     private TextToSpeech tts;
+    private TextView infinitive, simplePast, pastParticiple;
+    private TextView pInfinitive, pSimplePast, pPastParticiple;
+    private TextView definition, sample1, sample2, sample3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +81,18 @@ public class DetailsActivity extends AppCompatActivity implements
         verbID = bundle.getLong(VERB_ID, -1);
         String title = bundle.getString(VERB_NAME);
         getSupportActionBar().setTitle(title);
+
+        //Text
+        infinitive = (TextView) findViewById(R.id.infinitive);
+        simplePast = (TextView) findViewById(R.id.simple_past);
+        pastParticiple = (TextView) findViewById(R.id.past_participle);
+        pInfinitive = (TextView) findViewById(R.id.phonetic_infinitive);
+        pSimplePast = (TextView) findViewById(R.id.phonetic_simple_past);
+        pPastParticiple = (TextView) findViewById(R.id.phonetic_past_participle);
+        definition = (TextView) findViewById(R.id.definition);
+        sample1 = (TextView) findViewById(R.id.sample1);
+        sample2 = (TextView) findViewById(R.id.sample2);
+        sample3 = (TextView) findViewById(R.id.sample3);
 
         // define click listeners
         LinearLayout header = (LinearLayout) findViewById(R.id.play_infinitive);
@@ -99,6 +125,102 @@ public class DetailsActivity extends AppCompatActivity implements
         // Initialize a loader to read the verb data from the database and display it
         getLoaderManager().initLoader(EXISTING_VERB_LOADER, null, this);
         showFavoriteButtons();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.details, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        switch (id) {
+            case R.id.action_change_color:
+                changeColorDialog();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * Changes the color
+     */
+    private void changeColorDialog() {
+        final int[] colors = {
+                ContextCompat.getColor(getApplicationContext(), R.color.colorBlack),
+                ContextCompat.getColor(getApplicationContext(), R.color.colorRed),
+                ContextCompat.getColor(getApplicationContext(), R.color.colorGreen),
+                ContextCompat.getColor(getApplicationContext(), R.color.colorBlue),
+                ContextCompat.getColor(getApplicationContext(), R.color.colorPink),
+                ContextCompat.getColor(getApplicationContext(), R.color.colorPurple),
+                ContextCompat.getColor(getApplicationContext(), R.color.colorDeepPurple),
+                ContextCompat.getColor(getApplicationContext(), R.color.colorIndigo),
+                ContextCompat.getColor(getApplicationContext(), R.color.colorOrange),
+                ContextCompat.getColor(getApplicationContext(), R.color.colorDeepOrange),
+                ContextCompat.getColor(getApplicationContext(), R.color.colorBrown),
+                ContextCompat.getColor(getApplicationContext(), R.color.colorBlueGray) };
+
+        final int[] selectedColor = {colors[0]};
+        if (verb!= null) {
+            selectedColor[0] = verb.getColor();
+        }
+        LayoutInflater layoutInflater = LayoutInflater.from(getApplicationContext());
+        final ColorPickerPalette colorPickerPalette = (ColorPickerPalette) layoutInflater
+                .inflate(R.layout.custom_picker, null);
+
+        ColorPickerSwatch.OnColorSelectedListener listener = new ColorPickerSwatch.OnColorSelectedListener() {
+            @Override
+            public void onColorSelected(int color) {
+                selectedColor[0] = color;
+                colorPickerPalette.drawPalette(colors, selectedColor[0]);
+            }
+        };
+
+        colorPickerPalette.init(colors.length, 4, listener);
+        colorPickerPalette.drawPalette(colors, selectedColor[0]);
+
+        AlertDialog alert = new AlertDialog.Builder(this, R.style.MyAlertDialogStyle)
+                .setTitle(R.string.select_color)
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Save changes
+                        saveColor(selectedColor[0]);
+                        setVerbColor(selectedColor[0]);
+                        verb.setColor(selectedColor[0]);
+                    }
+                })
+                .setView(colorPickerPalette)
+                .create();
+        alert.show();
+    }
+
+    /**
+     * Save the color to database.
+     * @param color Color
+     */
+    private void saveColor(int color) {
+        ContentValues values = new ContentValues();
+        values.put(VerbEntry.COLUMN_COLOR, "" + color);
+        int rowsAffected = getContentResolver().update(
+                ContentUris.withAppendedId(VerbEntry.CONTENT_URI, verbID), values, null, null);
+
+        // Show a toast message depending on whether or not the update was successful.
+        if (rowsAffected == 0) {
+            // If no rows were affected, then there was an error with the update.
+            if (LOG){
+                Log.e(TAG, "Failed to change color to verb!");
+            }
+        }
     }
 
     /**
@@ -183,6 +305,7 @@ public class DetailsActivity extends AppCompatActivity implements
                     cursor.getString(cursor.getColumnIndex(VerbEntry.COLUMN_TRANSLATION_ES)),
                     cursor.getString(cursor.getColumnIndex(VerbEntry.COLUMN_TRANSLATION_FR))  );
 
+            setVerbColor(verb.getColor());
             fillVerbDetails(verb);
         }
     }
@@ -197,17 +320,6 @@ public class DetailsActivity extends AppCompatActivity implements
      * @param verb
      */
     private void fillVerbDetails(Verb verb) {
-        TextView infinitive = (TextView) findViewById(R.id.infinitive);
-        TextView simplePast = (TextView) findViewById(R.id.simple_past);
-        TextView pastParticiple = (TextView) findViewById(R.id.past_participle);
-        TextView pInfinitive = (TextView) findViewById(R.id.phonetic_infinitive);
-        TextView pSimplePast = (TextView) findViewById(R.id.phonetic_simple_past);
-        TextView pPastParticiple = (TextView) findViewById(R.id.phonetic_past_participle);
-        TextView definition = (TextView) findViewById(R.id.definition);
-        TextView sample1 = (TextView) findViewById(R.id.sample1);
-        TextView sample2 = (TextView) findViewById(R.id.sample2);
-        TextView sample3 = (TextView) findViewById(R.id.sample3);
-
         // Update the views on the screen with the values from the database
         infinitive.setText(verb.getInfinitive());
         simplePast.setText(verb.getSimplePast());
@@ -220,6 +332,16 @@ public class DetailsActivity extends AppCompatActivity implements
         sample1.setText(verb.getSample1());
         sample2.setText(verb.getSample2());
         sample3.setText(verb.getSample3());
+    }
+
+    /**
+     * Set the text color.
+     * @param color color
+     */
+    private void setVerbColor(int color) {
+        infinitive.setTextColor(color);
+        simplePast.setTextColor(color);
+        pastParticiple.setTextColor(color);
     }
 
     @Override

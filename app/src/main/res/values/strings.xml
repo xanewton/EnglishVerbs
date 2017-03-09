@@ -21,6 +21,8 @@
     <!-- Label for overflow menu option that deletes all verb notes in the app [CHAR LIMIT=20] -->
     <string name="action_delete_all_entries">Delete All Verbs</string>
     <string name="action_type">Type</string>
+    <string name="action_color">Color</string>
+    <string name="select_color">Select color</string>
 
     <!-- Label for editor menu option to save verb and leave editor [CHAR LIMIT=20] -->
     <string name="action_save">Save</string>

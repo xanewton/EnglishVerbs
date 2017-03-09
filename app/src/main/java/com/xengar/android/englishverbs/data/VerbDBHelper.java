@@ -19,7 +19,9 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.support.v4.content.ContextCompat;
 
+import com.xengar.android.englishverbs.R;
 import com.xengar.android.englishverbs.data.VerbContract.VerbEntry;
 
 import static android.database.sqlite.SQLiteDatabase.CONFLICT_REPLACE;
@@ -42,7 +44,9 @@ public class VerbDBHelper extends SQLiteOpenHelper {
     /**
      * Database version. If you change the database schema, you must increment the database version.
      */
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
+
+    private Context context;
 
 
     /**
@@ -52,6 +56,7 @@ public class VerbDBHelper extends SQLiteOpenHelper {
      */
     public VerbDBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        this.context = context;
     }
 
 
@@ -131,6 +136,7 @@ public class VerbDBHelper extends SQLiteOpenHelper {
      */
     private void insertVerbs(SQLiteDatabase db) {
         ContentValues values = new ContentValues();
+        final String DEFAULT_COLOR = "" + ContextCompat.getColor(context, R.color.colorBlack);
         for (int i = 0; i < verbs.length; i++) {
             values.put("_id", i);
             values.put(VerbEntry.COLUMN_INFINITIVE, verbs[i][0]);
@@ -144,7 +150,7 @@ public class VerbDBHelper extends SQLiteOpenHelper {
             values.put(VerbEntry.COLUMN_SAMPLE_3, verbs[i][8]);
             values.put(VerbEntry.COLUMN_COMMON, verbs[i][9]);
             values.put(VerbEntry.COLUMN_REGULAR, verbs[i][10]);
-            values.put(VerbEntry.COLUMN_COLOR, verbs[i][11]);
+            values.put(VerbEntry.COLUMN_COLOR, DEFAULT_COLOR);
             values.put(VerbEntry.COLUMN_SCORE, verbs[i][12]);
             values.put(VerbEntry.COLUMN_DEFINITION, verbs[i][13]);
             values.put(VerbEntry.COLUMN_TRANSLATION_ES, verbs[i][14]);
@@ -153,6 +159,8 @@ public class VerbDBHelper extends SQLiteOpenHelper {
             db.insertWithOnConflict(VerbEntry.TABLE_NAME, null, values, CONFLICT_REPLACE );
         }
     }
+
+
 
     // List of pre-loaded verbs.
     public static final String[][] verbs = {

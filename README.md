@@ -1,5 +1,5 @@
 English Verbs
-========
+=============
 
 ![Scheme](/readmeImages/Screenshot_1481839252.png)
 ![Scheme](/readmeImages/Screenshot_1481839259.png)
@@ -14,9 +14,10 @@ Pre-requisites
 - [Color Picker Module](http://www.materialdoc.com/color-picker/)
 
 
-Set up
-------
-# Color Picker Module
+# Set up
+
+Color Picker Module
+-------------------
 
 1.  Download repository from
   ```
@@ -40,8 +41,8 @@ dependencies {
 
 ```
 
-4. Add compileSdkVersion and buildToolsVersion to avoid Error:Cause: buildToolsVersion is not specified. to colorpicker/build.gradle
- ```
+4. Add compileSdkVersion and buildToolsVersion in colorpicker/build.gradle to avoid Error buildToolsVersion is not specified
+```
  apply plugin: 'com.android.library'
 
  android {
@@ -55,4 +56,4 @@ dependencies {
          res.srcDirs = ['res']
      }
  }
- ```
+```

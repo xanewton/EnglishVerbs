@@ -69,7 +69,8 @@ public class FetchVerbs extends AsyncTask<Void, Void, ArrayList<Verb>> {
                 VerbEntry.COLUMN_PAST_PARTICIPLE,
                 VerbEntry.COLUMN_DEFINITION,
                 VerbEntry.COLUMN_REGULAR,
-                VerbEntry.COLUMN_SCORE };
+                VerbEntry.COLUMN_SCORE,
+                VerbEntry.COLUMN_COLOR };
 
         Cursor cursor;
         switch (type){
@@ -93,7 +94,7 @@ public class FetchVerbs extends AsyncTask<Void, Void, ArrayList<Verb>> {
                 verb = new Verb(cursor.getLong(0), cursor.getString(1), cursor.getString(2),
                         cursor.getString(3), cursor.getString(4),
                         "", "", "", "", "", "",
-                        0, cursor.getInt(5), 0, cursor.getInt(6), "", "", "");
+                        0, cursor.getInt(5), cursor.getInt(7), cursor.getInt(6), "", "", "");
                 verbs.add(verb);
             }
         } else {
