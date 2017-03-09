@@ -40,6 +40,7 @@ public final class Constants {
     public static final String REGULAR = "regular";
     public static final String IRREGULAR = "irregular";
     public static final String BOTH = "both (regular, irregular)";
+    public static final String FAVORITES = "favorites";
 
     public static final String ITEM_TYPE = "item_type";
     public static final String CARD = "card";

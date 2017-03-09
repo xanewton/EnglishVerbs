@@ -31,6 +31,7 @@ import java.util.List;
 import fr.castorflex.android.circularprogressbar.CircularProgressBar;
 
 import static com.xengar.android.englishverbs.utils.Constants.BOTH;
+import static com.xengar.android.englishverbs.utils.Constants.FAVORITES;
 import static com.xengar.android.englishverbs.utils.Constants.IRREGULAR;
 import static com.xengar.android.englishverbs.utils.Constants.LOG;
 import static com.xengar.android.englishverbs.utils.Constants.REGULAR;
@@ -63,7 +64,7 @@ public class FetchVerbs extends AsyncTask<Void, Void, ArrayList<Verb>> {
         ArrayList<Verb> verbs = new ArrayList<>();
         // Define a projection that specifies the columns from the table we care about.
         String[] columns = {
-                VerbEntry._ID,
+                VerbEntry.COLUMN_ID,
                 VerbEntry.COLUMN_INFINITIVE,
                 VerbEntry.COLUMN_SIMPLE_PAST,
                 VerbEntry.COLUMN_PAST_PARTICIPLE,
@@ -96,12 +97,16 @@ public class FetchVerbs extends AsyncTask<Void, Void, ArrayList<Verb>> {
             case IRREGULAR:
                 cursor = contentResolver.query(VerbEntry.CONTENT_IRREGULARS_URI, columns, null, null, null);
                 break;
+
+            case FAVORITES:
+                cursor = contentResolver.query(VerbEntry.CONTENT_FAVORITE_VERBS_URI, columns, null, null, null);
+                break;
         }
 
         if (cursor != null && cursor.getCount() != 0) {
             Verb verb;
             while (cursor.moveToNext()) {
-                verb = new Verb(cursor.getLong(cursor.getColumnIndex(VerbEntry._ID)),
+                verb = new Verb(cursor.getLong(cursor.getColumnIndex(VerbEntry.COLUMN_ID)),
                         cursor.getString(cursor.getColumnIndex(VerbEntry.COLUMN_INFINITIVE)),
                         cursor.getString(cursor.getColumnIndex(VerbEntry.COLUMN_SIMPLE_PAST)),
                         cursor.getString(cursor.getColumnIndex(VerbEntry.COLUMN_PAST_PARTICIPLE)),

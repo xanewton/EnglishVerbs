@@ -25,6 +25,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -231,24 +232,62 @@ public class DetailsActivity extends AppCompatActivity implements
         fabAdd = (FloatingActionButton) findViewById(R.id.fab_add);
         fabDel = (FloatingActionButton) findViewById(R.id.fab_minus);
 
-        /*Cursor cursor = getContentResolver().query(ContentUris.withAppendedId(URI, movieID),
-                new String[]{COLUMN_MOVIE_ID}, null, null, null);
-        if (cursor != null && cursor.getCount() != 0) {*/
-        if (false){
+        Cursor cursor = getContentResolver().query(
+            ContentUris.withAppendedId(VerbContract.VerbEntry.CONTENT_FAVORITES_URI, verbID),
+                new String[]{ VerbEntry.COLUMN_ID}, null, null, null);
+        if (cursor != null && cursor.getCount() != 0) {
             fabDel.setVisibility(View.VISIBLE);
         } else {
             fabAdd.setVisibility(View.VISIBLE);
         }
-        /*
         if (cursor != null)
-            cursor.close();*/
+            cursor.close();
+    }
+
+    /**
+     * Defines what to do when click on add/remove from Favorites buttons.
+     */
+    private void defineClickFavoriteButtons() {
+        final int DURATION = 1000;
+
+        fabAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, getString(R.string.favorites_add_message), DURATION)
+                        .setAction("Action", null).show();
+                ContentValues values = new ContentValues();
+                values.put(VerbEntry.COLUMN_ID, verbID);
+                getContentResolver().insert(VerbContract.VerbEntry.CONTENT_FAVORITES_URI, values);
+
+                fabAdd.setVisibility(View.INVISIBLE);
+                fabDel.setVisibility(View.VISIBLE);
+                //ActivityUtils.firebaseAnalyticsLogEventSelectContent(mFirebaseAnalytics,
+                //        MOVIE_ID + " " + movieID, container.getTitle(), TYPE_ADD_FAV);
+            }
+        });
+
+        fabDel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, getString(R.string.favorites_del_message), DURATION)
+                        .setAction("Action", null).show();
+                getContentResolver().delete(VerbContract.VerbEntry.CONTENT_FAVORITES_URI,
+                        VerbEntry.COLUMN_ID + " = ?",
+                        new String[]{Long.toString(verbID)} );
+
+                fabAdd.setVisibility(View.VISIBLE);
+                fabDel.setVisibility(View.INVISIBLE);
+                //ActivityUtils.firebaseAnalyticsLogEventSelectContent(mFirebaseAnalytics,
+                //        MOVIE_ID + " " + movieID, container.getTitle(), TYPE_DEL_FAV);
+            }
+        });
     }
 
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         String[] projection = {
-                VerbEntry._ID,
+                VerbEntry.COLUMN_ID,
                 VerbEntry.COLUMN_INFINITIVE,
                 VerbEntry.COLUMN_SIMPLE_PAST,
                 VerbEntry.COLUMN_PAST_PARTICIPLE,
@@ -308,6 +347,7 @@ public class DetailsActivity extends AppCompatActivity implements
 
             setVerbColor(verb.getColor());
             fillVerbDetails(verb);
+            defineClickFavoriteButtons();
         }
     }
 

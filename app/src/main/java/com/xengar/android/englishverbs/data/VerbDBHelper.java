@@ -44,7 +44,7 @@ public class VerbDBHelper extends SQLiteOpenHelper {
     /**
      * Database version. If you change the database schema, you must increment the database version.
      */
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 1;
 
     private Context context;
 
@@ -67,6 +67,7 @@ public class VerbDBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         createSchemaVersion1(db);
         insertVerbs(db);
+        insertFavorites(db);
     }
 
     /**
@@ -76,8 +77,9 @@ public class VerbDBHelper extends SQLiteOpenHelper {
      */
     private void createSchemaVersion1(SQLiteDatabase db){
         // Create a String that contains the SQL statement to create the verbs table
-        String SQL_CREATE_VERBS_TABLE =  "CREATE TABLE " + VerbEntry.TABLE_NAME + " ("
+        String query =  "CREATE TABLE " + VerbEntry.VERBS_TBL + " ("
                 + VerbEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + VerbEntry.COLUMN_ID + " INTEGER NOT NULL, "
                 + VerbEntry.COLUMN_INFINITIVE + " TEXT NOT NULL, "
                 + VerbEntry.COLUMN_SIMPLE_PAST + " TEXT NOT NULL, "
                 + VerbEntry.COLUMN_PAST_PARTICIPLE + " TEXT NOT NULL, "
@@ -97,7 +99,12 @@ public class VerbDBHelper extends SQLiteOpenHelper {
                 + VerbEntry.COLUMN_NOTES + " TEXT);";
 
         // Execute the SQL statement
-        db.execSQL(SQL_CREATE_VERBS_TABLE);
+        db.execSQL(query);
+
+        query = "CREATE TABLE " + VerbEntry.FAVORITES_TBL + " ("
+                + VerbEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + VerbEntry.COLUMN_ID + " INTEGER NOT NULL); ";
+        db.execSQL(query);
     }
 
 
@@ -109,7 +116,9 @@ public class VerbDBHelper extends SQLiteOpenHelper {
         String query;
         if (oldVersion > newVersion) {
             // This should not happen, version numbers should increment. Start clean.
-            query = "DROP TABLE IF EXISTS " +  VerbEntry.TABLE_NAME ;
+            query = "DROP TABLE IF EXISTS " +  VerbEntry.VERBS_TBL;
+            db.execSQL(query);
+            query = "DROP TABLE IF EXISTS " +  VerbEntry.FAVORITES_TBL;
             db.execSQL(query);
         }
 
@@ -131,174 +140,190 @@ public class VerbDBHelper extends SQLiteOpenHelper {
     }
 
     /**
+     * Insert the 5 most common verbs.
+     * @param db
+     */
+    private void insertFavorites(SQLiteDatabase db) {
+        ContentValues values = new ContentValues();
+        for (int i = 0; i < favorites.length; i++) {
+            values.put("_id", i);
+            values.put(VerbEntry.COLUMN_ID, favorites[i][0]);
+            db.insertWithOnConflict(VerbEntry.FAVORITES_TBL, null, values, CONFLICT_REPLACE );
+        }
+    }
+
+    // List of pre-loaded favorite verbs.
+    public static final String[][] favorites = {
+            {"0"}, // be
+            {"1"}, // have
+            {"2"}, // do
+            {"3"}, // say
+            {"4"}  // get
+    };
+
+    /**
      * Insert default verbs.
      * @param db
      */
     private void insertVerbs(SQLiteDatabase db) {
         ContentValues values = new ContentValues();
         final String DEFAULT_COLOR = "" + ContextCompat.getColor(context, R.color.colorBlack);
+        final String DEFAULT_SCORE = "0";
         for (int i = 0; i < verbs.length; i++) {
             values.put("_id", i);
-            values.put(VerbEntry.COLUMN_INFINITIVE, verbs[i][0]);
-            values.put(VerbEntry.COLUMN_SIMPLE_PAST, verbs[i][1]);
-            values.put(VerbEntry.COLUMN_PAST_PARTICIPLE, verbs[i][2]);
-            values.put(VerbEntry.COLUMN_PHONETIC_INFINITIVE, verbs[i][3]);
-            values.put(VerbEntry.COLUMN_PHONETIC_SIMPLE_PAST, verbs[i][4]);
-            values.put(VerbEntry.COLUMN_PHONETIC_PAST_PARTICIPLE, verbs[i][5]);
-            values.put(VerbEntry.COLUMN_SAMPLE_1, verbs[i][6]);
-            values.put(VerbEntry.COLUMN_SAMPLE_2, verbs[i][7]);
-            values.put(VerbEntry.COLUMN_SAMPLE_3, verbs[i][8]);
-            values.put(VerbEntry.COLUMN_COMMON, verbs[i][9]);
-            values.put(VerbEntry.COLUMN_REGULAR, verbs[i][10]);
+            values.put(VerbEntry.COLUMN_ID, verbs[i][0]);
+            values.put(VerbEntry.COLUMN_INFINITIVE, verbs[i][1]);
+            values.put(VerbEntry.COLUMN_SIMPLE_PAST, verbs[i][2]);
+            values.put(VerbEntry.COLUMN_PAST_PARTICIPLE, verbs[i][3]);
+            values.put(VerbEntry.COLUMN_PHONETIC_INFINITIVE, verbs[i][4]);
+            values.put(VerbEntry.COLUMN_PHONETIC_SIMPLE_PAST, verbs[i][5]);
+            values.put(VerbEntry.COLUMN_PHONETIC_PAST_PARTICIPLE, verbs[i][6]);
+            values.put(VerbEntry.COLUMN_SAMPLE_1, verbs[i][7]);
+            values.put(VerbEntry.COLUMN_SAMPLE_2, verbs[i][8]);
+            values.put(VerbEntry.COLUMN_SAMPLE_3, verbs[i][9]);
+            values.put(VerbEntry.COLUMN_COMMON, verbs[i][10]);
+            values.put(VerbEntry.COLUMN_REGULAR, verbs[i][11]);
             values.put(VerbEntry.COLUMN_COLOR, DEFAULT_COLOR);
-            values.put(VerbEntry.COLUMN_SCORE, verbs[i][12]);
-            values.put(VerbEntry.COLUMN_DEFINITION, verbs[i][13]);
-            values.put(VerbEntry.COLUMN_TRANSLATION_ES, verbs[i][14]);
-            values.put(VerbEntry.COLUMN_TRANSLATION_FR, verbs[i][15]);
-            values.put(VerbEntry.COLUMN_NOTES, verbs[i][16]);
-            db.insertWithOnConflict(VerbEntry.TABLE_NAME, null, values, CONFLICT_REPLACE );
+            values.put(VerbEntry.COLUMN_SCORE, DEFAULT_SCORE);
+            values.put(VerbEntry.COLUMN_DEFINITION, verbs[i][12]);
+            values.put(VerbEntry.COLUMN_TRANSLATION_ES, verbs[i][13]);
+            values.put(VerbEntry.COLUMN_TRANSLATION_FR, verbs[i][14]);
+            values.put(VerbEntry.COLUMN_NOTES, verbs[i][15]);
+            db.insertWithOnConflict(VerbEntry.VERBS_TBL, null, values, CONFLICT_REPLACE );
         }
     }
-
-
 
     // List of pre-loaded verbs.
     public static final String[][] verbs = {
             // TOP25
-            {"be", "was, were", "been", "/bi/", "/wəz/ /wə(r)/", "/biːn/",
-                "John is a man.",
-                "My birthday was last Thursday.",
-                "I haven't been there for several years.",
-                S_TOP_25, S_IRREGULAR, "0", "0",
+            {"0", "be", "was, were", "been", "/bi/", "/wəz/ /wə(r)/", "/biːn/",
+                "John is a man.", "My birthday was last Thursday.", "I haven't been there for several years.",
+                S_TOP_25, S_IRREGULAR,
                 "to exist; to take place, occur; an auxiliary verb",
                 "ser, estar", "être", ""},
-            {"have", "had", "had", "/hæv/", "/həd/", "/həd/",
-                "The Simpsons have three children.",
-                "The boy saw what a mistake he had made.",
-                "You have had a remarkable life.",
-                S_TOP_25, S_IRREGULAR, "0", "0",
+            {"1", "have", "had", "had", "/hæv/", "/həd/", "/həd/",
+                "The Simpsons have three children.", "The boy saw what a mistake he had made.", "You have had a remarkable life.",
+                S_TOP_25, S_IRREGULAR,
                 "to posses; to do; an auxiliary verb",
                 "tener, padecer", "avoir", ""},
-            {"do", "did", "done", "/du:/", "/dɪd/", "/dʌn/",
-                "I was trying to do some work.",
-                "I did not know Jamie had a knife.",
-                "You have done nothing all morning!",
-                S_TOP_25, S_IRREGULAR, "0", "0",
+            {"2", "do", "did", "done", "/du:/", "/dɪd/", "/dʌn/",
+                "I was trying to do some work.", "We did not know Jamie had a knife.", "You have done nothing all morning!",
+                S_TOP_25, S_IRREGULAR,
                 "to perform or carry out; an auxiliary verb",
                 "hacer", "faire", ""},
-            {"say", "said", "said", "/seɪ/", "/sed/", "/sed/",
+            {"3", "say", "said", "said", "/seɪ/", "/sed/", "/sed/",
                 "I like the way you say thank you.", "\"Let's do it,\" she finally said unceremoniously.", "Martha, will you say the Pledge of Allegiance?",
-                S_TOP_25, S_IRREGULAR, "0", "0",
+                S_TOP_25, S_IRREGULAR,
                 "utter words so as to convey information, an opinion, a feeling or intention, or an instruction.",
                 "decir", "dire", ""},
-            {"get", "got", "got, gotten", "/get/", "/gɒt/", "/gɒt/, /'gɒtn/",
+            {"4", "get", "got", "got, gotten", "/get/", "/gɒt/", "/gɒt/, /'gɒtn/",
                 "He gets very cross when you ask him personal questions.", "He's got two sisters and a brother.", "He's just gotten a new job.",
-                S_TOP_25, S_IRREGULAR, "0", "0",
+                S_TOP_25, S_IRREGULAR,
                 "come to have or hold (something); receive. succeed in attaining, achieving, or experiencing; obtain.", "obtener", "obtenir", ""},
-            {"make", "made", "made", "/meɪk/", "/meɪd/", "/meɪd/",
+            {"5", "make", "made", "made", "/meɪk/", "/meɪd/", "/meɪd/",
                 "They make a cute couple.", "I made a poem for her wedding.", "I don’t know what to make of it.",
-                S_TOP_25, S_REGULAR, "0", "0",
+                S_TOP_25, S_REGULAR,
                 "form (something) by putting parts together or combining substances; construct; create.",
                 "hacer", "faire", ""},
-            {"go", "went", "gone", "/gou/", "/went/", "/gɒn/",
-                "Peter goes to church on Sundays.", "He went out to the store.", "They had already gone to the show so we didn't go.",
-                S_TOP_25, S_IRREGULAR, "0", "0",
+            {"6", "go", "went", "gone", "/gou/", "/went/", "/gɒn/",
+                "Peter goes to church on Sundays.", "She went out to the store.", "They had already gone to the show so we didn't go.",
+                S_TOP_25, S_IRREGULAR,
                 "move from one place or point to another; travel.",
                 "ir", "aller", ""},
-            {"know", "knew", "known", "/nou/", "/nu:/", "/noun/",
+            {"7", "know", "knew", "known", "/nou/", "/nu:/", "/noun/",
                 "I know your mother, but I’ve never met your father.", "She knew of our plan.", "Bivalved crustaceans little known to non professionals.",
-                S_TOP_25, S_IRREGULAR, "0", "0",
+                S_TOP_25, S_IRREGULAR,
                 "be aware of through observation, inquiry, or information; be familiar or friendly with", "saber", "connaître", ""},
-            {"take", "took", "taken", "/teɪk/", "/tʊk/", "/'teɪkən/",
-                "He leaned forward to take her hand.", "He took ten gold pieces from his table and wrapped them in the little letter.", "It was a picture taken at the party and the focus was on Carmen and Alex.",
-                S_TOP_25, S_IRREGULAR, "0", "0",
+            {"8", "take", "took", "taken", "/teɪk/", "/tʊk/", "/'teɪkən/",
+                "She leaned forward to take her hand.", "He took ten gold pieces from his table and wrapped them in the little letter.", "It was a picture taken at the party and the focus was on Carmen and Alex.",
+                S_TOP_25, S_IRREGULAR,
                 "lay hold of (something) with one's hands; reach for and hold; carry or bring with one; convey", "tomar", "prendre", ""},
-            {"see", "saw", "seen", "/si:/", "/sɔ:/", "/si:n/",
+            {"9", "see", "saw", "seen", "/si:/", "/sɔ:/", "/si:n/",
                 "I can't see any other way to treat it.", "The wolf saw him.", "You should have seen Dad's face.",
-                S_TOP_25, S_IRREGULAR, "0", "0",
+                S_TOP_25, S_IRREGULAR,
                 "perceive with the eyes; discern visually; discern or deduce mentally after reflection or from information; understand", "ver", "voir", ""},
-            {"come", "came", "come", "/kʌm/", "/keɪm/", "/kʌm/",
+            {"10", "come", "came", "come", "/kʌm/", "/keɪm/", "/kʌm/",
                 "May we come in?", "Jessica came into the kitchen.", "\"The end of the world has come!\" cried some; and they ran about in the darkness.",
-                S_TOP_25, S_IRREGULAR, "0", "0",
+                S_TOP_25, S_IRREGULAR, "0",
                 "move or travel toward or into a place thought of as near or familiar to the speaker", "venir", "venir", ""},
-            {"think", "thought", "thought", "/θɪŋk/", "/θɔ:t/", "/θɔ:t/",
+            {"11", "think", "thought", "thought", "/θɪŋk/", "/θɔ:t/", "/θɔ:t/",
                 "He could not think of anything else.", "She thought that nothing would be the same again.", "I never thought I could do it.",
-                S_TOP_25, S_IRREGULAR, "0", "0",
+                S_TOP_25, S_IRREGULAR,
                 "have a particular opinion, belief, or idea about someone or something; direct one's mind toward someone or something; use one's mind actively to form connected ideas.",
                 "pensar", "pense", ""},
-            {"look", "looked", "looked", "/lʊk/", "/'lʊkt/", "/'lʊkt/",
+            {"12", "look", "looked", "looked", "/lʊk/", "/'lʊkt/", "/'lʊkt/",
                 "Do I look that bad?", "The boy looked around him with wondering eyes.", "Oh, I wish I had looked after my teeth.",
-                S_TOP_25, S_REGULAR, "0", "0",
+                S_TOP_25, S_REGULAR,
                 "direct one's gaze toward someone or something or in a specified direction",
                 "mirar", "regarder", ""},
-            {"want", "wanted", "wanted", "/'wɒnt/", "/'wɒntɪd/", "/'wɒntɪd/",
+            {"13", "want", "wanted", "wanted", "/'wɒnt/", "/'wɒntɪd/", "/'wɒntɪd/",
                 "I want an apple.", "He wanted the wisdom of the gods.", "You shall want for nothing while you are with me.",
-                S_TOP_25, S_REGULAR, "0", "0",
+                S_TOP_25, S_REGULAR,
                 "have a desire to possess or do (something); wish for; lack or be short of something desirable or essential",
                 "querer", "vouloir", ""},
-            {"give", "gave", "given", "/gɪv/", "/geɪv/", "/'gɪvən/",
+            {"14", "give", "gave", "given", "/gɪv/", "/geɪv/", "/'gɪvən/",
                 "I'm too close to my goal to give up now.", "They gave her water to drink.", "She hadn't been given that much consideration.",
-                S_TOP_25, S_IRREGULAR, "0", "0",
+                S_TOP_25, S_IRREGULAR,
                 "freely transfer the possession of (something) to (someone); hand over to",
                 "dar", "donner", ""},
-            {"use", "used", "used", "/'ju:z/", "/'ju:zd/", "/'ju:zd/",
+            {"15", "use", "used", "used", "/'ju:z/", "/'ju:zd/", "/'ju:zd/",
                 "I figured you could use the rest.", "She used the remote to shut the television off.", "You'll get used to it.",
-                S_TOP_25, S_REGULAR, "0", "0",
+                S_TOP_25, S_REGULAR,
                 "take, hold, or deploy (something) as a means of accomplishing a purpose or achieving a result; employ",
                 "utilizar", "utiliser", ""},
-            {"find", "found", "found", "/faɪnd/", "/faʊnd/", "/faʊnd/",
+            {"16", "find", "found", "found", "/faɪnd/", "/faʊnd/", "/faʊnd/",
                 "Water finds its own level.", "Vitamin B12 is found in dairy products.", "Uncle Henry says 'Eureka' means 'I have found it.'",
-                S_TOP_25, S_IRREGULAR, "0", "0",
+                S_TOP_25, S_IRREGULAR,
                 "discover or perceive by chance or unexpectedly; recognize or discover (something) to be present",
                 "encontrar", "trouver, découvrir", ""},
-            {"tell", "told", "told", "/tel/", "/tould/", "/tould/",
+            {"17", "tell", "told", "told", "/tel/", "/tould/", "/tould/",
                 "Boys, what did I tell you?", "The doctor hasn't told us yet.", "Men have told me that there is no riddle so cunning that you can not solve it.",
-                S_TOP_25, S_IRREGULAR, "0", "0",
+                S_TOP_25, S_IRREGULAR,
                 "communicate information, facts, or news to someone in spoken or written words",
                 "decir", "dire", ""},
-            {"ask", "asked", "asked", "/'ɑ:sk/", "/'ɑ:skt/", "/'ɑ:skt/",
+            {"18", "ask", "asked", "asked", "/'ɑ:sk/", "/'ɑ:skt/", "/'ɑ:skt/",
                 "Oh, I was going to ask you.", "\"Where's my milk?\" asked the kitten, looking up into Dorothy's face.", "Two months is all Kris asks, and I'm free.",
-                S_TOP_25, S_REGULAR, "0", "0",
+                S_TOP_25, S_REGULAR,
                 "say something in order to obtain an answer or some information; request (someone) to do or give something",
                 "pedir", "demander", ""},
-            {"work", "worked", "worked", "/'wɜ:k/", "/'wɜ:kt/", "/'wɜ:kt/",
+            {"19", "work", "worked", "worked", "/'wɜ:k/", "/'wɜ:kt/", "/'wɜ:kt/",
                 "He said it would work for a girl or a boy.", "A coloring book and crayons kept her busy while they worked and talked.", "We had worked hard on a presentation to a potential customer.",
-                S_TOP_25, S_REGULAR, "0", "0",
+                S_TOP_25, S_REGULAR,
                 "be engaged in physical or mental activity in order to achieve a purpose or result, especially in one's job; do work",
                 "trabajar", "travailler", ""},
-            {"seem", "seemed", "seemed", "/'si:m/", "/'si:md/", "/'si:md/",
+            {"20", "seem", "seemed", "seemed", "/'si:m/", "/'si:md/", "/'si:md/",
                 "It didn't seem like Christmas.", "Dawn seemed annoyed.", "For a long time it had seemed to me that life was about to begin.",
-                S_TOP_25, S_REGULAR, "0", "0",
+                S_TOP_25, S_REGULAR,
                 "give the impression or sensation of being something or having a particular quality",
                 "parecer", "sembler", ""},
-            {"feel", "felt", "felt", "/fi:l/", "/felt/", "/felt/",
+            {"21", "feel", "felt", "felt", "/fi:l/", "/felt/", "/felt/",
                 "I feel much better now.", "We felt a sense of excitement.", "It had felt very poorly for ages before he decided to try that new medicine.",
-                S_TOP_25, S_IRREGULAR, "0", "0",
+                S_TOP_25, S_IRREGULAR,
                 "be aware of (a person or object) through touching or being touched; experience (an emotion or sensation)",
                 "sentir", "ressentir", ""},
-            {"try", "tried", "tried", "/'traɪ/", "/'traɪd/", "/'traɪd/",
+            {"22", "try", "tried", "tried", "/'traɪ/", "/'traɪd/", "/'traɪd/",
                 "Try to stay out of the woods.", "He tried to regain his breath.", "She said you tried to call her.",
-                S_TOP_25, S_REGULAR, "0", "0",
+                S_TOP_25, S_REGULAR,
                 "make an attempt or effort to do something",
                 "intentar", "essayer", ""},
-            {"leave", "left", "left", "/li:v/", "/left/", "/left/",
+            {"23", "leave", "left", "left", "/li:v/", "/left/", "/left/",
                 "So the prisoners resolved to leave their prison at once.", "She left New York on June 6.", "All the sun's warmth left the air.",
-                S_TOP_25, S_IRREGULAR, "0", "0",
+                S_TOP_25, S_IRREGULAR,
                 "go away from",
                 "salir, dejar", "laisser", ""},
-            {"call", "called", "called", "/'kɔ:l/", "/'kɔ:ld/", "/'kɔ:ld/",
+            {"24", "call", "called", "called", "/'kɔ:l/", "/'kɔ:ld/", "/'kɔ:ld/",
                 "I suppose you could call it that.", "The doctor called today.", "I wish you had called me.",
-                S_TOP_25, S_REGULAR, "0", "0",
+                S_TOP_25, S_REGULAR,
                 "cry out to (someone) in order to summon them or attract their attention",
                 "llamar", "appeler", ""},
             // TOP50
-            {"become", "became", "become", "/bɪ 'kʌm/", "/bɪ 'keɪm/", "/bɪ 'kʌm/",
+            {"25", "become", "became", "become", "/bɪ 'kʌm/", "/bɪ 'keɪm/", "/bɪ 'kʌm/",
                 "It seems like you've become the resident veterinarian.", "Henry became king of England.", "Read in order to become wise.",
-                S_TOP_50, S_IRREGULAR, "0", "0",
+                S_TOP_50, S_IRREGULAR,
                 "begin to be; (of clothing) look good on or suit (someone)", "volverse", "devenir", ""},
-            {"begin", "began", "begun", "/bɪ 'gɪn/", "/bɪ 'gæn/", "/bɪ 'gʌn/",
+            {"26", "begin", "began", "begun", "/bɪ 'gɪn/", "/bɪ 'gæn/", "/bɪ 'gʌn/",
                 "The future begins now.", "They say life began when simple chemicals built up into more complex chemicals.", "Theorists have just begun to address these complex questions.",
-                S_TOP_50, S_IRREGULAR, "0", "0",
+                S_TOP_50, S_IRREGULAR,
                 "start; perform or undergo the first part of (an action or activity)", "empezar", "commencer", ""},
     };
 }

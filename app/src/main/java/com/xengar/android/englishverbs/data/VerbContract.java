@@ -36,7 +36,8 @@ public final class VerbContract {
     public static final String PATH_VERBS = "verbs";
     public static final String PATH_REGULAR_VERBS = "irregular_verbs";
     public static final String PATH_IRREGULAR_VERBS = "regular_verbs";
-
+    public static final String PATH_FAVORITES = "favorites";
+    public static final String PATH_FAVORITE_VERBS = "favorite_verbs";
 
     /**
      * Inner class that defines constant values for the verbs database table.
@@ -50,19 +51,30 @@ public final class VerbContract {
         public static final Uri CONTENT_IRREGULARS_URI
                 = Uri.withAppendedPath(BASE_CONTENT_URI, PATH_IRREGULAR_VERBS);
 
+        public static final Uri CONTENT_FAVORITES_URI = Uri.withAppendedPath(BASE_CONTENT_URI,
+                PATH_FAVORITES);
+        public static final Uri CONTENT_FAVORITE_VERBS_URI = Uri.withAppendedPath(BASE_CONTENT_URI,
+                PATH_FAVORITE_VERBS);
+
         /** The MIME type of the {@link #CONTENT_URI} for a list of verbs. */
-        public static final String CONTENT_LIST_TYPE =
+        public static final String CONTENT_LIST_TYPE_VERB =
                 ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_VERBS;
+        public static final String CONTENT_LIST_TYPE_FAVORITE =
+                ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_FAVORITES;
 
         /** The MIME type of the {@link #CONTENT_URI} for a single verb. */
-        public static final String CONTENT_ITEM_TYPE =
+        public static final String CONTENT_ITEM_TYPE_VERB =
                 ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_VERBS;
+        public static final String CONTENT_ITEM_TYPE_FAVORITE =
+                ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_FAVORITES;
 
         /** Name of database table for verbs */
-        public final static String TABLE_NAME = "VERBS_TBL";
+        public final static String VERBS_TBL = "VERBS_TBL";
+        public final static String FAVORITES_TBL = "FAVORITES_TBL";
 
         /** Unique ID number for the verb (only for use in the database table). - Type: INTEGER */
         public final static String _ID = BaseColumns._ID;
+        public final static String COLUMN_ID ="ID";
 
         /** Verb in infinitive form. - Type: TEXT  */
         public final static String COLUMN_INFINITIVE ="INFINITIVE";

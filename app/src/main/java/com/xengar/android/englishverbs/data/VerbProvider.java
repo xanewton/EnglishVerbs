@@ -27,6 +27,7 @@ import android.util.Log;
 
 import com.xengar.android.englishverbs.data.VerbContract.VerbEntry;
 
+import static com.xengar.android.englishverbs.data.VerbContract.VerbEntry.COLUMN_ID;
 import static com.xengar.android.englishverbs.data.VerbContract.VerbEntry.COLUMN_REGULAR;
 import static com.xengar.android.englishverbs.data.VerbContract.VerbEntry.IRREGULAR;
 import static com.xengar.android.englishverbs.data.VerbContract.VerbEntry.REGULAR;
@@ -49,6 +50,12 @@ public class VerbProvider extends ContentProvider{
 
     private static final int VERBS_REGULAR = 102;
     private static final int VERBS_IRREGULAR = 103;
+    private static final int FAVORITE_VERBS = 104;
+
+    private static final int FAVORITES = 200;
+    private static final int FAVORITE_ID = 201;
+
+
 
     /**
      * UriMatcher object to match a content URI to a corresponding code.
@@ -69,6 +76,9 @@ public class VerbProvider extends ContentProvider{
         sUriMatcher.addURI(VerbContract.CONTENT_AUTHORITY, VerbContract.PATH_VERBS, VERBS);
         sUriMatcher.addURI(VerbContract.CONTENT_AUTHORITY, VerbContract.PATH_REGULAR_VERBS, VERBS_REGULAR);
         sUriMatcher.addURI(VerbContract.CONTENT_AUTHORITY, VerbContract.PATH_IRREGULAR_VERBS, VERBS_IRREGULAR);
+        sUriMatcher.addURI(VerbContract.CONTENT_AUTHORITY, VerbContract.PATH_FAVORITE_VERBS, FAVORITE_VERBS);
+
+        sUriMatcher.addURI(VerbContract.CONTENT_AUTHORITY, VerbContract.PATH_FAVORITES, FAVORITES);
 
         // The content URI of the form "content://com.xengar.android.englishverbs/verbs/#" will map
         // to the integer code {@link #VERB_ID}. This URI is used to provide access to ONE single
@@ -78,6 +88,7 @@ public class VerbProvider extends ContentProvider{
         // For example, "content://com.xengar.android.englishverbs/verbs/3" matches, but
         // "content://com.xengar.android.englishverbs/verbs" (without a number at the end) doesn't.
         sUriMatcher.addURI(VerbContract.CONTENT_AUTHORITY, VerbContract.PATH_VERBS + "/#", VERB_ID);
+        sUriMatcher.addURI(VerbContract.CONTENT_AUTHORITY, VerbContract.PATH_FAVORITES + "/#", FAVORITE_ID);
     }
 
     /** Database helper object */
@@ -107,25 +118,37 @@ public class VerbProvider extends ContentProvider{
                 // For the VERBS code, query the verbs table directly with the given
                 // projection, selection, selection arguments, and sort order. The cursor
                 // could contain multiple rows of the verbs table.
-                cursor = database.query(VerbEntry.TABLE_NAME, projection, selection, selectionArgs,
+                cursor = database.query(VerbEntry.VERBS_TBL, projection, selection, selectionArgs,
+                        null, null, sortOrder);
+                break;
+
+            case FAVORITES:
+                cursor = database.query(VerbEntry.FAVORITES_TBL, projection, selection, selectionArgs,
                         null, null, sortOrder);
                 break;
 
             case VERB_ID:
                 // For the VERB_ID code, extract out the ID from the URI.
                 // For an example URI such as "content://com.xengar.android.englishverbs/verbs/3",
-                // the selection will be "_id=?" and the selection argument will be a
+                // the selection will be "COLUMN_ID=?" and the selection argument will be a
                 // String array containing the actual ID of 3 in this case.
                 //
                 // For every "?" in the selection, we need to have an element in the selection
                 // arguments that will fill in the "?". Since we have 1 question mark in the
                 // selection, we have 1 String in the selection arguments' String array.
-                selection = VerbEntry._ID + "=?";
+                selection = VerbEntry.COLUMN_ID + "=?";
                 selectionArgs = new String[] { String.valueOf(ContentUris.parseId(uri)) };
 
-                // This will perform a query on the verbs table where the _id equals 3 to return a
+                // This will perform a query on the verbs table where the COLUMN_ID equals 3 to return a
                 // Cursor containing that row of the table.
-                cursor = database.query(VerbEntry.TABLE_NAME, projection, selection, selectionArgs,
+                cursor = database.query(VerbEntry.VERBS_TBL, projection, selection, selectionArgs,
+                        null, null, sortOrder);
+                break;
+
+            case FAVORITE_ID:
+                selection = VerbEntry.COLUMN_ID + "=?";
+                selectionArgs = new String[] { String.valueOf(ContentUris.parseId(uri)) };
+                cursor = database.query(VerbEntry.FAVORITES_TBL, projection, selection, selectionArgs,
                         null, null, sortOrder);
                 break;
 
@@ -136,7 +159,7 @@ public class VerbProvider extends ContentProvider{
                     }
                     columns += projection[i];
                 }
-                cursor = database.rawQuery("SELECT " + columns + " FROM " + VerbEntry.TABLE_NAME
+                cursor = database.rawQuery("SELECT " + columns + " FROM " + VerbEntry.VERBS_TBL
                         + " WHERE " + COLUMN_REGULAR + " =  '" + REGULAR + "'", null);
                 break;
 
@@ -147,8 +170,20 @@ public class VerbProvider extends ContentProvider{
                     }
                     columns += projection[i];
                 }
-                cursor = database.rawQuery("SELECT " + columns + " FROM " + VerbEntry.TABLE_NAME
+                cursor = database.rawQuery("SELECT " + columns + " FROM " + VerbEntry.VERBS_TBL
                         + " WHERE " + COLUMN_REGULAR + " =  '" + IRREGULAR + "'", null);
+                break;
+
+            case FAVORITE_VERBS:
+                for (int i = 0; i < projection.length; i++) {
+                    if (i > 0){
+                        columns += ",";
+                    }
+                    columns += projection[i];
+                }
+                cursor = database.rawQuery("SELECT " + columns + " FROM " + VerbEntry.VERBS_TBL
+                        + " WHERE " + COLUMN_ID + " in "
+                        + " (SELECT " + COLUMN_ID + " FROM " + VerbEntry.FAVORITES_TBL + ")", null);
                 break;
 
             default:
@@ -172,9 +207,14 @@ public class VerbProvider extends ContentProvider{
             case VERBS:
             case VERBS_REGULAR:
             case VERBS_IRREGULAR:
-                return VerbEntry.CONTENT_LIST_TYPE;
+            case FAVORITE_VERBS:
+                return VerbEntry.CONTENT_LIST_TYPE_VERB;
             case VERB_ID:
-                return VerbEntry.CONTENT_ITEM_TYPE;
+                return VerbEntry.CONTENT_ITEM_TYPE_VERB;
+            case FAVORITES:
+                return VerbEntry.CONTENT_LIST_TYPE_FAVORITE;
+            case FAVORITE_ID:
+                return VerbEntry.CONTENT_ITEM_TYPE_FAVORITE;
             default:
                 throw new IllegalStateException("Unknown URI " + uri + " with match " + match);
         }
@@ -187,6 +227,8 @@ public class VerbProvider extends ContentProvider{
         switch (match) {
             case VERBS:
                 return insertVerb(uri, contentValues);
+            case FAVORITES:
+                return insertFavorite(uri, contentValues);
             default:
                 throw new IllegalArgumentException("Insertion is not supported for " + uri);
         }
@@ -204,13 +246,21 @@ public class VerbProvider extends ContentProvider{
         switch (match) {
             case VERBS:
                 // Delete all rows that match the selection and selection args
-                rowsDeleted = database.delete(VerbEntry.TABLE_NAME, selection, selectionArgs);
+                rowsDeleted = database.delete(VerbEntry.VERBS_TBL, selection, selectionArgs);
                 break;
             case VERB_ID:
                 // Delete a single row given by the ID in the URI
-                selection = VerbEntry._ID + "=?";
+                selection = VerbEntry.COLUMN_ID + "=?";
                 selectionArgs = new String[] { String.valueOf(ContentUris.parseId(uri)) };
-                rowsDeleted = database.delete(VerbEntry.TABLE_NAME, selection, selectionArgs);
+                rowsDeleted = database.delete(VerbEntry.VERBS_TBL, selection, selectionArgs);
+                break;
+            case FAVORITES:
+                rowsDeleted = database.delete(VerbEntry.FAVORITES_TBL, selection, selectionArgs);
+                break;
+            case FAVORITE_ID:
+                selection = VerbEntry.COLUMN_ID + "=?";
+                selectionArgs = new String[] { String.valueOf(ContentUris.parseId(uri)) };
+                rowsDeleted = database.delete(VerbEntry.FAVORITES_TBL, selection, selectionArgs);
                 break;
             default:
                 throw new IllegalArgumentException("Deletion is not supported for " + uri);
@@ -238,7 +288,7 @@ public class VerbProvider extends ContentProvider{
                 // For the VERB_ID code, extract out the ID from the URI,
                 // so we know which row to update. Selection will be "_id=?" and selection
                 // arguments will be a String array containing the actual ID.
-                selection = VerbEntry._ID + "=?";
+                selection = VerbEntry.COLUMN_ID + "=?";
                 selectionArgs = new String[] { String.valueOf(ContentUris.parseId(uri)) };
                 return updateVerb(uri, contentValues, selection, selectionArgs);
             default:
@@ -301,7 +351,7 @@ public class VerbProvider extends ContentProvider{
         SQLiteDatabase database = mDbHelper.getWritableDatabase();
 
         // Insert the new verb with the given values
-        long id = database.insert(VerbEntry.TABLE_NAME, null, values);
+        long id = database.insert(VerbEntry.VERBS_TBL, null, values);
         if (id == -1) {
             if (LOG) {
                 Log.e(TAG, "Failed to insert row for " + uri);
@@ -309,7 +359,34 @@ public class VerbProvider extends ContentProvider{
             return null;
         }
 
-        // Notify all listeners that the data has changed for the pet content URI
+        // Notify all listeners that the data has changed for the verb content URI
+        getContext().getContentResolver().notifyChange(uri, null);
+
+        // Return the new URI with the ID (of the newly inserted row) appended at the end
+        return ContentUris.withAppendedId(uri, id);
+    }
+
+    /**
+     * Insert a favorite into the database with the given content values. Return the new content URI
+     * for that specific row in the database.
+     */
+    private Uri insertFavorite(Uri uri, ContentValues values) {
+        // Check the values
+        checkNull(values.getAsString(VerbEntry.COLUMN_ID), "Favorite requires verb id");
+
+        // Get writable database
+        SQLiteDatabase database = mDbHelper.getWritableDatabase();
+
+        // Insert the new verb with the given values
+        long id = database.insert(VerbEntry.FAVORITES_TBL, null, values);
+        if (id == -1) {
+            if (LOG) {
+                Log.e(TAG, "Failed to insert row for " + uri);
+            }
+            return null;
+        }
+
+        // Notify all listeners that the data has changed for the favorite content URI
         getContext().getContentResolver().notifyChange(uri, null);
 
         // Return the new URI with the ID (of the newly inserted row) appended at the end
@@ -374,7 +451,7 @@ public class VerbProvider extends ContentProvider{
         SQLiteDatabase database = mDbHelper.getWritableDatabase();
 
         // Perform the update on the database and get the number of rows affected
-        int rowsUpdated = database.update(VerbEntry.TABLE_NAME, values, selection, selectionArgs);
+        int rowsUpdated = database.update(VerbEntry.VERBS_TBL, values, selection, selectionArgs);
 
         // If 1 or more rows were updated, then notify all listeners that the data at the
         // given URI has changed

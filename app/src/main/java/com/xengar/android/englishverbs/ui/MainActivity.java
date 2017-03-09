@@ -43,6 +43,7 @@ import com.xengar.android.englishverbs.utils.ActivityUtils;
 import static com.xengar.android.englishverbs.utils.Constants.BOTH;
 import static com.xengar.android.englishverbs.utils.Constants.CARD;
 import static com.xengar.android.englishverbs.utils.Constants.CURRENT_PAGE;
+import static com.xengar.android.englishverbs.utils.Constants.FAVORITES;
 import static com.xengar.android.englishverbs.utils.Constants.IRREGULAR;
 import static com.xengar.android.englishverbs.utils.Constants.ITEM_TYPE;
 import static com.xengar.android.englishverbs.utils.Constants.LAST_ACTIVITY;
@@ -62,6 +63,7 @@ public class MainActivity extends AppCompatActivity
     private static final String TAG = MainActivity.class.getSimpleName();
     private UniversalFragment verbsFragment;
     private UniversalFragment cardsFragment;
+    private UniversalFragment favoritesFragment;
     private FrameLayout fragmentLayout;
 
     final String VERB_TYPES[] = {REGULAR, IRREGULAR, BOTH};
@@ -103,6 +105,7 @@ public class MainActivity extends AppCompatActivity
         fragmentLayout = (FrameLayout) findViewById(R.id.fragment_container);
         verbsFragment = createUniversalFragment(BOTH, LIST);
         cardsFragment = createUniversalFragment(BOTH, CARD);
+        favoritesFragment = createUniversalFragment(FAVORITES, LIST);
         showPage(page);
         assignCheckedItem(page);
     }
@@ -232,7 +235,7 @@ public class MainActivity extends AppCompatActivity
                 page = PAGE_FAVORITES;
                 getSupportActionBar().setTitle(R.string.menu_option_favorites);
                 ActivityUtils.saveStringToPreferences(this, CURRENT_PAGE, PAGE_FAVORITES);
-                //launchFragment(PAGE_FAVORITES);
+                launchFragment(PAGE_FAVORITES);
                 break;
             case R.id.nav_settings:
                 ActivityUtils.launchSettingsActivity(getApplicationContext());
@@ -265,11 +268,11 @@ public class MainActivity extends AppCompatActivity
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
                 break;
-            /*case PAGE_FAVORITES:
-                fragmentTransaction.replace(R.id.fragment_container, verbsFragment);
+            case PAGE_FAVORITES:
+                fragmentTransaction.replace(R.id.fragment_container, favoritesFragment);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
-                break;*/
+                break;
         }
     }
 
@@ -289,11 +292,11 @@ public class MainActivity extends AppCompatActivity
                 ActivityUtils.saveStringToPreferences(this, CURRENT_PAGE, PAGE_CARDS);
                 launchFragment(PAGE_CARDS);
                 break;
-            /*case PAGE_FAVORITES:
+            case PAGE_FAVORITES:
                 getSupportActionBar().setTitle(R.string.menu_option_favorites);
                 ActivityUtils.saveStringToPreferences(this, CURRENT_PAGE, PAGE_FAVORITES);
                 launchFragment(PAGE_FAVORITES);
-                break;*/
+                break;
         }
     }
 
