@@ -20,9 +20,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+import android.speech.tts.TextToSpeech;
 import android.text.Html;
 import android.text.Spanned;
 import android.view.View;
@@ -116,7 +118,7 @@ public class ActivityUtils {
         context.startActivity(intent);
     }
 
-    public static void lauchDetailsActivity(final Context context, final long id, final String verb) {
+    public static void launchDetailsActivity(final Context context, final long id, final String verb) {
         Intent intent = new Intent(context, DetailsActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
@@ -218,6 +220,18 @@ public class ActivityUtils {
             case SPANISH:
                 textView.setText(verb.getTranslationES());
                 break;
+        }
+    }
+
+    /**
+     * Text we want to speak.
+     * @param text String
+     */
+    public static void speak(TextToSpeech tts, String text){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, null);
+        }else{
+            tts.speak(text, TextToSpeech.QUEUE_FLUSH, null);
         }
     }
 }

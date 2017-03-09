@@ -22,7 +22,6 @@ import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Loader;
 import android.database.Cursor;
-import android.os.Build;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.support.design.widget.FloatingActionButton;
@@ -360,37 +359,21 @@ public class DetailsActivity extends AppCompatActivity implements
     @Override
     public void onClick(View view) {
         // Play the sounds
-        final int DURATION = 1000;
         switch(view.getId()){
             case R.id.play_infinitive:
-                speak(verb.getInfinitive());
-                //Snackbar.make(view, "infinitive", DURATION).setAction("Action", null).show();
+                ActivityUtils.speak(tts, verb.getInfinitive());
                 Toast.makeText(getApplicationContext(),verb.getInfinitive(),Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.play_simple_past:
-                speak(verb.getSimplePast());
-                //Snackbar.make(view, "past", DURATION).setAction("Action", null).show();
+                ActivityUtils.speak(tts, verb.getSimplePast());
                 Toast.makeText(getApplicationContext(),verb.getSimplePast(),Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.play_past_participle:
-                speak(verb.getPastParticiple());
-                //Snackbar.make(view, "past part", DURATION).setAction("Action", null).show();
+                ActivityUtils.speak(tts, verb.getPastParticiple());
                 Toast.makeText(getApplicationContext(),verb.getPastParticiple(),Toast.LENGTH_SHORT).show();
                 break;
-        }
-    }
-
-    /**
-     * Text we want to speak
-     * @param text String
-     */
-    private void speak(String text){
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, null);
-        }else{
-            tts.speak(text, TextToSpeech.QUEUE_FLUSH, null);
         }
     }
 }

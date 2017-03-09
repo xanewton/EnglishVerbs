@@ -41,9 +41,12 @@ import com.xengar.android.englishverbs.data.VerbContract.VerbEntry;
 import com.xengar.android.englishverbs.utils.ActivityUtils;
 
 import static com.xengar.android.englishverbs.utils.Constants.BOTH;
+import static com.xengar.android.englishverbs.utils.Constants.CARD;
 import static com.xengar.android.englishverbs.utils.Constants.CURRENT_PAGE;
 import static com.xengar.android.englishverbs.utils.Constants.IRREGULAR;
+import static com.xengar.android.englishverbs.utils.Constants.ITEM_TYPE;
 import static com.xengar.android.englishverbs.utils.Constants.LAST_ACTIVITY;
+import static com.xengar.android.englishverbs.utils.Constants.LIST;
 import static com.xengar.android.englishverbs.utils.Constants.LOG;
 import static com.xengar.android.englishverbs.utils.Constants.MAIN_ACTIVITY;
 import static com.xengar.android.englishverbs.utils.Constants.PAGE_CARDS;
@@ -57,14 +60,16 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
-    private UniversalFragment universalFragment;
-    //private RegularFragment regularFragment;
-    //private IrregularFragment irregularFragment;
+    private UniversalFragment verbsFragment;
+    private UniversalFragment cardsFragment;
     private FrameLayout fragmentLayout;
 
     final String VERB_TYPES[] = {REGULAR, IRREGULAR, BOTH};
     private final int[] verbSelection = {2};
     private final String[] verbType = {VERB_TYPES[verbSelection[0]]}; // current verb type list in screen
+    final String ITEM_TYPES[] = {LIST, CARD};
+    private final String[] itemType = {ITEM_TYPES[0]};
+    private String page = PAGE_VERBS; // Current page
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,10 +98,11 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
 
         SharedPreferences prefs = getSharedPreferences(SHARED_PREF_NAME, 0);
-        String page = prefs.getString(CURRENT_PAGE, PAGE_VERBS);
+        page = prefs.getString(CURRENT_PAGE, PAGE_VERBS);
 
         fragmentLayout = (FrameLayout) findViewById(R.id.fragment_container);
-        universalFragment = createUniversalFragment(BOTH);
+        verbsFragment = createUniversalFragment(BOTH, LIST);
+        cardsFragment = createUniversalFragment(BOTH, CARD);
         showPage(page);
         assignCheckedItem(page);
     }
@@ -140,10 +146,17 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    private UniversalFragment createUniversalFragment(String verbsType) {
+    /**
+     * Creates a Fragment.
+     * @param verbsType Type of verbs to display REGULAR, IRREGULAR, BOTH
+     * @param itemType Display mode LIST, CARD
+     * @return fragment
+     */
+    private UniversalFragment createUniversalFragment(String verbsType, String itemType) {
         UniversalFragment fragment = new UniversalFragment();
         Bundle bundle = new Bundle();
         bundle.putString(VERB_TYPE, verbsType);
+        bundle.putString(ITEM_TYPE, itemType);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -168,15 +181,22 @@ public class MainActivity extends AppCompatActivity
                 });
         builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                // TODO: Use a single fragment
                 // Change the selection.
                 switch (verbType[0]){
                     case REGULAR:
                     case IRREGULAR:
                     case BOTH:
-                        if (!universalFragment.getVerbsType().contentEquals(verbType[0])) {
-                            universalFragment = createUniversalFragment(verbType[0]);
-                            launchFragment(PAGE_VERBS);
+                        if (!verbsFragment.getVerbsType().contentEquals(verbType[0])) {
+                            verbsFragment = createUniversalFragment(verbType[0], LIST);
+                            if (page.contentEquals(PAGE_VERBS)) {
+                                launchFragment(PAGE_VERBS);
+                            }
+                        }
+                        if (!cardsFragment.getVerbsType().contentEquals(verbType[0])) {
+                            cardsFragment = createUniversalFragment(verbType[0], CARD);
+                            if (page.contentEquals(PAGE_CARDS)) {
+                                launchFragment(PAGE_CARDS);
+                            }
                         }
                         break;
 
@@ -197,16 +217,19 @@ public class MainActivity extends AppCompatActivity
 
         switch (id){
             case R.id.nav_verbs:
+                page = PAGE_VERBS;
                 getSupportActionBar().setTitle(R.string.menu_option_verbs);
                 ActivityUtils.saveStringToPreferences(this, CURRENT_PAGE, PAGE_VERBS);
                 launchFragment(PAGE_VERBS);
                 break;
             case R.id.nav_cards:
+                page = PAGE_CARDS;
                 getSupportActionBar().setTitle(R.string.menu_option_cards);
                 ActivityUtils.saveStringToPreferences(this, CURRENT_PAGE, PAGE_CARDS);
-                //launchFragment(PAGE_CARDS);
+                launchFragment(PAGE_CARDS);
                 break;
             case R.id.nav_favorites:
+                page = PAGE_FAVORITES;
                 getSupportActionBar().setTitle(R.string.menu_option_favorites);
                 ActivityUtils.saveStringToPreferences(this, CURRENT_PAGE, PAGE_FAVORITES);
                 //launchFragment(PAGE_FAVORITES);
@@ -233,17 +256,17 @@ public class MainActivity extends AppCompatActivity
                 = getSupportFragmentManager().beginTransaction();
         switch (category) {
             case PAGE_VERBS:
-                fragmentTransaction.replace(R.id.fragment_container, universalFragment);
+                fragmentTransaction.replace(R.id.fragment_container, verbsFragment);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
                 break;
-            /*case PAGE_CARDS:
+            case PAGE_CARDS:
                 fragmentTransaction.replace(R.id.fragment_container, cardsFragment);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
-                break;*/
+                break;
             /*case PAGE_FAVORITES:
-                fragmentTransaction.replace(R.id.fragment_container, universalFragment);
+                fragmentTransaction.replace(R.id.fragment_container, verbsFragment);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
                 break;*/
@@ -261,11 +284,11 @@ public class MainActivity extends AppCompatActivity
                 ActivityUtils.saveStringToPreferences(this, CURRENT_PAGE, PAGE_VERBS);
                 launchFragment(PAGE_VERBS);
                 break;
-            /*case PAGE_CARDS:
+            case PAGE_CARDS:
                 getSupportActionBar().setTitle(R.string.menu_option_verbs);
                 ActivityUtils.saveStringToPreferences(this, CURRENT_PAGE, PAGE_CARDS);
                 launchFragment(PAGE_CARDS);
-                break;*/
+                break;
             /*case PAGE_FAVORITES:
                 getSupportActionBar().setTitle(R.string.menu_option_favorites);
                 ActivityUtils.saveStringToPreferences(this, CURRENT_PAGE, PAGE_FAVORITES);

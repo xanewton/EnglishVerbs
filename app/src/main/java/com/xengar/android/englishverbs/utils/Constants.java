@@ -41,6 +41,10 @@ public final class Constants {
     public static final String IRREGULAR = "irregular";
     public static final String BOTH = "both (regular, irregular)";
 
+    public static final String ITEM_TYPE = "item_type";
+    public static final String CARD = "card";
+    public static final String LIST = "list";
+
     public static final String CURRENT_PAGE = "current_page";
     public static final String PAGE_VERBS = "Verbs";
     public static final String PAGE_CARDS = "Cards";

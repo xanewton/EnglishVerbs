@@ -16,11 +16,14 @@
 package com.xengar.android.englishverbs.adapters;
 
 import android.content.Context;
+import android.speech.tts.TextToSpeech;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.xengar.android.englishverbs.R;
 import com.xengar.android.englishverbs.data.Verb;
@@ -29,28 +32,37 @@ import com.xengar.android.englishverbs.utils.ActivityUtils;
 import java.util.List;
 import java.util.Locale;
 
+import static com.xengar.android.englishverbs.utils.Constants.CARD;
+import static com.xengar.android.englishverbs.utils.Constants.LIST;
+
 /**
  * VerbAdapter
  */
 public class VerbAdapter extends RecyclerView.Adapter<VerbAdapter.VerbHolder> {
 
     private final List<Verb> mVerbs;
+    private String mLayoutType = LIST;
+    private TextToSpeech tts;
 
-    public VerbAdapter(List<Verb> verbs) {
+    public VerbAdapter(final List<Verb> verbs, final String layoutType, final TextToSpeech tts) {
         mVerbs = verbs;
+        mLayoutType = layoutType;
+        this.tts = tts;
     }
 
     @Override
     public VerbHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View v = inflater.inflate(R.layout.verbs_list_item, parent, false);
+        View v = inflater.inflate(
+                (mLayoutType.contentEquals(LIST))? R.layout.verbs_list_item
+                        : R.layout.verbs_card_item, parent, false);
         return new VerbHolder(v);
     }
 
     @Override
     public void onBindViewHolder(VerbHolder holder, int position) {
         Verb movie = mVerbs.get(position);
-        holder.bindMovie(movie);
+        holder.bindVerb(movie);
     }
 
     @Override
@@ -66,44 +78,78 @@ public class VerbAdapter extends RecyclerView.Adapter<VerbAdapter.VerbHolder> {
 
         private final Context mContext;
         private Verb mVerb;
-        final TextView infinitiveTextView;
-        final TextView simplePastTextView;
-        final TextView pastParticipleTextView;
-        final TextView definitionTextView;
-        final TextView typeTextView;
-        final TextView scoreTextView;
-        final TextView translationView;
+        private final TextView infinitive, simplePast, pastParticiple;
+        private final TextView definition;
+        private final TextView type;
+        private final TextView score;
+        private final TextView translation;
+        private TextView pInfinitive, pSimplePast, pPastParticiple;
+        private TextView sample1, sample2, sample3;
 
 
         public VerbHolder(View view) {
             super(view);
-            infinitiveTextView = (TextView) view.findViewById(R.id.infinitive);
-            simplePastTextView = (TextView) view.findViewById(R.id.simple_past);
-            pastParticipleTextView = (TextView) view.findViewById(R.id.past_participle);
-            definitionTextView = (TextView) view.findViewById(R.id.definition);
-            typeTextView = (TextView) view.findViewById(R.id.type);
-            scoreTextView = (TextView) view.findViewById(R.id.score);
-            translationView = (TextView) view.findViewById(R.id.translation);
+            infinitive = (TextView) view.findViewById(R.id.infinitive);
+            simplePast = (TextView) view.findViewById(R.id.simple_past);
+            pastParticiple = (TextView) view.findViewById(R.id.past_participle);
+            definition = (TextView) view.findViewById(R.id.definition);
+            type = (TextView) view.findViewById(R.id.type);
+            score = (TextView) view.findViewById(R.id.score);
+            translation = (TextView) view.findViewById(R.id.translation);
+
+            // Card items
+            pInfinitive = (TextView) view.findViewById(R.id.phonetic_infinitive);
+            pSimplePast = (TextView) view.findViewById(R.id.phonetic_simple_past);
+            pPastParticiple = (TextView) view.findViewById(R.id.phonetic_past_participle);
+            sample1 = (TextView) view.findViewById(R.id.sample1);
+            sample2 = (TextView) view.findViewById(R.id.sample2);
+            sample3 = (TextView) view.findViewById(R.id.sample3);
+            // define click listeners
+            LinearLayout header = (LinearLayout) view.findViewById(R.id.play_infinitive);
+            if (header != null) {
+                header.setOnClickListener(this);
+            }
+            header = (LinearLayout) view.findViewById(R.id.play_simple_past);
+            if (header != null) {
+                header.setOnClickListener(this);
+            }
+            header = (LinearLayout) view.findViewById(R.id.play_past_participle);
+            if (header != null) {
+                header.setOnClickListener(this);
+            }
+
             mContext = view.getContext();
             view.setOnClickListener(this);
         }
 
-        void bindMovie(Verb verb) {
+        void bindVerb(Verb verb) {
             mVerb = verb;
             // Set values
-            infinitiveTextView.setText(verb.getInfinitive());
-            simplePastTextView.setText(verb.getSimplePast());
-            pastParticipleTextView.setText(verb.getPastParticiple());
-            infinitiveTextView.setTextColor(verb.getColor());
-            simplePastTextView.setTextColor(verb.getColor());
-            pastParticipleTextView.setTextColor(verb.getColor());
-            definitionTextView.setText(verb.getDefinition());
+            infinitive.setText(verb.getInfinitive());
+            simplePast.setText(verb.getSimplePast());
+            pastParticiple.setText(verb.getPastParticiple());
+            infinitive.setTextColor(verb.getColor());
+            simplePast.setTextColor(verb.getColor());
+            pastParticiple.setTextColor(verb.getColor());
+            definition.setText(verb.getDefinition());
             if(!ActivityUtils.getPreferenceShowDefinitions(mContext)) {
-                definitionTextView.setVisibility(View.GONE);
+                definition.setVisibility(View.GONE);
             }
-            typeTextView.setText((verb.getRegular()  == 0)? "R" : "I");
-            scoreTextView.setText(String.format(Locale.ENGLISH, "%d", verb.getScore()));
-            ActivityUtils.setTranslation(mContext, translationView, verb);
+
+            if (mLayoutType.contentEquals(LIST)) {
+                type.setText((verb.getRegular() == 0) ? "R" : "I");
+                score.setText(String.format(Locale.ENGLISH, "%d", verb.getScore()));
+            } else if(mLayoutType.contentEquals(CARD)) {
+                pInfinitive.setText(verb.getPhoneticInfinitive());
+                pSimplePast.setText(verb.getPhoneticSimplePast());
+                pPastParticiple.setText(verb.getPhoneticPastParticiple());
+                sample1.setText(verb.getSample1());
+                sample2.setText(verb.getSample2());
+                sample3.setText(verb.getSample3());
+            }
+            ActivityUtils.setTranslation(mContext, translation, verb);
+
+            // TODO: Logic for card
         }
 
         // Handles the item click.
@@ -111,10 +157,30 @@ public class VerbAdapter extends RecyclerView.Adapter<VerbAdapter.VerbHolder> {
         public void onClick(View view) {
             int position = getAdapterPosition(); // gets item position
             // Check if an item was deleted, but the user clicked it before the UI removed it
-            if (position != RecyclerView.NO_POSITION) {
-                // TODO: Change id into something bigger, like string
-                //ActivityUtils.launchEditorActivity(mContext, mVerb.getId());
-                ActivityUtils.lauchDetailsActivity(mContext, mVerb.getId(), mVerb.getInfinitive());
+            if (position == RecyclerView.NO_POSITION) {
+                return;
+            }
+
+            // Play the sounds
+            switch(view.getId()){
+                case R.id.play_infinitive:
+                    ActivityUtils.speak(tts, mVerb.getInfinitive());
+                    Toast.makeText(mContext, mVerb.getInfinitive(),Toast.LENGTH_SHORT).show();
+                    break;
+
+                case R.id.play_simple_past:
+                    ActivityUtils.speak(tts, mVerb.getSimplePast());
+                    Toast.makeText(mContext, mVerb.getSimplePast(),Toast.LENGTH_SHORT).show();
+                    break;
+
+                case R.id.play_past_participle:
+                    ActivityUtils.speak(tts, mVerb.getPastParticiple());
+                    Toast.makeText(mContext, mVerb.getPastParticiple(),Toast.LENGTH_SHORT).show();
+                    break;
+
+                default:
+                    ActivityUtils.launchDetailsActivity(mContext, mVerb.getId(), mVerb.getInfinitive());
+                    break;
             }
         }
 
