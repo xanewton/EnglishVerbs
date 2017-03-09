@@ -49,4 +49,9 @@ public final class Constants {
     public static final String VERB_ID = "verb_id";
     public static final String VERB_NAME = "verb_name";
 
+    // Translation languages
+    public static final String NONE = "None";
+    public static final String FRENCH = "fr";
+    public static final String SPANISH = "es";
+
 }

@@ -225,12 +225,101 @@
     </string>
 
     <string name="title_activity_settings">Settings</string>
+    <string name="title_activity_details">DetailsActivity</string>
 
     <!-- Strings related to Settings -->
 
     <!-- Example General settings -->
     <string name="pref_header_general">General</string>
+    <string name="pref_header_language">Language</string>
+    <string name="pref_show_definitions_switch" translatable="false">pref_show_definitions_switch</string>
+    <string name="pref_title_show_definitions">Show verb definitions</string>
+    <string name="pref_title_translation_language">Verb translation</string>
+    <string name="pref_translation_language" translatable="false">pref_translation_language</string>
+    <string-array name="translation_languages_titles" translatable="false">
+        <item name="default">None</item>
+<!--        <item name="albanian">Shqip</item>
+        <item name="arabic">العربية</item>
+        <item name="basque">Euskara</item>
+        <item name="belarusian">Беларуская</item>
+        <item name="bosnian">Bosanski</item>
+        <item name="bulgarian">Български</item>
+        <item name="catalan">Català</item>
+        <item name="chinese">中文</item>
+        <item name="chinese">文言</item>
+        <item name="czech">Čeština</item>
+        <item name="danish">Dansk</item>
+        <item name="dutch">Nederlands</item>
+        <item name="esperanto">Esperanto</item>
+        <item name="estonian">Eesti</item>
+        <item name="finnish">Suomi</item>-->
+        <item name="french">Français</item>
+<!--        <item name="german">Deutsch</item>
+        <item name="greek">Ελληνικά</item>
+        <item name="hebrew">עברית</item>
+        <item name="hindi">हिन्दी</item>
+        <item name="hungarian">Magyar</item>
+        <item name="irish">Gaeilge</item>
+        <item name="italian">Italiano</item>
+        <item name="japanese">日本語</item>
+        <item name="korean">韓國語</item>
+        <item name="latvian">Latviešu</item>
+        <item name="lithuanian">Lietuvių</item>
+        <item name="norwegian">Norsk bokmål</item>
+        <item name="polish">Polski</item>
+        <item name="portuguese">Português</item>
+        <item name="romanian">Română</item>
+        <item name="russian">Русский</item>
+        <item name="serbian">Српски / srpski</item>-->
+        <item name="spanish">Español</item>
+<!--        <item name="swedish">Svenska</item>
+        <item name="ukrainian">Українська</item>
+        <item name="turkish">Türkçe</item>-->
+    </string-array>
+    <string-array name="translation_languages_values" translatable="false">
+        <!--suppress CheckTagEmptyBody -->
+        <item name="default"></item>
+<!--        <item name="albanian">sq_AL</item>
+        <item name="arabic">ar_AR</item>
+        <item name="basque">eu_ES</item>
+        <item name="belarusian">be_BE</item>
+        <item name="bosnian">bs_BS</item>
+        <item name="bulgarian">bg_BG</item>
+        <item name="catalan">ca_ES</item>
+        <item name="chinese">zh_CN</item>
+        <item name="chinese">zh_TW</item>
+        <item name="czech">cs_CZ</item>
+        <item name="danish">da_DK</item>
+        <item name="dutch">nl_NL</item>
+        <item name="esperanto">eo_EO</item>
+        <item name="estonian">et_ET</item>
+        <item name="finnish">fi_FI</item>-->
+        <item name="french">fr_FR</item>
+ <!--       <item name="german">de_DE</item>
+        <item name="greek">el_GR</item>
+        <item name="hebrew">he_IL</item>
+        <item name="hindi">hi_IN</item>
+        <item name="hungarian">hu_HU</item>
+        <item name="irish">ga_GA</item>
+        <item name="italian">it_IT</item>
+        <item name="japanese">ja_JP</item>
+        <item name="korean">ko_KR</item>
+        <item name="latvian">lv_LV</item>
+        <item name="lithuanian">lt_LT</item>
+        <item name="norwegian">no_NO</item>
+        <item name="polish">pl_PL</item>
+        <item name="portuguese">pt_PT</item>
+        <item name="romanian">ro_RO</item>
+        <item name="russian">ru_RU</item>
+        <item name="serbian">sr_RS</item>-->
+        <item name="spanish">es_ES</item>
+<!--        <item name="swedish">sv_SE</item>
+        <item name="ukrainian">uk_UA</item>
+        <item name="turkish">tr_TR</item>-->
+    </string-array>
 
+
+    <!--
     <string name="pref_title_social_recommendations">Enable social recommendations</string>
     <string name="pref_description_social_recommendations">Recommendations for people to contact
         based on your message history
@@ -249,9 +338,10 @@
         <item>1</item>
         <item>0</item>
         <item>-1</item>
-    </string-array>
+    </string-array> -->
 
     <!-- Example settings for Data & Sync -->
+    <!--
     <string name="pref_header_data_sync">Data &amp; sync</string>
 
     <string name="pref_title_sync_frequency">Sync frequency</string>
@@ -287,8 +377,9 @@
     <string-array name="multi_select_list_preference_default_value" />
 
     <string name="pref_title_system_sync_settings">System sync settings</string>
-
+-->
     <!-- Example settings for Notifications -->
+    <!--
     <string name="pref_header_notifications">Notifications</string>
 
     <string name="pref_title_new_message_notifications">New message notifications</string>
@@ -297,7 +388,7 @@
     <string name="pref_ringtone_silent">Silent</string>
 
     <string name="pref_title_vibrate">Vibrate</string>
-    <string name="title_activity_details">DetailsActivity</string>
+     -->
 
 </resources>
 

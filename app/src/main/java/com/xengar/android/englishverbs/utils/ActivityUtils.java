@@ -22,6 +22,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceManager;
 import android.text.Html;
 import android.text.Spanned;
 
@@ -32,7 +33,10 @@ import com.xengar.android.englishverbs.ui.EditorActivity;
 import com.xengar.android.englishverbs.ui.HelpActivity;
 import com.xengar.android.englishverbs.ui.SettingsActivity;
 
+import static com.xengar.android.englishverbs.utils.Constants.FRENCH;
+import static com.xengar.android.englishverbs.utils.Constants.NONE;
 import static com.xengar.android.englishverbs.utils.Constants.SHARED_PREF_NAME;
+import static com.xengar.android.englishverbs.utils.Constants.SPANISH;
 import static com.xengar.android.englishverbs.utils.Constants.VERB_ID;
 import static com.xengar.android.englishverbs.utils.Constants.VERB_NAME;
 
@@ -160,5 +164,37 @@ public class ActivityUtils {
             result = Html.fromHtml(html);
         }
         return result;
+    }
+
+    /**
+     * Returns the value of show definitions from preferences.
+     * @param context context
+     * @return boolean or default(true)
+     */
+    public static boolean getPreferenceShowDefinitions(final Context context) {
+        String key = context.getString(R.string.pref_show_definitions_switch);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getBoolean(key, true);
+    }
+
+    /**
+     * Returns the translation language from preferences.
+     * @param context Context
+     * @return code of launguage (default NONE)
+     */
+    public static String getPreferenceTranslationLanguage(final Context context) {
+        String key = context.getString(R.string.pref_translation_language);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        String lang =  prefs.getString(key, "None");
+        switch (lang){
+            case "":
+            case "None":
+            default:
+                return NONE;
+            case "fr_FR":
+                return FRENCH;
+            case "es_ES":
+                return SPANISH;
+        }
     }
 }

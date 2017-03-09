@@ -70,7 +70,9 @@ public class FetchVerbs extends AsyncTask<Void, Void, ArrayList<Verb>> {
                 VerbEntry.COLUMN_DEFINITION,
                 VerbEntry.COLUMN_REGULAR,
                 VerbEntry.COLUMN_SCORE,
-                VerbEntry.COLUMN_COLOR };
+                VerbEntry.COLUMN_COLOR,
+                VerbEntry.COLUMN_TRANSLATION_ES,
+                VerbEntry.COLUMN_TRANSLATION_FR };
 
         Cursor cursor;
         switch (type){
@@ -91,10 +93,18 @@ public class FetchVerbs extends AsyncTask<Void, Void, ArrayList<Verb>> {
         if (cursor != null && cursor.getCount() != 0) {
             Verb verb;
             while (cursor.moveToNext()) {
-                verb = new Verb(cursor.getLong(0), cursor.getString(1), cursor.getString(2),
-                        cursor.getString(3), cursor.getString(4),
-                        "", "", "", "", "", "",
-                        0, cursor.getInt(5), cursor.getInt(7), cursor.getInt(6), "", "", "");
+                verb = new Verb(
+                        cursor.getLong(cursor.getColumnIndex(VerbEntry._ID)),
+                        cursor.getString(cursor.getColumnIndex(VerbEntry.COLUMN_INFINITIVE)),
+                        cursor.getString(cursor.getColumnIndex(VerbEntry.COLUMN_SIMPLE_PAST)),
+                        cursor.getString(cursor.getColumnIndex(VerbEntry.COLUMN_PAST_PARTICIPLE)),
+                        cursor.getString(cursor.getColumnIndex(VerbEntry.COLUMN_DEFINITION)),
+                        "", "", "", "", "", "", 0,
+                        cursor.getInt(cursor.getColumnIndex(VerbEntry.COLUMN_REGULAR)),
+                        cursor.getInt(cursor.getColumnIndex(VerbEntry.COLUMN_COLOR)),
+                        cursor.getInt(cursor.getColumnIndex(VerbEntry.COLUMN_SCORE)), "",
+                        cursor.getString(cursor.getColumnIndex(VerbEntry.COLUMN_TRANSLATION_ES)),
+                        cursor.getString(cursor.getColumnIndex(VerbEntry.COLUMN_TRANSLATION_FR)));
                 verbs.add(verb);
             }
         } else {

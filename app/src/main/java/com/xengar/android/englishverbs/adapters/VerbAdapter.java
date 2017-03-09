@@ -29,9 +29,9 @@ import com.xengar.android.englishverbs.utils.ActivityUtils;
 import java.util.List;
 import java.util.Locale;
 
-import static com.xengar.android.englishverbs.R.id.definition;
-import static com.xengar.android.englishverbs.R.id.infinitive;
-import static com.xengar.android.englishverbs.R.id.score;
+import static com.xengar.android.englishverbs.utils.Constants.FRENCH;
+import static com.xengar.android.englishverbs.utils.Constants.NONE;
+import static com.xengar.android.englishverbs.utils.Constants.SPANISH;
 
 /**
  * VerbAdapter
@@ -76,16 +76,18 @@ public class VerbAdapter extends RecyclerView.Adapter<VerbAdapter.VerbHolder> {
         final TextView definitionTextView;
         final TextView typeTextView;
         final TextView scoreTextView;
+        final TextView translationView;
 
 
         public VerbHolder(View view) {
             super(view);
-            infinitiveTextView = (TextView) view.findViewById(infinitive);
+            infinitiveTextView = (TextView) view.findViewById(R.id.infinitive);
             simplePastTextView = (TextView) view.findViewById(R.id.simple_past);
             pastParticipleTextView = (TextView) view.findViewById(R.id.past_participle);
-            definitionTextView = (TextView) view.findViewById(definition);
+            definitionTextView = (TextView) view.findViewById(R.id.definition);
             typeTextView = (TextView) view.findViewById(R.id.type);
-            scoreTextView = (TextView) view.findViewById(score);
+            scoreTextView = (TextView) view.findViewById(R.id.score);
+            translationView = (TextView) view.findViewById(R.id.translation);
             mContext = view.getContext();
             view.setOnClickListener(this);
         }
@@ -100,8 +102,22 @@ public class VerbAdapter extends RecyclerView.Adapter<VerbAdapter.VerbHolder> {
             simplePastTextView.setTextColor(verb.getColor());
             pastParticipleTextView.setTextColor(verb.getColor());
             definitionTextView.setText(verb.getDefinition());
+            if(!ActivityUtils.getPreferenceShowDefinitions(mContext)) {
+                definitionTextView.setVisibility(View.GONE);
+            }
             typeTextView.setText((verb.getRegular()  == 0)? "R" : "I");
             scoreTextView.setText(String.format(Locale.ENGLISH, "%d", verb.getScore()));
+            switch (ActivityUtils.getPreferenceTranslationLanguage(mContext)) {
+                case NONE:
+                    translationView.setVisibility(View.GONE);
+                    break;
+                case FRENCH:
+                    translationView.setText(verb.getTranslationFR());
+                    break;
+                case SPANISH:
+                    translationView.setText(verb.getTranslationES());
+                    break;
+            }
         }
 
         // Handles the item click.
