@@ -19,6 +19,7 @@ import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Build;
@@ -34,9 +35,11 @@ import android.widget.TextView;
 import com.xengar.android.englishverbs.R;
 import com.xengar.android.englishverbs.data.Verb;
 import com.xengar.android.englishverbs.data.VerbContract;
+import com.xengar.android.englishverbs.data.VerbContract.VerbEntry;
 import com.xengar.android.englishverbs.ui.DetailsActivity;
 import com.xengar.android.englishverbs.ui.EditorActivity;
 import com.xengar.android.englishverbs.ui.HelpActivity;
+import com.xengar.android.englishverbs.ui.SearchActivity;
 import com.xengar.android.englishverbs.ui.SettingsActivity;
 
 import static com.xengar.android.englishverbs.utils.Constants.FRENCH;
@@ -156,6 +159,16 @@ public class ActivityUtils {
     }
 
     /**
+     * Launches Search Activity.
+     * @param context context
+     */
+    public static void launchSearchActivity(final Context context) {
+        Intent intent = new Intent(context, SearchActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+    }
+
+    /**
      * Helper class to handle deprecated method.
      * Source: http://stackoverflow.com/questions/37904739/html-fromhtml-deprecated-in-android-n
      * @param html html string
@@ -240,5 +253,59 @@ public class ActivityUtils {
         }else{
             tts.speak(text, TextToSpeech.QUEUE_FLUSH, null);
         }
+    }
+
+    /**
+     * Generate all table verb columns.
+     * @return String[]
+     */
+    public static String[] allVerbColumns(){
+        String[] columns = {
+                VerbEntry.COLUMN_ID,
+                VerbEntry.COLUMN_INFINITIVE,
+                VerbEntry.COLUMN_SIMPLE_PAST,
+                VerbEntry.COLUMN_PAST_PARTICIPLE,
+                VerbEntry.COLUMN_DEFINITION,
+                VerbEntry.COLUMN_PHONETIC_INFINITIVE,
+                VerbEntry.COLUMN_PHONETIC_SIMPLE_PAST,
+                VerbEntry.COLUMN_PHONETIC_PAST_PARTICIPLE,
+                VerbEntry.COLUMN_SAMPLE_1,
+                VerbEntry.COLUMN_SAMPLE_2,
+                VerbEntry.COLUMN_SAMPLE_3,
+                VerbEntry.COLUMN_COMMON,
+                VerbEntry.COLUMN_REGULAR,
+                VerbEntry.COLUMN_COLOR,
+                VerbEntry.COLUMN_SCORE,
+                VerbEntry.COLUMN_NOTES,
+                VerbEntry.COLUMN_TRANSLATION_ES,
+                VerbEntry.COLUMN_TRANSLATION_FR };
+        return columns;
+    }
+
+    /**
+     * Create a Verb from the current cursor position.
+     * Note: columns must exist.
+     * @param cursor Cursor
+     * @return Verb
+     */
+    public static Verb verbFromCursor(final Cursor cursor){
+        return new Verb(cursor.getLong(cursor.getColumnIndex(VerbEntry.COLUMN_ID)),
+                cursor.getString(cursor.getColumnIndex(VerbEntry.COLUMN_INFINITIVE)),
+                cursor.getString(cursor.getColumnIndex(VerbEntry.COLUMN_SIMPLE_PAST)),
+                cursor.getString(cursor.getColumnIndex(VerbEntry.COLUMN_PAST_PARTICIPLE)),
+                cursor.getString(cursor.getColumnIndex(VerbEntry.COLUMN_DEFINITION)),
+                cursor.getString(cursor.getColumnIndex(VerbEntry.COLUMN_SAMPLE_1)),
+                cursor.getString(cursor.getColumnIndex(VerbEntry.COLUMN_SAMPLE_2)),
+                cursor.getString(cursor.getColumnIndex(VerbEntry.COLUMN_SAMPLE_3)),
+                cursor.getString(cursor.getColumnIndex(VerbEntry.COLUMN_PHONETIC_INFINITIVE)),
+                cursor.getString(cursor.getColumnIndex(VerbEntry.COLUMN_PHONETIC_SIMPLE_PAST)),
+                cursor.getString(cursor.getColumnIndex(VerbEntry.COLUMN_PHONETIC_PAST_PARTICIPLE)),
+                cursor.getInt(cursor.getColumnIndex(VerbEntry.COLUMN_COMMON)),
+                cursor.getInt(cursor.getColumnIndex(VerbEntry.COLUMN_REGULAR)),
+                cursor.getInt(cursor.getColumnIndex(VerbEntry.COLUMN_COLOR)),
+                cursor.getInt(cursor.getColumnIndex(VerbEntry.COLUMN_SCORE)),
+                cursor.getString(cursor.getColumnIndex(VerbEntry.COLUMN_NOTES)),
+                cursor.getString(cursor.getColumnIndex(VerbEntry.COLUMN_TRANSLATION_ES)),
+                cursor.getString(cursor.getColumnIndex(VerbEntry.COLUMN_TRANSLATION_FR))  );
     }
 }

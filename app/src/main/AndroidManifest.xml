@@ -32,6 +32,7 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -49,6 +50,13 @@
             android:parentActivityName=".ui.MainActivity"
             android:theme="@style/AppTheme">
             <!-- Parent activity meta-notes to support 4.0 and lower -->
+            <meta-notes
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.MainActivity" />
+        </activity>
+        <activity android:name=".ui.SearchActivity"
+            android:parentActivityName=".ui.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar" >
             <meta-notes
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.MainActivity" />

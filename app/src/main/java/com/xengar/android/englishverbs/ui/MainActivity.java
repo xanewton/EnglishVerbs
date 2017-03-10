@@ -164,6 +164,11 @@ public class MainActivity extends AppCompatActivity
                 showMostCommon();
                 return true;
 
+            case R.id.action_search:
+                ActivityUtils.launchSearchActivity(getApplicationContext());
+                return true;
+
+            /*
             // Respond to a click on the "Insert dummy data" menu option
             case R.id.action_insert_dummy_data:
                 insertSampleVerbs();
@@ -171,7 +176,7 @@ public class MainActivity extends AppCompatActivity
             // Respond to a click on the "Delete all entries" menu option
             case R.id.action_delete_all_entries:
                 deleteAllVerbs();
-                return true;
+                return true;*/
         }
         return super.onOptionsItemSelected(item);
     }

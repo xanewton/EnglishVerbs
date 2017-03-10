@@ -148,6 +148,10 @@ public class DetailsActivity extends AppCompatActivity implements
             case R.id.action_change_color:
                 changeColorDialog();
                 return true;
+
+            case R.id.action_search:
+                ActivityUtils.launchSearchActivity(getApplicationContext());
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -286,25 +290,7 @@ public class DetailsActivity extends AppCompatActivity implements
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        String[] projection = {
-                VerbEntry.COLUMN_ID,
-                VerbEntry.COLUMN_INFINITIVE,
-                VerbEntry.COLUMN_SIMPLE_PAST,
-                VerbEntry.COLUMN_PAST_PARTICIPLE,
-                VerbEntry.COLUMN_DEFINITION,
-                VerbEntry.COLUMN_PHONETIC_INFINITIVE,
-                VerbEntry.COLUMN_PHONETIC_SIMPLE_PAST,
-                VerbEntry.COLUMN_PHONETIC_PAST_PARTICIPLE,
-                VerbEntry.COLUMN_SAMPLE_1,
-                VerbEntry.COLUMN_SAMPLE_2,
-                VerbEntry.COLUMN_SAMPLE_3,
-                VerbEntry.COLUMN_COMMON,
-                VerbEntry.COLUMN_REGULAR,
-                VerbEntry.COLUMN_COLOR,
-                VerbEntry.COLUMN_SCORE,
-                VerbEntry.COLUMN_NOTES,
-                VerbEntry.COLUMN_TRANSLATION_ES,
-                VerbEntry.COLUMN_TRANSLATION_FR };
+        String[] projection = ActivityUtils.allVerbColumns();
 
         // This loader will execute the ContentProvider's query method on a background thread
         return new CursorLoader(this,   // Parent activity context
@@ -326,25 +312,7 @@ public class DetailsActivity extends AppCompatActivity implements
         // Proceed with moving to the first row of the cursor and reading data from it
         // (This should be the only row in the cursor)
         if (cursor.moveToFirst()) {
-            verb = new Verb(verbID,
-                    cursor.getString(cursor.getColumnIndex(VerbEntry.COLUMN_INFINITIVE)),
-                    cursor.getString(cursor.getColumnIndex(VerbEntry.COLUMN_SIMPLE_PAST)),
-                    cursor.getString(cursor.getColumnIndex(VerbEntry.COLUMN_PAST_PARTICIPLE)),
-                    cursor.getString(cursor.getColumnIndex(VerbEntry.COLUMN_DEFINITION)),
-                    cursor.getString(cursor.getColumnIndex(VerbEntry.COLUMN_SAMPLE_1)),
-                    cursor.getString(cursor.getColumnIndex(VerbEntry.COLUMN_SAMPLE_2)),
-                    cursor.getString(cursor.getColumnIndex(VerbEntry.COLUMN_SAMPLE_3)),
-                    cursor.getString(cursor.getColumnIndex(VerbEntry.COLUMN_PHONETIC_INFINITIVE)),
-                    cursor.getString(cursor.getColumnIndex(VerbEntry.COLUMN_PHONETIC_SIMPLE_PAST)),
-                    cursor.getString(cursor.getColumnIndex(VerbEntry.COLUMN_PHONETIC_PAST_PARTICIPLE)),
-                    cursor.getInt(cursor.getColumnIndex(VerbEntry.COLUMN_COMMON)),
-                    cursor.getInt(cursor.getColumnIndex(VerbEntry.COLUMN_REGULAR)),
-                    cursor.getInt(cursor.getColumnIndex(VerbEntry.COLUMN_COLOR)),
-                    cursor.getInt(cursor.getColumnIndex(VerbEntry.COLUMN_SCORE)),
-                    cursor.getString(cursor.getColumnIndex(VerbEntry.COLUMN_NOTES)),
-                    cursor.getString(cursor.getColumnIndex(VerbEntry.COLUMN_TRANSLATION_ES)),
-                    cursor.getString(cursor.getColumnIndex(VerbEntry.COLUMN_TRANSLATION_FR))  );
-
+            verb = ActivityUtils.verbFromCursor(cursor);
             setVerbColor(verb.getColor());
             fillVerbDetails(verb);
             defineClickFavoriteButtons();

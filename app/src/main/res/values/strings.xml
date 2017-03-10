@@ -22,6 +22,7 @@
     <string name="action_sort">Sort</string>
     <string name="action_color">Color</string>
     <string name="action_most_common">Most common</string>
+    <string name="action_search">Search</string>
     <string name="select_color">Select color</string>
     <string name="action_save">Save</string>
     <string name="action_delete">Delete</string>
@@ -200,7 +201,7 @@
     <string name="pref_translation_language" translatable="false">pref_translation_language</string>
     <string-array name="translation_languages_titles" translatable="false">
         <item name="default">None</item>
-<!--        <item name="albanian">Shqip</item>
+        <!--        <item name="albanian">Shqip</item>
         <item name="arabic">العربية</item>
         <item name="basque">Euskara</item>
         <item name="belarusian">Беларуская</item>
@@ -216,7 +217,7 @@
         <item name="estonian">Eesti</item>
         <item name="finnish">Suomi</item>-->
         <item name="french">Français</item>
-<!--        <item name="german">Deutsch</item>
+        <!--        <item name="german">Deutsch</item>
         <item name="greek">Ελληνικά</item>
         <item name="hebrew">עברית</item>
         <item name="hindi">हिन्दी</item>
@@ -234,14 +235,14 @@
         <item name="russian">Русский</item>
         <item name="serbian">Српски / srpski</item>-->
         <item name="spanish">Español</item>
-<!--        <item name="swedish">Svenska</item>
+        <!--        <item name="swedish">Svenska</item>
         <item name="ukrainian">Українська</item>
         <item name="turkish">Türkçe</item>-->
     </string-array>
     <string-array name="translation_languages_values" translatable="false">
         <!--suppress CheckTagEmptyBody -->
         <item name="default"></item>
-<!--        <item name="albanian">sq_AL</item>
+        <!--        <item name="albanian">sq_AL</item>
         <item name="arabic">ar_AR</item>
         <item name="basque">eu_ES</item>
         <item name="belarusian">be_BE</item>
@@ -257,7 +258,7 @@
         <item name="estonian">et_ET</item>
         <item name="finnish">fi_FI</item>-->
         <item name="french">fr_FR</item>
- <!--       <item name="german">de_DE</item>
+        <!--       <item name="german">de_DE</item>
         <item name="greek">el_GR</item>
         <item name="hebrew">he_IL</item>
         <item name="hindi">hi_IN</item>
@@ -275,7 +276,7 @@
         <item name="russian">ru_RU</item>
         <item name="serbian">sr_RS</item>-->
         <item name="spanish">es_ES</item>
-<!--        <item name="swedish">sv_SE</item>
+        <!--        <item name="swedish">sv_SE</item>
         <item name="ukrainian">uk_UA</item>
         <item name="turkish">tr_TR</item>-->
     </string-array>

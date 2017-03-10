@@ -24,6 +24,12 @@
         android:title="@string/action_settings"
         app:showAsAction="never" /> -->
     <item
+        android:id="@+id/action_search"
+        android:icon="@drawable/ic_search_white_24dp"
+        android:title="@string/action_search"
+        app:showAsAction="ifRoom|collapseActionView"/>
+
+    <item
         android:id="@+id/action_change_type"
         android:title="@string/action_type"
         app:showAsAction="never" />
@@ -38,6 +44,7 @@
         android:title="@string/action_most_common"
         app:showAsAction="never" />
 
+    <!--
     <item
         android:id="@+id/action_insert_dummy_data"
         android:title="@string/action_insert_dummy_data"
@@ -46,5 +53,5 @@
     <item
         android:id="@+id/action_delete_all_entries"
         android:title="@string/action_delete_all_entries"
-        app:showAsAction="never" />
+        app:showAsAction="never" /> -->
 </menu>
