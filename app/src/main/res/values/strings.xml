@@ -122,6 +122,8 @@
     <!-- Help strings -->
     <string name="help">Help</string>
     <string name="more">More</string>
+    <string name="volume">Volume</string>
+    <string name="volume_description">Text to speech uses the current media player volume.</string>
     <string name="report_problem">Report a problem</string>
     <string name="give_feedback">Give feedback</string>
     <string name="license">License</string>
