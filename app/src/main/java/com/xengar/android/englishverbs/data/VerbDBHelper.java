@@ -33,7 +33,6 @@ import static com.xengar.android.englishverbs.data.VerbContract.VerbEntry.S_TOP_
 /**
  * Database helper for Verbs app. Manages database creation and version management.
  */
-
 public class VerbDBHelper extends SQLiteOpenHelper {
 
     public static final String LOG_TAG = VerbDBHelper.class.getSimpleName();
@@ -51,7 +50,6 @@ public class VerbDBHelper extends SQLiteOpenHelper {
 
     /**
      * Constructs a new instance of {@link VerbDBHelper}.
-     *
      * @param context of the app
      */
     public VerbDBHelper(Context context) {
@@ -141,7 +139,7 @@ public class VerbDBHelper extends SQLiteOpenHelper {
 
     /**
      * Insert the 5 most common verbs.
-     * @param db
+     * @param db SQLiteDatabase
      */
     private void insertFavorites(SQLiteDatabase db) {
         ContentValues values = new ContentValues();
@@ -163,7 +161,7 @@ public class VerbDBHelper extends SQLiteOpenHelper {
 
     /**
      * Insert default verbs.
-     * @param db
+     * @param db SQLiteDatabase
      */
     private void insertVerbs(SQLiteDatabase db) {
         ContentValues values = new ContentValues();
@@ -244,7 +242,7 @@ public class VerbDBHelper extends SQLiteOpenHelper {
                 "perceive with the eyes; discern visually; discern or deduce mentally after reflection or from information; understand", "ver", "voir", ""},
             {"10", "come", "came", "come", "/kʌm/", "/keɪm/", "/kʌm/",
                 "May we come in?", "Jessica came into the kitchen.", "\"The end of the world has come!\" cried some; and they ran about in the darkness.",
-                S_TOP_25, S_IRREGULAR, "0",
+                S_TOP_25, S_IRREGULAR,
                 "move or travel toward or into a place thought of as near or familiar to the speaker", "venir", "venir", ""},
             {"11", "think", "thought", "thought", "/θɪŋk/", "/θɔ:t/", "/θɔ:t/",
                 "He could not think of anything else.", "She thought that nothing would be the same again.", "I never thought I could do it.",
