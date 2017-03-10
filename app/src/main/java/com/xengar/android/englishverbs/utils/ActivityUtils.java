@@ -43,6 +43,7 @@ import com.xengar.android.englishverbs.ui.SearchActivity;
 import com.xengar.android.englishverbs.ui.SettingsActivity;
 
 import static com.xengar.android.englishverbs.utils.Constants.FRENCH;
+import static com.xengar.android.englishverbs.utils.Constants.LIST;
 import static com.xengar.android.englishverbs.utils.Constants.NONE;
 import static com.xengar.android.englishverbs.utils.Constants.SHARED_PREF_NAME;
 import static com.xengar.android.englishverbs.utils.Constants.SPANISH;
@@ -215,6 +216,17 @@ public class ActivityUtils {
             case "es_ES":
                 return SPANISH;
         }
+    }
+
+    /**
+     * Returns the favorites mode from preferences.
+     * @param context context
+     * @return CARD or LIST
+     */
+    public static String getPreferenceFavoritesMode(final Context context) {
+        String key = context.getString(R.string.pref_favorite_mode_list);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getString(key, LIST);
     }
 
     /**

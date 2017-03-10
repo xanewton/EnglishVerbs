@@ -195,6 +195,16 @@
     <!-- Example General settings -->
     <string name="pref_header_general">General</string>
     <string name="pref_header_language">Language</string>
+    <string name="pref_title_favorite_mode">Favorites mode</string>
+    <string name="pref_favorite_mode_list" translatable="false">pref_favorite_mode_list</string>
+    <string-array name="pref_list_favorite_modes_titles">
+        <item>card</item>
+        <item>list</item>
+    </string-array>
+    <string-array name="pref_list_favorite_modes_values" translatable="false">
+        <item>card</item>
+        <item>list</item>
+    </string-array>
     <string name="pref_show_definitions_switch" translatable="false">pref_show_definitions_switch</string>
     <string name="pref_title_show_definitions">Show verb definitions</string>
     <string name="pref_title_translation_language">Verb translation</string>

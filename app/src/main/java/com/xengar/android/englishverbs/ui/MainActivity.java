@@ -124,7 +124,8 @@ public class MainActivity extends AppCompatActivity
         fragmentLayout = (FrameLayout) findViewById(R.id.fragment_container);
         verbsFragment = createUniversalFragment(BOTH, LIST, ALPHABET);
         cardsFragment = createUniversalFragment(BOTH, CARD, ALPHABET);
-        favoritesFragment = createUniversalFragment(FAVORITES, LIST, ALPHABET);
+        favoritesFragment = createUniversalFragment(FAVORITES,
+                ActivityUtils.getPreferenceFavoritesMode(getApplicationContext()), ALPHABET);
         showPage(page);
         assignCheckedItem(page);
     }
@@ -330,7 +331,8 @@ public class MainActivity extends AppCompatActivity
         }
         if (!favoritesFragment.getVerbsType().contentEquals(verbType[0]) ||
                 !favoritesFragment.getSortType().contentEquals(sortType[0])) {
-            favoritesFragment = createUniversalFragment(verbType[0], LIST, sortType[0]);
+            favoritesFragment = createUniversalFragment(verbType[0],
+                    ActivityUtils.getPreferenceFavoritesMode(getApplicationContext()), sortType[0]);
             if (page.contentEquals(PAGE_FAVORITES)) {
                 launchFragment(PAGE_FAVORITES);
             }

@@ -267,6 +267,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity
             //bindPreferenceSummaryToValue(findPreference("example_text"));
             //bindPreferenceSummaryToValue(findPreference("example_list"));
             bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_translation_language)));
+            bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_favorite_mode_list)));
         }
 
         @Override
