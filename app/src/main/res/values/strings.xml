@@ -19,6 +19,7 @@
     <string name="action_insert_dummy_data">Insert Dummy Data</string>
     <string name="action_delete_all_entries">Delete All Verbs</string>
     <string name="action_type">Type</string>
+    <string name="action_sort">Sort</string>
     <string name="action_color">Color</string>
     <string name="select_color">Select color</string>
     <string name="action_save">Save</string>
@@ -62,6 +63,11 @@
     <string name="regular">regular</string>
     <string name="irregular">irregular</string>
     <string name="both">both</string>
+    <string name="select_type_of_sort">Sort by</string>
+    <string name="alphabet">alphabet</string>
+    <string name="color">color</string>
+    <string name="verbs_ed">verbs(ed)</string>
+
     <string name="definition">Definition:</string>
     <string name="examples">Examples:</string>
     <string name="play">play</string>

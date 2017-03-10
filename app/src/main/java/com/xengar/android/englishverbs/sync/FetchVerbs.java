@@ -30,11 +30,14 @@ import java.util.List;
 
 import fr.castorflex.android.circularprogressbar.CircularProgressBar;
 
+import static com.xengar.android.englishverbs.utils.Constants.ALPHABET;
 import static com.xengar.android.englishverbs.utils.Constants.BOTH;
+import static com.xengar.android.englishverbs.utils.Constants.COLOR;
 import static com.xengar.android.englishverbs.utils.Constants.FAVORITES;
 import static com.xengar.android.englishverbs.utils.Constants.IRREGULAR;
 import static com.xengar.android.englishverbs.utils.Constants.LOG;
 import static com.xengar.android.englishverbs.utils.Constants.REGULAR;
+import static com.xengar.android.englishverbs.utils.Constants.VERBS_ED;
 
 /**
  * FetchVerbs from the database.
@@ -43,16 +46,18 @@ public class FetchVerbs extends AsyncTask<Void, Void, ArrayList<Verb>> {
 
     private final String TAG = FetchVerbs.class.getSimpleName();
     private final String type; // Verb type (regular, irregular, both)
+    private final String sort; // Sort order (alpabet, color, verbs_ed)
     private final ContentResolver contentResolver;
     private final VerbAdapter adapter;
     private final List<Verb> verbs;
     private final CircularProgressBar progressBar;
 
     // Constructor
-    public FetchVerbs(final String type, final VerbAdapter adapter,
+    public FetchVerbs(final String type, final String sort, final VerbAdapter adapter,
                       final ContentResolver contentResolver, final List<Verb> verbs,
                       final CircularProgressBar progressBar) {
         this.type = type;
+        this.sort = sort;
         this.adapter = adapter;
         this.contentResolver = contentResolver;
         this.verbs = verbs;
@@ -83,23 +88,39 @@ public class FetchVerbs extends AsyncTask<Void, Void, ArrayList<Verb>> {
                 VerbEntry.COLUMN_TRANSLATION_ES,
                 VerbEntry.COLUMN_TRANSLATION_FR };
 
+        String sortOrder = null;
+        switch (sort){
+            case ALPHABET:
+            default:
+                sortOrder = VerbEntry.COLUMN_INFINITIVE + " ASC";
+                break;
+
+            case COLOR:
+                sortOrder = VerbEntry.COLUMN_COLOR + " DESC, " + VerbEntry.COLUMN_INFINITIVE + " ASC";
+                break;
+
+            case VERBS_ED:
+                sortOrder = VerbEntry.COLUMN_REGULAR + " ASC, " + VerbEntry.COLUMN_INFINITIVE + " ASC";
+                break;
+        }
+
         Cursor cursor;
         switch (type){
             case BOTH:
             default:
-                cursor = contentResolver.query(VerbEntry.CONTENT_URI, columns, null, null, null);
+                cursor = contentResolver.query(VerbEntry.CONTENT_URI, columns, null, null, sortOrder);
                 break;
 
             case REGULAR:
-                cursor = contentResolver.query(VerbEntry.CONTENT_REGULARS_URI, columns, null, null, null);
+                cursor = contentResolver.query(VerbEntry.CONTENT_REGULARS_URI, columns, null, null, sortOrder);
                 break;
 
             case IRREGULAR:
-                cursor = contentResolver.query(VerbEntry.CONTENT_IRREGULARS_URI, columns, null, null, null);
+                cursor = contentResolver.query(VerbEntry.CONTENT_IRREGULARS_URI, columns, null, null, sortOrder);
                 break;
 
             case FAVORITES:
-                cursor = contentResolver.query(VerbEntry.CONTENT_FAVORITE_VERBS_URI, columns, null, null, null);
+                cursor = contentResolver.query(VerbEntry.CONTENT_FAVORITE_VERBS_URI, columns, null, null, sortOrder);
                 break;
         }
 

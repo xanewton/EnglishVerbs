@@ -39,10 +39,12 @@ import java.util.Locale;
 
 import fr.castorflex.android.circularprogressbar.CircularProgressBar;
 
+import static com.xengar.android.englishverbs.utils.Constants.ALPHABET;
 import static com.xengar.android.englishverbs.utils.Constants.BOTH;
 import static com.xengar.android.englishverbs.utils.Constants.ITEM_TYPE;
 import static com.xengar.android.englishverbs.utils.Constants.LIST;
 import static com.xengar.android.englishverbs.utils.Constants.LOG;
+import static com.xengar.android.englishverbs.utils.Constants.SORT_TYPE;
 import static com.xengar.android.englishverbs.utils.Constants.VERB_TYPE;
 
 /**
@@ -57,8 +59,9 @@ public class UniversalFragment extends Fragment {
     private CircularProgressBar progressBar;
     private VerbAdapter mAdapter;
     private List<Verb> mVerbs;
-    private String verbsType = BOTH;  // regular, irregular, both
-    private String itemType = LIST;   // card, list
+    private String verbsType = BOTH; // regular, irregular, both
+    private String sortTYpe = ALPHABET; // alphabet, color, verbs_ed
+    private String itemType = LIST; // card, list
     private TextToSpeech tts;
 
     public UniversalFragment() {
@@ -77,6 +80,7 @@ public class UniversalFragment extends Fragment {
         if (getArguments() != null) {
             verbsType = getArguments().getString(VERB_TYPE, BOTH);
             itemType = getArguments().getString(ITEM_TYPE, LIST);
+            sortTYpe = getArguments().getString(SORT_TYPE, ALPHABET);
         }
 
         // Inflate the layout for this fragment
@@ -113,6 +117,10 @@ public class UniversalFragment extends Fragment {
 
     public String getVerbsType(){
         return verbsType;
+    }
+
+    public String getSortType(){
+        return sortTYpe;
     }
 
     @Override
@@ -154,8 +162,8 @@ public class UniversalFragment extends Fragment {
         FragmentUtils.updateProgressBar(progressBar, true);
 
         FetchVerbs fetch =
-                new FetchVerbs(verbsType, mAdapter, getActivity().getContentResolver(), mVerbs,
-                        progressBar);
+                new FetchVerbs(verbsType, sortTYpe, mAdapter, getActivity().getContentResolver(),
+                        mVerbs, progressBar);
         fetch.execute();
     }
 

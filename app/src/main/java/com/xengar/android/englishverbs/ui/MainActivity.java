@@ -40,8 +40,10 @@ import com.xengar.android.englishverbs.data.Verb;
 import com.xengar.android.englishverbs.data.VerbContract.VerbEntry;
 import com.xengar.android.englishverbs.utils.ActivityUtils;
 
+import static com.xengar.android.englishverbs.utils.Constants.ALPHABET;
 import static com.xengar.android.englishverbs.utils.Constants.BOTH;
 import static com.xengar.android.englishverbs.utils.Constants.CARD;
+import static com.xengar.android.englishverbs.utils.Constants.COLOR;
 import static com.xengar.android.englishverbs.utils.Constants.CURRENT_PAGE;
 import static com.xengar.android.englishverbs.utils.Constants.FAVORITES;
 import static com.xengar.android.englishverbs.utils.Constants.IRREGULAR;
@@ -55,6 +57,8 @@ import static com.xengar.android.englishverbs.utils.Constants.PAGE_FAVORITES;
 import static com.xengar.android.englishverbs.utils.Constants.PAGE_VERBS;
 import static com.xengar.android.englishverbs.utils.Constants.REGULAR;
 import static com.xengar.android.englishverbs.utils.Constants.SHARED_PREF_NAME;
+import static com.xengar.android.englishverbs.utils.Constants.SORT_TYPE;
+import static com.xengar.android.englishverbs.utils.Constants.VERBS_ED;
 import static com.xengar.android.englishverbs.utils.Constants.VERB_TYPE;
 
 public class MainActivity extends AppCompatActivity
@@ -69,6 +73,11 @@ public class MainActivity extends AppCompatActivity
     final String VERB_TYPES[] = {REGULAR, IRREGULAR, BOTH};
     private final int[] verbSelection = {2};
     private final String[] verbType = {VERB_TYPES[verbSelection[0]]}; // current verb type list in screen
+
+    final String SORT_TYPES[] = {ALPHABET, COLOR, VERBS_ED};
+    private final int[] sortSelection = {0};
+    private final String[] sortType = {SORT_TYPES[sortSelection[0]]}; // current sort type list in screen
+
     final String ITEM_TYPES[] = {LIST, CARD};
     private final String[] itemType = {ITEM_TYPES[0]};
     private String page = PAGE_VERBS; // Current page
@@ -103,9 +112,9 @@ public class MainActivity extends AppCompatActivity
         page = prefs.getString(CURRENT_PAGE, PAGE_VERBS);
 
         fragmentLayout = (FrameLayout) findViewById(R.id.fragment_container);
-        verbsFragment = createUniversalFragment(BOTH, LIST);
-        cardsFragment = createUniversalFragment(BOTH, CARD);
-        favoritesFragment = createUniversalFragment(FAVORITES, LIST);
+        verbsFragment = createUniversalFragment(BOTH, LIST, ALPHABET);
+        cardsFragment = createUniversalFragment(BOTH, CARD, ALPHABET);
+        favoritesFragment = createUniversalFragment(FAVORITES, LIST, ALPHABET);
         showPage(page);
         assignCheckedItem(page);
     }
@@ -137,6 +146,10 @@ public class MainActivity extends AppCompatActivity
                 changeVerbType();
                 return true;
 
+            case R.id.action_sort:
+                sortVerbs();
+                return true;
+
             // Respond to a click on the "Insert dummy data" menu option
             case R.id.action_insert_dummy_data:
                 insertSampleVerbs();
@@ -155,11 +168,13 @@ public class MainActivity extends AppCompatActivity
      * @param itemType Display mode LIST, CARD
      * @return fragment
      */
-    private UniversalFragment createUniversalFragment(String verbsType, String itemType) {
+    private UniversalFragment createUniversalFragment(String verbsType, String itemType,
+                                                      String sortType) {
         UniversalFragment fragment = new UniversalFragment();
         Bundle bundle = new Bundle();
         bundle.putString(VERB_TYPE, verbsType);
         bundle.putString(ITEM_TYPE, itemType);
+        bundle.putString(SORT_TYPE, sortType);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -189,18 +204,7 @@ public class MainActivity extends AppCompatActivity
                     case REGULAR:
                     case IRREGULAR:
                     case BOTH:
-                        if (!verbsFragment.getVerbsType().contentEquals(verbType[0])) {
-                            verbsFragment = createUniversalFragment(verbType[0], LIST);
-                            if (page.contentEquals(PAGE_VERBS)) {
-                                launchFragment(PAGE_VERBS);
-                            }
-                        }
-                        if (!cardsFragment.getVerbsType().contentEquals(verbType[0])) {
-                            cardsFragment = createUniversalFragment(verbType[0], CARD);
-                            if (page.contentEquals(PAGE_CARDS)) {
-                                launchFragment(PAGE_CARDS);
-                            }
-                        }
+                        changeFragmentsDisplay();
                         break;
 
                     default:
@@ -209,6 +213,69 @@ public class MainActivity extends AppCompatActivity
             }
         });
         builder.show();
+    }
+
+    /**
+     * Changes the sort order.
+     */
+    private void sortVerbs() {
+        final CharSequence options[] = new CharSequence[] {
+                getString(R.string.alphabet), getString(R.string.color),
+                getString(R.string.verbs_ed) };
+
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.MyAlertDialogStyle);
+        builder.setTitle(getString(R.string.select_type_of_sort));
+        builder.setSingleChoiceItems(options, sortSelection[0],
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int item) {
+                        // save the selected verb type
+                        sortSelection[0] = item;
+                        sortType[0] = SORT_TYPES[item];
+                    }
+                });
+        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // Change the selection.
+                switch (sortType[0]){
+                    case ALPHABET:
+                    case COLOR:
+                    case VERBS_ED:
+                        changeFragmentsDisplay();
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+        });
+        builder.show();
+    }
+
+    /**
+     * Creates if needed a new fragment with the new display configurations.
+     */
+    private void changeFragmentsDisplay(){
+        if (!verbsFragment.getVerbsType().contentEquals(verbType[0]) ||
+                !verbsFragment.getSortType().contentEquals(sortType[0])) {
+            verbsFragment = createUniversalFragment(verbType[0], LIST, sortType[0]);
+            if (page.contentEquals(PAGE_VERBS)) {
+                launchFragment(PAGE_VERBS);
+            }
+        }
+        if (!cardsFragment.getVerbsType().contentEquals(verbType[0]) ||
+                !cardsFragment.getSortType().contentEquals(sortType[0])) {
+            cardsFragment = createUniversalFragment(verbType[0], CARD, sortType[0]);
+            if (page.contentEquals(PAGE_CARDS)) {
+                launchFragment(PAGE_CARDS);
+            }
+        }
+        if (!favoritesFragment.getVerbsType().contentEquals(verbType[0]) ||
+                !favoritesFragment.getSortType().contentEquals(sortType[0])) {
+            favoritesFragment = createUniversalFragment(verbType[0], LIST, sortType[0]);
+            if (page.contentEquals(PAGE_FAVORITES)) {
+                launchFragment(PAGE_FAVORITES);
+            }
+        }
     }
 
 
