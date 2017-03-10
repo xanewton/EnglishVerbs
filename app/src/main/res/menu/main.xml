@@ -17,12 +17,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!--
-    <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never" /> -->
     <item
         android:id="@+id/action_search"
         android:icon="@drawable/ic_search_white_24dp"
@@ -30,28 +24,45 @@
         app:showAsAction="ifRoom|collapseActionView"/>
 
     <item
-        android:id="@+id/action_change_type"
-        android:title="@string/action_type"
-        app:showAsAction="never" />
+        android:id="@+id/action_more"
+        android:icon="@drawable/ic_more_vert_white_24dp"
+        android:title="@string/more"
+        android:orderInCategory="100"
+        app:showAsAction="always">
+        <menu>
+            <item
+                android:id="@+id/action_change_type"
+                android:title="@string/action_type"
+                android:icon="@drawable/ic_type_white_24dp"
+                android:orderInCategory="100"
+                app:showAsAction="never" />
 
-    <item
-        android:id="@+id/action_sort"
-        android:title="@string/action_sort"
-        app:showAsAction="never" />
+            <item
+                android:id="@+id/action_sort"
+                android:title="@string/action_sort"
+                android:icon="@drawable/ic_sort_white_24dp"
+                android:orderInCategory="101"
+                app:showAsAction="never" />
 
-    <item
-        android:id="@+id/action_most_common"
-        android:title="@string/action_most_common"
-        app:showAsAction="never" />
+            <item
+                android:id="@+id/action_most_common"
+                android:title="@string/action_most_common"
+                android:icon="@drawable/ic_whatshot_white_24dp"
+                android:orderInCategory="102"
+                app:showAsAction="never" />
 
-    <!--
-    <item
-        android:id="@+id/action_insert_dummy_data"
-        android:title="@string/action_insert_dummy_data"
-        app:showAsAction="never" />
+            <!--
+<item
+    android:id="@+id/action_insert_dummy_data"
+    android:title="@string/action_insert_dummy_data"
+    app:showAsAction="never" />
 
-    <item
-        android:id="@+id/action_delete_all_entries"
-        android:title="@string/action_delete_all_entries"
-        app:showAsAction="never" /> -->
+<item
+    android:id="@+id/action_delete_all_entries"
+    android:title="@string/action_delete_all_entries"
+    app:showAsAction="never" /> -->
+
+        </menu>
+    </item>
+
 </menu>

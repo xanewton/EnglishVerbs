@@ -38,7 +38,7 @@
         android:layout_gravity="center_vertical"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="25dp"
         android:layout_marginBottom="30dp"
         android:layout_toRightOf="@id/logo"
         android:orientation="vertical"
@@ -48,7 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="end"
-            android:textColor="@color/colorAccent"
+            android:textColor="@color/colorPrimary"
             android:textSize="24sp"
             android:text="@string/app_name" />
 
@@ -65,7 +65,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="end"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="@color/colorPrimary"
             android:textSize="14sp"
             tools:text="3.0" />
 
@@ -76,7 +76,7 @@
             android:layout_marginTop="5dp"
             android:layout_below="@id/logo"
             android:ellipsize="end"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="@color/colorGray"
             android:textSize="14sp"
             android:text="@string/copyright" />
 
