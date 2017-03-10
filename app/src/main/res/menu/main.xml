@@ -34,6 +34,11 @@
         app:showAsAction="never" />
 
     <item
+        android:id="@+id/action_most_common"
+        android:title="@string/action_most_common"
+        app:showAsAction="never" />
+
+    <item
         android:id="@+id/action_insert_dummy_data"
         android:title="@string/action_insert_dummy_data"
         app:showAsAction="never" />

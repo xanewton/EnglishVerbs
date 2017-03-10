@@ -52,6 +52,11 @@ import static com.xengar.android.englishverbs.utils.Constants.LAST_ACTIVITY;
 import static com.xengar.android.englishverbs.utils.Constants.LIST;
 import static com.xengar.android.englishverbs.utils.Constants.LOG;
 import static com.xengar.android.englishverbs.utils.Constants.MAIN_ACTIVITY;
+import static com.xengar.android.englishverbs.utils.Constants.MOST_COMMON_100;
+import static com.xengar.android.englishverbs.utils.Constants.MOST_COMMON_25;
+import static com.xengar.android.englishverbs.utils.Constants.MOST_COMMON_50;
+import static com.xengar.android.englishverbs.utils.Constants.MOST_COMMON_500;
+import static com.xengar.android.englishverbs.utils.Constants.MOST_COMMON_ALL;
 import static com.xengar.android.englishverbs.utils.Constants.PAGE_CARDS;
 import static com.xengar.android.englishverbs.utils.Constants.PAGE_FAVORITES;
 import static com.xengar.android.englishverbs.utils.Constants.PAGE_VERBS;
@@ -77,6 +82,11 @@ public class MainActivity extends AppCompatActivity
     final String SORT_TYPES[] = {ALPHABET, COLOR, VERBS_ED};
     private final int[] sortSelection = {0};
     private final String[] sortType = {SORT_TYPES[sortSelection[0]]}; // current sort type list in screen
+
+    final String COMMON_TYPES[] = {MOST_COMMON_25, MOST_COMMON_50, MOST_COMMON_100,
+            MOST_COMMON_500, MOST_COMMON_ALL};
+    private final int[] commonSelection = {0};
+    private final String[] commonType = {COMMON_TYPES[commonSelection[0]]}; // current most common type list in screen
 
     final String ITEM_TYPES[] = {LIST, CARD};
     private final String[] itemType = {ITEM_TYPES[0]};
@@ -150,6 +160,10 @@ public class MainActivity extends AppCompatActivity
                 sortVerbs();
                 return true;
 
+            case R.id.action_most_common:
+                showMostCommon();
+                return true;
+
             // Respond to a click on the "Insert dummy data" menu option
             case R.id.action_insert_dummy_data:
                 insertSampleVerbs();
@@ -188,7 +202,7 @@ public class MainActivity extends AppCompatActivity
                 getString(R.string.both) };
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.MyAlertDialogStyle);
-        builder.setTitle(getString(R.string.select_type_of_verb));
+        builder.setTitle(getString(R.string.select_show_verbs));
         builder.setSingleChoiceItems(options, verbSelection[0],
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int item) {
@@ -241,6 +255,46 @@ public class MainActivity extends AppCompatActivity
                     case COLOR:
                     case VERBS_ED:
                         changeFragmentsDisplay();
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+        });
+        builder.show();
+    }
+
+    /**
+     * Shos the most common verbs according to selection.
+     */
+    private void showMostCommon() {
+        final CharSequence options[] = new CharSequence[] {
+                getString(R.string.most_common_25), getString(R.string.most_common_50),
+                getString(R.string.most_common_100), getString(R.string.most_common_500),
+                getString(R.string.most_common_all),};
+
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.MyAlertDialogStyle);
+        builder.setTitle(getString(R.string.select_show_verbs));
+        builder.setSingleChoiceItems(options, commonSelection[0],
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int item) {
+                        // save the selected verb type
+                        commonSelection[0] = item;
+                        commonType[0] = COMMON_TYPES[item];
+                    }
+                });
+        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // Change the selection.
+                switch (commonType[0]){
+                    case MOST_COMMON_25:
+                    case MOST_COMMON_50:
+                    case MOST_COMMON_100:
+                    case MOST_COMMON_500:
+                    case MOST_COMMON_ALL:
+                        // TODO: implement once we have enought verbs
+                        //changeFragmentsDisplay();
                         break;
 
                     default:

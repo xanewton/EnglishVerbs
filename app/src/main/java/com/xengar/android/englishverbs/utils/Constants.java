@@ -45,6 +45,12 @@ public final class Constants {
     public static final String ALPHABET = "alphabet";
     public static final String COLOR = "color";
     public static final String VERBS_ED = "verbs_ed";
+    public static final String COMMON_TYPE = "common_type";
+    public static final String MOST_COMMON_25 = "25";
+    public static final String MOST_COMMON_50 = "50";
+    public static final String MOST_COMMON_100 = "100";
+    public static final String MOST_COMMON_500 = "500";
+    public static final String MOST_COMMON_ALL = "all";
 
     public static final String ITEM_TYPE = "item_type";
     public static final String CARD = "card";
