@@ -33,6 +33,7 @@ import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.xengar.android.englishverbs.R;
 import com.xengar.android.englishverbs.adapters.VerbHolder;
 import com.xengar.android.englishverbs.data.Verb;
@@ -45,6 +46,8 @@ import java.util.Locale;
 
 import static com.xengar.android.englishverbs.utils.Constants.LIST;
 import static com.xengar.android.englishverbs.utils.Constants.LOG;
+import static com.xengar.android.englishverbs.utils.Constants.PAGE_SEARCH;
+import static com.xengar.android.englishverbs.utils.Constants.TYPE_PAGE;
 
 /**
  * SearchActivity
@@ -58,6 +61,8 @@ public class SearchActivity extends AppCompatActivity {
     private SearchView mSearchView;
     private SearchAdapter mAdapter;
     private TextToSpeech tts;
+
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +103,11 @@ public class SearchActivity extends AppCompatActivity {
                 }
             }
         });
+
+        // Obtain the FirebaseAnalytics instance.
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        ActivityUtils.firebaseAnalyticsLogEventSelectContent(mFirebaseAnalytics,
+                PAGE_SEARCH, PAGE_SEARCH, TYPE_PAGE);
     }
 
     @Override
@@ -197,8 +207,8 @@ public class SearchActivity extends AppCompatActivity {
                     results.values = mMultiSearchItems;
                     results.count = mMultiSearchItems.size();
 
-                    //ActivityUtils.firebaseAnalyticsLogEventSearch(
-                    //        mFirebaseAnalytics, charSequence.toString());
+                    ActivityUtils.firebaseAnalyticsLogEventSearch(
+                            mFirebaseAnalytics, charSequence.toString());
                     return results;
                 }
 

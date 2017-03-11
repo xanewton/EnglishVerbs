@@ -42,17 +42,26 @@ import com.android.colorpicker.ColorPickerPalette;
 import com.android.colorpicker.ColorPickerSwatch;
 import com.github.amlcurran.showcaseview.ShowcaseView;
 import com.github.amlcurran.showcaseview.targets.ViewTarget;
+import com.google.android.gms.ads.AdView;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.xengar.android.englishverbs.R;
 import com.xengar.android.englishverbs.data.Verb;
 import com.xengar.android.englishverbs.data.VerbContract;
 import com.xengar.android.englishverbs.data.VerbContract.VerbEntry;
 import com.xengar.android.englishverbs.utils.ActivityUtils;
+import com.xengar.android.englishverbs.utils.LogAdListener;
 
 import java.util.Locale;
 
 import static com.xengar.android.englishverbs.data.VerbContract.VerbEntry.COLUMN_ID;
 import static com.xengar.android.englishverbs.utils.Constants.DEMO_MODE;
+import static com.xengar.android.englishverbs.utils.Constants.DETAILS_ACTIVITY;
 import static com.xengar.android.englishverbs.utils.Constants.LOG;
+import static com.xengar.android.englishverbs.utils.Constants.PAGE_VERB_DETAILS;
+import static com.xengar.android.englishverbs.utils.Constants.TYPE_ADD_FAV;
+import static com.xengar.android.englishverbs.utils.Constants.TYPE_DEL_FAV;
+import static com.xengar.android.englishverbs.utils.Constants.TYPE_PAGE;
+import static com.xengar.android.englishverbs.utils.Constants.VERBS;
 import static com.xengar.android.englishverbs.utils.Constants.VERB_ID;
 import static com.xengar.android.englishverbs.utils.Constants.VERB_NAME;
 
@@ -73,10 +82,15 @@ public class DetailsActivity extends AppCompatActivity implements
     private TextView pInfinitive, pSimplePast, pPastParticiple;
     private TextView definition, translation, sample1, sample2, sample3;
 
+    private FirebaseAnalytics mFirebaseAnalytics;
+    private AdView mAdView;
+    private LogAdListener listener;
+
     // Demo
     private ShowcaseView showcaseView;
     private boolean demo;
     private int counter = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,9 +154,49 @@ public class DetailsActivity extends AppCompatActivity implements
         getLoaderManager().initLoader(EXISTING_VERB_LOADER, null, this);
         showFavoriteButtons();
 
+        // Obtain the FirebaseAnalytics instance.
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        ActivityUtils.firebaseAnalyticsLogEventSelectContent(
+                mFirebaseAnalytics, PAGE_VERB_DETAILS, PAGE_VERB_DETAILS, TYPE_PAGE);
+
+        // create AdMob banner
+        listener = new LogAdListener(mFirebaseAnalytics, DETAILS_ACTIVITY);
+        mAdView = ActivityUtils.createAdMobBanner(this, listener);
+
         if (demo){
             defineDemoMode();
         }
+    }
+
+    /** Called when leaving the activity */
+    @Override
+    public void onPause() {
+        if (mAdView != null) {
+            mAdView.pause();
+        }
+        super.onPause();
+    }
+
+    /** Called when returning to the activity */
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mAdView != null) {
+            mAdView.resume();
+        }
+    }
+
+    /** Called before the activity is destroyed */
+    @Override
+    public void onDestroy() {
+        if (mAdView != null) {
+            mAdView.destroy();
+        }
+        if (tts != null) {
+            tts.stop();
+            tts.shutdown();
+        }
+        super.onDestroy();
     }
 
     @Override
@@ -303,8 +357,8 @@ public class DetailsActivity extends AppCompatActivity implements
 
                 fabAdd.setVisibility(View.INVISIBLE);
                 fabDel.setVisibility(View.VISIBLE);
-                //ActivityUtils.firebaseAnalyticsLogEventSelectContent(mFirebaseAnalytics,
-                //        MOVIE_ID + " " + movieID, container.getTitle(), TYPE_ADD_FAV);
+                ActivityUtils.firebaseAnalyticsLogEventSelectContent(mFirebaseAnalytics,
+                        VERB_ID + " " + verbID, verb.getInfinitive(), TYPE_ADD_FAV);
             }
         });
 
@@ -319,8 +373,8 @@ public class DetailsActivity extends AppCompatActivity implements
 
                 fabAdd.setVisibility(View.VISIBLE);
                 fabDel.setVisibility(View.INVISIBLE);
-                //ActivityUtils.firebaseAnalyticsLogEventSelectContent(mFirebaseAnalytics,
-                //        MOVIE_ID + " " + movieID, container.getTitle(), TYPE_DEL_FAV);
+                ActivityUtils.firebaseAnalyticsLogEventSelectContent(mFirebaseAnalytics,
+                        VERB_ID + " " + verbID, verb.getInfinitive(), TYPE_DEL_FAV);
             }
         });
     }
@@ -381,6 +435,9 @@ public class DetailsActivity extends AppCompatActivity implements
         sample3.setText(verb.getSample3());
 
         ActivityUtils.setTranslation(getApplicationContext(), translation, verb);
+
+        ActivityUtils.firebaseAnalyticsLogEventViewItem(
+                mFirebaseAnalytics, "" + verbID, verb.getInfinitive(), VERBS);
     }
 
     /**
@@ -391,15 +448,6 @@ public class DetailsActivity extends AppCompatActivity implements
         infinitive.setTextColor(color);
         simplePast.setTextColor(color);
         pastParticiple.setTextColor(color);
-    }
-
-    @Override
-    public void onDestroy() {
-        if (tts != null) {
-            tts.stop();
-            tts.shutdown();
-        }
-        super.onDestroy();
     }
 
     @Override

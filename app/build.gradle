@@ -35,5 +35,13 @@ dependencies {
     compile 'com.github.castorflex.smoothprogressbar:library-circular:1.2.0'
     compile 'com.android.support:support-vector-drawable:25.2.0'
     compile 'com.github.amlcurran.showcaseview:library:5.4.3'
+    // Firebase
+    compile 'com.google.firebase:firebase-ads:10.2.0'
+    compile 'com.google.firebase:firebase-core:10.2.0'
+    compile 'com.google.firebase:firebase-messaging:10.2.0'
+    compile 'com.google.firebase:firebase-crash:10.2.0'
     testCompile 'junit:junit:4.12'
 }
+
+// Firebase
+apply plugin: 'com.google.gms.google-services'

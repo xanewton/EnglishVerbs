@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1095746665234",
+    "firebase_url": "https://englishverbs-eb245.firebaseio.com",
+    "project_id": "englishverbs-eb245",
+    "storage_bucket": "englishverbs-eb245.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1095746665234:android:bf080a5afe047654",
+        "android_client_info": {
+          "package_name": "com.xengar.android.englishverbs"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1095746665234-jbdpf470l5468k95pmh7imutmf5odpuj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.xengar.android.englishverbs",
+            "certificate_hash": "a8f04f7d7e4ad427af9bc21decddea72102d6ec4"
+          }
+        },
+        {
+          "client_id": "1095746665234-ou82altmndhsrv4buc1l76av5ver0ugm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDNHACOiQnOecsJP6vytKaH80-H8tTV6uU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1095746665234-ou82altmndhsrv4buc1l76av5ver0ugm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

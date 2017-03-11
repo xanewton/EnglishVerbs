@@ -25,11 +25,16 @@ import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.speech.tts.TextToSpeech;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.text.Spanned;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.xengar.android.englishverbs.R;
 import com.xengar.android.englishverbs.data.Verb;
 import com.xengar.android.englishverbs.data.VerbContract.VerbEntry;
@@ -45,6 +50,7 @@ import static com.xengar.android.englishverbs.utils.Constants.LIST;
 import static com.xengar.android.englishverbs.utils.Constants.NONE;
 import static com.xengar.android.englishverbs.utils.Constants.SHARED_PREF_NAME;
 import static com.xengar.android.englishverbs.utils.Constants.SPANISH;
+import static com.xengar.android.englishverbs.utils.Constants.USE_TEST_ADS;
 import static com.xengar.android.englishverbs.utils.Constants.VERB_ID;
 import static com.xengar.android.englishverbs.utils.Constants.VERB_NAME;
 
@@ -281,10 +287,10 @@ public class ActivityUtils {
      */
     public static String[] allVerbColumns(){
         String[] columns = {
-                VerbEntry.COLUMN_ID,
                 VerbEntry.COLUMN_INFINITIVE,
                 VerbEntry.COLUMN_SIMPLE_PAST,
                 VerbEntry.COLUMN_PAST_PARTICIPLE,
+                VerbEntry.COLUMN_ID,
                 VerbEntry.COLUMN_DEFINITION,
                 VerbEntry.COLUMN_PHONETIC_INFINITIVE,
                 VerbEntry.COLUMN_PHONETIC_SIMPLE_PAST,
@@ -329,5 +335,103 @@ public class ActivityUtils {
                 cursor.getString(cursor.getColumnIndex(VerbEntry.COLUMN_NOTES)),
                 cursor.getString(cursor.getColumnIndex(VerbEntry.COLUMN_TRANSLATION_ES)),
                 cursor.getString(cursor.getColumnIndex(VerbEntry.COLUMN_TRANSLATION_FR))  );
+    }
+
+
+    /**
+     * Initializes and show the AdMob banner.
+     * Needs to be called in onCreate of the activity.
+     * https://firebase.google.com/docs/admob/android/quick-start
+     * @param activity activity
+     * @param listener LogAdListener
+     */
+    public static AdView createAdMobBanner(final AppCompatActivity activity,
+                                           final LogAdListener listener) {
+        final String adMobAppId = activity.getString(R.string.admob_app_id);
+        // Initialize AdMob
+        MobileAds.initialize(activity.getApplicationContext(), adMobAppId);
+
+        AdView adView = (AdView) activity.findViewById(R.id.adView);
+        // Set listener
+        // https://firebase.google.com/docs/admob/android/ad-events
+        adView.setAdListener(listener);
+
+        // Load an ad into the AdMob banner view.
+        AdRequest adRequest;
+        if (USE_TEST_ADS) {
+            adRequest = new AdRequest.Builder()
+                    // Use AdRequest.Builder.addTestDevice() to get test ads on this device.
+                    .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                    // SLONE SLONE Pilot_S5004 (Android 6.0, API 23)
+                    .addTestDevice("4DF5D2AB04EBFA06FB2656A06D2C0EE3")
+                    .build();
+        } else {
+            adRequest = new AdRequest.Builder().build();
+        }
+        adView.loadAd(adRequest);
+
+        return adView;
+    }
+
+    /**
+     * Logs a Firebase Analytics select content event.
+     * https://firebase.google.com/docs/reference/android/com/google/firebase/analytics/FirebaseAnalytics.Event#SELECT_CONTENT
+     * @param analytics FirebaseAnalytics
+     * @param id id
+     * @param name name
+     * @param type type
+     */
+    public static void firebaseAnalyticsLogEventSelectContent(final FirebaseAnalytics analytics,
+                                                              final String id, final String name,
+                                                              final String type) {
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, id);
+        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, name);
+        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, type);
+        analytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+    }
+
+    /**
+     * Logs a Firebase Analytics search event.
+     * https://firebase.google.com/docs/reference/android/com/google/firebase/analytics/FirebaseAnalytics.Event#SEARCH
+     * @param analytics FirebaseAnalytics
+     * @param search string to search
+     */
+    public static void firebaseAnalyticsLogEventSearch(final FirebaseAnalytics analytics,
+                                                       final String search) {
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.SEARCH_TERM, search);
+        analytics.logEvent(FirebaseAnalytics.Event.SEARCH, bundle);
+    }
+
+    /**
+     * Logs a Firebase Analytics view search results event.
+     * https://firebase.google.com/docs/reference/android/com/google/firebase/analytics/FirebaseAnalytics.Event#VIEW_SEARCH_RESULTS
+     * @param analytics FirebaseAnalytics
+     * @param search string to search
+     */
+    public static void firebaseAnalyticsLogEventViewSearchResults(final FirebaseAnalytics analytics,
+                                                                  final String search) {
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.SEARCH_TERM, search);
+        analytics.logEvent(FirebaseAnalytics.Event.VIEW_SEARCH_RESULTS, bundle);
+    }
+
+    /**
+     * Logs a Firebase Analytics view item event.
+     * https://firebase.google.com/docs/reference/android/com/google/firebase/analytics/FirebaseAnalytics.Event#VIEW_ITEM
+     * @param analytics FirebaseAnalytics
+     * @param id id
+     * @param name name
+     * @param category category
+     */
+    public static void firebaseAnalyticsLogEventViewItem(final FirebaseAnalytics analytics,
+                                                         final String id, final String name,
+                                                         final String category) {
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, id);
+        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, name);
+        bundle.putString(FirebaseAnalytics.Param.ITEM_CATEGORY, category);
+        analytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle);
     }
 }

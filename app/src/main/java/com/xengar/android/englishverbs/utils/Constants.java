@@ -20,18 +20,6 @@ package com.xengar.android.englishverbs.utils;
  */
 public final class Constants {
 
-    /**
-     * Boolean used to log or not lines
-     * Usage:
-     *      if (LOG) {
-     *           if (condition) Log.i(...);
-     *      }
-     *  When you set LOG to false, the compiler will strip out all code inside such checks
-     * (since it is a static final, it knows at compile time that code is not used.)
-     * http://stackoverflow.com/questions/2446248/remove-all-debug-logging-calls-before-publishing-are-there-tools-to-do-this
-     */
-    public static final boolean LOG = true;
-
     public static final String LAST_ACTIVITY = "last_activity";
     public static final String MAIN_ACTIVITY = "main_activity";
 
@@ -71,5 +59,39 @@ public final class Constants {
     public static final String NONE = "None";
     public static final String FRENCH = "fr";
     public static final String SPANISH = "es";
+
+    // Firebase strings
+    public static final String TYPE_PAGE = "page";
+    public static final String TYPE_AD = "Ad";
+    public static final String DETAILS_ACTIVITY = "details_activity";
+    public static final String PAGE_VERB_DETAILS = "Verb Details";
+    public static final String PAGE_SEARCH = "Search";
+    public static final String PAGE_EDITOR = "Editor";
+    public static final String PAGE_HELP = "Help";
+    public static final String TYPE_ADD_FAV = "add to Favorites";
+    public static final String TYPE_DEL_FAV = "remove from Favorites";
+    public static final String TYPE_ADD_USER_VERB = "add user Verb";
+    public static final String TYPE_DEL_USER_VERB = "remove user Verb";
+    public static final String TYPE_EDI_USER_VERB = "edit user Verb";
+    public static final String VERBS = "verbs";
+
+
+    /**
+     * Boolean used to log or not lines
+     * Usage:
+     *      if (LOG) {
+     *           if (condition) Log.i(...);
+     *      }
+     *  When you set LOG to false, the compiler will strip out all code inside such checks
+     * (since it is a static final, it knows at compile time that code is not used.)
+     * http://stackoverflow.com/questions/2446248/remove-all-debug-logging-calls-before-publishing-are-there-tools-to-do-this
+     */
+    public static final boolean LOG = true;
+
+    /**
+     * Enable test ads for AdMob
+     * See ActivityUtils.createAdMobBanner()
+     */
+    public static final boolean USE_TEST_ADS = true;
 
 }

@@ -31,14 +31,20 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.xengar.android.englishverbs.BuildConfig;
 import com.xengar.android.englishverbs.R;
 import com.xengar.android.englishverbs.utils.ActivityUtils;
+
+import static com.xengar.android.englishverbs.utils.Constants.PAGE_HELP;
+import static com.xengar.android.englishverbs.utils.Constants.TYPE_PAGE;
 
 /**
  * HelpActivity
  */
 public class HelpActivity extends AppCompatActivity implements View.OnClickListener {
+
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +58,11 @@ public class HelpActivity extends AppCompatActivity implements View.OnClickListe
         // define click listeners
         LinearLayout header = (LinearLayout) findViewById(R.id.header_verbs);
         header.setOnClickListener(this);
+
+        // Obtain the FirebaseAnalytics instance.
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        ActivityUtils.firebaseAnalyticsLogEventSelectContent(mFirebaseAnalytics,
+                PAGE_HELP, PAGE_HELP, TYPE_PAGE);
     }
 
     @Override

@@ -38,6 +38,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.xengar.android.englishverbs.R;
 import com.xengar.android.englishverbs.data.Verb;
 import com.xengar.android.englishverbs.data.VerbContract.VerbEntry;
@@ -45,6 +46,11 @@ import com.xengar.android.englishverbs.data.VerbDBHelper;
 import com.xengar.android.englishverbs.utils.ActivityUtils;
 
 import static com.xengar.android.englishverbs.data.VerbContract.VerbEntry.COLUMN_ID;
+import static com.xengar.android.englishverbs.utils.Constants.PAGE_EDITOR;
+import static com.xengar.android.englishverbs.utils.Constants.TYPE_ADD_USER_VERB;
+import static com.xengar.android.englishverbs.utils.Constants.TYPE_DEL_USER_VERB;
+import static com.xengar.android.englishverbs.utils.Constants.TYPE_EDI_USER_VERB;
+import static com.xengar.android.englishverbs.utils.Constants.TYPE_PAGE;
 import static com.xengar.android.englishverbs.utils.Constants.VERB_ID;
 
 public class EditorActivity extends AppCompatActivity implements
@@ -78,6 +84,8 @@ public class EditorActivity extends AppCompatActivity implements
     private long userVerbID = -10; // Current User verb number
     private long verbID = -1;
     private Verb verb;
+
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     /**
      * OnTouchListener that listens for any user touches on a View, implying that they are modifying
@@ -144,6 +152,11 @@ public class EditorActivity extends AppCompatActivity implements
         mSample3.setOnTouchListener(mTouchListener);
 
         setupSpinner();
+
+        // Obtain the FirebaseAnalytics instance.
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        ActivityUtils.firebaseAnalyticsLogEventSelectContent(mFirebaseAnalytics,
+                PAGE_EDITOR, PAGE_EDITOR, TYPE_PAGE);
     }
 
     /**
@@ -326,6 +339,8 @@ public class EditorActivity extends AppCompatActivity implements
                 // Otherwise, the delete was successful and we can display a toast.
                 Toast.makeText(this, getString(R.string.editor_delete_verb_successful),
                         Toast.LENGTH_SHORT).show();
+                ActivityUtils.firebaseAnalyticsLogEventSelectContent(mFirebaseAnalytics,
+                        VERB_ID + " " + verbID, verb.getInfinitive(), TYPE_DEL_USER_VERB);
             }
         }
 
@@ -496,6 +511,8 @@ public class EditorActivity extends AppCompatActivity implements
                 // Otherwise, the insertion was successful and we can display a toast.
                 Toast.makeText(this, getString(R.string.editor_insert_verb_successful),
                         Toast.LENGTH_SHORT).show();
+                ActivityUtils.firebaseAnalyticsLogEventSelectContent(mFirebaseAnalytics,
+                        VERB_ID + " " + verbID, verb.getInfinitive(), TYPE_ADD_USER_VERB);
             }
         } else {
             // Otherwise this is an EXISTING verb, so update the verb with ContentValues.
@@ -512,6 +529,8 @@ public class EditorActivity extends AppCompatActivity implements
                 // Otherwise, the update was successful and we can display a toast.
                 Toast.makeText(this, getString(R.string.editor_update_verb_successful),
                         Toast.LENGTH_SHORT).show();
+                ActivityUtils.firebaseAnalyticsLogEventSelectContent(mFirebaseAnalytics,
+                        VERB_ID + " " + verbID, verb.getInfinitive(), TYPE_EDI_USER_VERB);
             }
         }
     }

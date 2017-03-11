@@ -33,10 +33,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 
+import com.google.android.gms.ads.AdView;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.xengar.android.englishverbs.R;
 import com.xengar.android.englishverbs.data.Verb;
 import com.xengar.android.englishverbs.data.VerbContract.VerbEntry;
 import com.xengar.android.englishverbs.utils.ActivityUtils;
+import com.xengar.android.englishverbs.utils.LogAdListener;
 
 import static com.xengar.android.englishverbs.utils.Constants.ALPHABET;
 import static com.xengar.android.englishverbs.utils.Constants.BOTH;
@@ -61,6 +64,7 @@ import static com.xengar.android.englishverbs.utils.Constants.PAGE_VERBS;
 import static com.xengar.android.englishverbs.utils.Constants.REGULAR;
 import static com.xengar.android.englishverbs.utils.Constants.SHARED_PREF_NAME;
 import static com.xengar.android.englishverbs.utils.Constants.SORT_TYPE;
+import static com.xengar.android.englishverbs.utils.Constants.TYPE_PAGE;
 import static com.xengar.android.englishverbs.utils.Constants.VERBS_ED;
 import static com.xengar.android.englishverbs.utils.Constants.VERB_TYPE;
 
@@ -90,6 +94,10 @@ public class MainActivity extends AppCompatActivity
     private final String[] itemType = {ITEM_TYPES[0]};
     private String page = PAGE_VERBS; // Current page
 
+    private FirebaseAnalytics mFirebaseAnalytics;
+    private AdView mAdView;
+    private LogAdListener listener;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,6 +118,12 @@ public class MainActivity extends AppCompatActivity
         SharedPreferences prefs = getSharedPreferences(SHARED_PREF_NAME, 0);
         page = prefs.getString(CURRENT_PAGE, PAGE_VERBS);
 
+        // Obtain the FirebaseAnalytics instance.
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        // create AdMob banner
+        listener = new LogAdListener(mFirebaseAnalytics, MAIN_ACTIVITY);
+        mAdView = ActivityUtils.createAdMobBanner(this, listener);
+
         fragmentLayout = (FrameLayout) findViewById(R.id.fragment_container);
         verbsFragment = createUniversalFragment(BOTH, LIST, ALPHABET);
         cardsFragment = createUniversalFragment(BOTH, CARD, ALPHABET);
@@ -117,6 +131,33 @@ public class MainActivity extends AppCompatActivity
                 ActivityUtils.getPreferenceFavoritesMode(getApplicationContext()), ALPHABET);
         showPage(page);
         assignCheckedItem(page);
+    }
+
+    /** Called when leaving the activity */
+    @Override
+    public void onPause() {
+        if (mAdView != null) {
+            mAdView.pause();
+        }
+        super.onPause();
+    }
+
+    /** Called when returning to the activity */
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mAdView != null) {
+            mAdView.resume();
+        }
+    }
+
+    /** Called before the activity is destroyed */
+    @Override
+    public void onDestroy() {
+        if (mAdView != null) {
+            mAdView.destroy();
+        }
+        super.onDestroy();
     }
 
     @Override
@@ -407,16 +448,22 @@ public class MainActivity extends AppCompatActivity
             case PAGE_VERBS:
                 getSupportActionBar().setTitle(R.string.menu_option_verbs);
                 ActivityUtils.saveStringToPreferences(this, CURRENT_PAGE, PAGE_VERBS);
+                ActivityUtils.firebaseAnalyticsLogEventSelectContent(
+                        mFirebaseAnalytics, PAGE_VERBS, PAGE_VERBS, TYPE_PAGE);
                 launchFragment(PAGE_VERBS);
                 break;
             case PAGE_CARDS:
                 getSupportActionBar().setTitle(R.string.menu_option_verbs);
                 ActivityUtils.saveStringToPreferences(this, CURRENT_PAGE, PAGE_CARDS);
+                ActivityUtils.firebaseAnalyticsLogEventSelectContent(
+                        mFirebaseAnalytics, PAGE_CARDS, PAGE_CARDS, TYPE_PAGE);
                 launchFragment(PAGE_CARDS);
                 break;
             case PAGE_FAVORITES:
                 getSupportActionBar().setTitle(R.string.menu_option_favorites);
                 ActivityUtils.saveStringToPreferences(this, CURRENT_PAGE, PAGE_FAVORITES);
+                ActivityUtils.firebaseAnalyticsLogEventSelectContent(
+                        mFirebaseAnalytics, PAGE_FAVORITES, PAGE_FAVORITES, TYPE_PAGE);
                 launchFragment(PAGE_FAVORITES);
                 break;
         }
