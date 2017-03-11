@@ -41,6 +41,8 @@ import android.widget.Toast;
 
 import com.android.colorpicker.ColorPickerPalette;
 import com.android.colorpicker.ColorPickerSwatch;
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.xengar.android.englishverbs.R;
 import com.xengar.android.englishverbs.data.Verb;
 import com.xengar.android.englishverbs.data.VerbContract;
@@ -49,6 +51,7 @@ import com.xengar.android.englishverbs.utils.ActivityUtils;
 
 import java.util.Locale;
 
+import static com.xengar.android.englishverbs.utils.Constants.DEMO_MODE;
 import static com.xengar.android.englishverbs.utils.Constants.LOG;
 import static com.xengar.android.englishverbs.utils.Constants.VERB_ID;
 import static com.xengar.android.englishverbs.utils.Constants.VERB_NAME;
@@ -70,6 +73,11 @@ public class DetailsActivity extends AppCompatActivity implements
     private TextView pInfinitive, pSimplePast, pPastParticiple;
     private TextView definition, translation, sample1, sample2, sample3;
 
+    // Demo
+    private ShowcaseView showcaseView;
+    private boolean demo;
+    private int counter = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,6 +87,7 @@ public class DetailsActivity extends AppCompatActivity implements
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Bundle bundle = getIntent().getExtras();
+        demo = bundle.getBoolean(DEMO_MODE, false);
         verbID = bundle.getLong(VERB_ID, -1);
         String title = bundle.getString(VERB_NAME);
         getSupportActionBar().setTitle(title);
@@ -127,6 +136,10 @@ public class DetailsActivity extends AppCompatActivity implements
         // Initialize a loader to read the verb data from the database and display it
         getLoaderManager().initLoader(EXISTING_VERB_LOADER, null, this);
         showFavoriteButtons();
+
+        if (demo){
+            defineDemoMode();
+        }
     }
 
     @Override
@@ -382,6 +395,77 @@ public class DetailsActivity extends AppCompatActivity implements
                 ActivityUtils.speak(getApplicationContext(), tts, verb.getPastParticiple());
                 Toast.makeText(getApplicationContext(),verb.getPastParticiple(),Toast.LENGTH_SHORT).show();
                 break;
+
+            default:
+                onClickDemo();
+                break;
         }
+    }
+
+    /**
+     * Start a show case view for demo mode.
+     */
+    private void defineDemoMode() {
+        showcaseView = new ShowcaseView.Builder(this)
+                .withMaterialShowcase()
+                .setTarget(new ViewTarget(findViewById(R.id.infinitive)))
+                .setContentTitle(getString(R.string.details))
+                .setContentText(getString(R.string.infinitive))
+                .setStyle(R.style.CustomShowcaseTheme2)
+                .replaceEndButton(R.layout.view_custom_button)
+                .setOnClickListener(this)
+                .build();
+        showcaseView.setButtonText(getString(R.string.next));
+    }
+
+    /**
+     * Defines what item to show case view for demo mode.
+     */
+    public void onClickDemo() {
+        if (!demo) return;
+        switch (counter) {
+            case 0:
+                showcaseView.setShowcase(new ViewTarget(findViewById(R.id.simple_past)), true);
+                showcaseView.setContentText(getString(R.string.simple_past));
+                break;
+
+            case 1:
+                showcaseView.setShowcase(new ViewTarget(findViewById(R.id.past_participle)), true);
+                showcaseView.setContentText(getString(R.string.past_participle));
+                break;
+
+            case 2:
+                showcaseView.setShowcase(new ViewTarget(findViewById(R.id.phonetic_infinitive)), true);
+                showcaseView.setContentText(getString(R.string.phonetics));
+                break;
+
+            case 3:
+                showcaseView.setShowcase(new ViewTarget(findViewById(R.id.play_simple_past)), true);
+                showcaseView.setContentText(getString(R.string.pronunciation));
+                break;
+
+            case 4:
+                showcaseView.setShowcase(new ViewTarget(findViewById(R.id.definition)), true);
+                showcaseView.setContentText(getString(R.string.definition));
+                break;
+
+            case 5:
+                showcaseView.setShowcase(new ViewTarget(findViewById(R.id.sample2)), true);
+                showcaseView.setContentText(getString(R.string.examples));
+                break;
+
+            case 6:
+                showcaseView.setShowcase(new ViewTarget(fabAdd), true);
+                showcaseView.setContentTitle(getString(R.string.menu_option_favorites));
+                showcaseView.setContentText(getString(R.string.add_remove_from_favorites));
+                showcaseView.setButtonText(getString(R.string.got_it));
+                break;
+
+            case 7:
+                showcaseView.hide();
+                demo = false;
+                break;
+        }
+        counter++;
     }
 }

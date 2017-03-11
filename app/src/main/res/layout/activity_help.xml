@@ -60,17 +60,92 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
+                    <LinearLayout
+                        android:id="@+id/header_verbs"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:background="@drawable/touch_effect"
+                        android:clickable="true">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:scaleType="centerInside"
+                            android:layout_gravity="end"
+                            app:srcCompat="@drawable/ic_card_black_24dp"/>
+
+                        <TextView
+                            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                            android:paddingStart="12dp"
+                            android:paddingEnd="12dp"
+                            android:paddingLeft="12dp"
+                            android:paddingRight="12dp"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:gravity="start"
+                            android:text="@string/menu_option_verbs"/>
+
+                        <TextView
+                            android:textColor="@color/colorRed"
+                            android:paddingStart="12dp"
+                            android:paddingEnd="12dp"
+                            android:paddingLeft="12dp"
+                            android:paddingRight="12dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/demo"/>
+
+                    </LinearLayout>
 
                     <TextView
-                        android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                        android:paddingStart="12dp"
-                        android:paddingEnd="12dp"
-                        android:paddingLeft="12dp"
-                        android:paddingRight="12dp"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="start"
-                        android:text="@string/volume"/>
+                        android:layout_marginBottom="1dp"
+                        android:paddingTop="10dp"
+                        android:text="@string/verbs_text_help"/>
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/card_margin"
+                android:layout_marginLeft="@dimen/card_margin"
+                android:layout_marginRight="@dimen/card_margin">
+
+                <LinearLayout
+                    style="@style/Widget.CardContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal" >
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:scaleType="centerInside"
+                            android:layout_gravity="end"
+                            app:srcCompat="@drawable/ic_play_arrow_black_24dp"/>
+
+                        <TextView
+                            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                            android:paddingStart="12dp"
+                            android:paddingEnd="12dp"
+                            android:paddingLeft="12dp"
+                            android:paddingRight="12dp"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:gravity="start"
+                            android:text="@string/volume"/>
+
+                    </LinearLayout>
 
                     <TextView
                         android:layout_width="match_parent"
@@ -81,7 +156,6 @@
 
                 </LinearLayout>
             </android.support.v7.widget.CardView>
-
 
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>

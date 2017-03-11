@@ -27,6 +27,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,7 +38,7 @@ import com.xengar.android.englishverbs.utils.ActivityUtils;
 /**
  * HelpActivity
  */
-public class HelpActivity extends AppCompatActivity {
+public class HelpActivity extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +48,10 @@ public class HelpActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        // define click listeners
+        LinearLayout header = (LinearLayout) findViewById(R.id.header_verbs);
+        header.setOnClickListener(this);
     }
 
     @Override
@@ -167,4 +172,13 @@ public class HelpActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    @Override
+    public void onClick(View view) {
+        switch(view.getId()){
+            case R.id.header_verbs:
+                // begin
+                ActivityUtils.launchDetailsActivity(getApplicationContext(), 26, "begin", true);
+                break;
+        }
+    }
 }

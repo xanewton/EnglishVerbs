@@ -42,6 +42,7 @@ import com.xengar.android.englishverbs.ui.HelpActivity;
 import com.xengar.android.englishverbs.ui.SearchActivity;
 import com.xengar.android.englishverbs.ui.SettingsActivity;
 
+import static com.xengar.android.englishverbs.utils.Constants.DEMO_MODE;
 import static com.xengar.android.englishverbs.utils.Constants.FRENCH;
 import static com.xengar.android.englishverbs.utils.Constants.LIST;
 import static com.xengar.android.englishverbs.utils.Constants.NONE;
@@ -123,13 +124,15 @@ public class ActivityUtils {
         context.startActivity(intent);
     }
 
-    public static void launchDetailsActivity(final Context context, final long id, final String verb) {
+    public static void launchDetailsActivity(final Context context, final long id,
+                                             final String verb, final boolean demoMode) {
         Intent intent = new Intent(context, DetailsActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         Bundle bundle = new Bundle();
         bundle.putLong(VERB_ID, id);
         bundle.putString(VERB_NAME, verb);
+        bundle.putBoolean(DEMO_MODE, demoMode);
         intent.putExtras(bundle);
 
         context.startActivity(intent);

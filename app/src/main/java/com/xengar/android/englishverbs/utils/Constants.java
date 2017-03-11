@@ -63,6 +63,7 @@ public final class Constants {
 
     public static final String VERB_ID = "verb_id";
     public static final String VERB_NAME = "verb_name";
+    public static final String DEMO_MODE = "demo_mode";
 
     // Translation languages
     public static final String NONE = "None";

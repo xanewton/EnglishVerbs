@@ -151,7 +151,8 @@ public class VerbHolder extends RecyclerView.ViewHolder implements View.OnClickL
                 break;
 
             default:
-                ActivityUtils.launchDetailsActivity(context, verb.getId(), verb.getInfinitive());
+                ActivityUtils.launchDetailsActivity(
+                        context, verb.getId(), verb.getInfinitive(), false);
                 break;
         }
     }
