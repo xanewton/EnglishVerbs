@@ -314,7 +314,7 @@ public class EditorActivity extends AppCompatActivity implements
     private void deleteVerb() {
         // Only perform the delete if this is an existing verb.
         if (verbID != -1) {
-            int rowsDeleted = getContentResolver().delete( //mCurrentVerbUri, null, null);
+            int rowsDeleted = getContentResolver().delete(
                     VerbEntry.CONTENT_URI, COLUMN_ID + " = ?", new String[]{Long.toString(verbID)});
 
             // Show a toast message depending on whether or not the delete was successful.
@@ -499,7 +499,7 @@ public class EditorActivity extends AppCompatActivity implements
             }
         } else {
             // Otherwise this is an EXISTING verb, so update the verb with ContentValues.
-            int rowsAffected = getContentResolver().update(//mCurrentVerbUri, values, null, null);
+            int rowsAffected = getContentResolver().update(
                     VerbEntry.CONTENT_URI, values,
                     COLUMN_ID + " = ?", new String[]{Long.toString(verbID)});
 

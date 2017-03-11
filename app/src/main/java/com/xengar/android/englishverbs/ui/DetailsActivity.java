@@ -16,7 +16,6 @@
 package com.xengar.android.englishverbs.ui;
 
 import android.app.LoaderManager;
-import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.CursorLoader;
 import android.content.DialogInterface;
@@ -254,7 +253,8 @@ public class DetailsActivity extends AppCompatActivity implements
         ContentValues values = new ContentValues();
         values.put(VerbEntry.COLUMN_COLOR, "" + color);
         int rowsAffected = getContentResolver().update(
-                ContentUris.withAppendedId(VerbEntry.CONTENT_URI, verbID), values, null, null);
+                VerbEntry.CONTENT_URI, values,
+                COLUMN_ID + " = ?", new String[]{Long.toString(verbID)});
 
         // Show a toast message depending on whether or not the update was successful.
         if (rowsAffected == 0) {
