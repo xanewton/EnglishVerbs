@@ -51,6 +51,13 @@
                 android:orderInCategory="102"
                 app:showAsAction="never" />
 
+            <item
+                android:id="@+id/add_verb"
+                android:title="@string/action_add_verb"
+                android:icon="@drawable/ic_card_white_24dp"
+                android:orderInCategory="103"
+                app:showAsAction="never" />
+
             <!--
 <item
     android:id="@+id/action_insert_dummy_data"

@@ -38,6 +38,12 @@
                 android:title="@string/action_color"
                 android:orderInCategory="100"
                 app:showAsAction="never" />
+            <item
+                android:id="@+id/action_edit"
+                android:icon="@drawable/ic_mode_edit_white_24dp"
+                android:title="@string/action_edit"
+                android:orderInCategory="101"
+                app:showAsAction="never" />
         </menu>
     </item>
 

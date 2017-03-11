@@ -21,7 +21,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -32,7 +31,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.FrameLayout;
 
 import com.xengar.android.englishverbs.R;
@@ -103,15 +101,6 @@ public class MainActivity extends AppCompatActivity
         ActivityUtils.saveStringToPreferences(getApplicationContext(), LAST_ACTIVITY,
                 MAIN_ACTIVITY);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), EditorActivity.class);
-                startActivity(intent);
-            }
-        });
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -167,6 +156,11 @@ public class MainActivity extends AppCompatActivity
 
             case R.id.action_search:
                 ActivityUtils.launchSearchActivity(getApplicationContext());
+                return true;
+
+            case R.id.add_verb:
+                Intent intent = new Intent(getApplicationContext(), EditorActivity.class);
+                startActivity(intent);
                 return true;
 
             /*
@@ -455,52 +449,52 @@ public class MainActivity extends AppCompatActivity
                 "He becomes president today.",
                         "Alice became teacher last year.",
                         "He has become a new person since he left her.", "", "", "",
-                VerbEntry.TOP_50, VerbEntry.REGULAR, 0, 0, "", "convertir", "devenir"));
+                VerbEntry.TOP_50, VerbEntry.REGULAR, 0, 0, 0, "", "convertir", "devenir"));
         insertVerb(new Verb(0L, "become", "became", "become", "To come into existance",
                 "He becomes president today.",
                         "Alice became teacher last year.",
                         "He has become a new person since he left her.", "", "", "",
-                VerbEntry.TOP_25, VerbEntry.IRREGULAR, 0, 0, "", "convertir", "devenir"));
+                VerbEntry.TOP_25, VerbEntry.IRREGULAR, 0, 0, 0, "", "convertir", "devenir"));
         insertVerb(new Verb(0L, "begin", "began", "begun", "To start something",
                 "He becomes president today.",
                         "Alice became teacher last year.",
                         "He has become a new person since he left her.", "", "", "",
-                VerbEntry.TOP_50, VerbEntry.IRREGULAR, 0, 0, "", "convertir", "devenir"));
+                VerbEntry.TOP_50, VerbEntry.IRREGULAR, 0, 0, 0, "", "convertir", "devenir"));
         insertVerb(new Verb(0L, "call", "called", "called", "To comunicate with someone by phone",
                 "He becomes president today.",
                         "Alice became teacher last year.",
                         "He has become a new person since he left her.", "", "", "",
-                VerbEntry.TOP_25, VerbEntry.REGULAR, 0, 0, "", "convertir", "devenir"));
+                VerbEntry.TOP_25, VerbEntry.REGULAR, 0, 0, 0, "", "convertir", "devenir"));
         insertVerb(new Verb(0L, "come", "came", "come", "To arrive into a place",
                 "He becomes president today.",
                         "Alice became teacher last year.",
                         "He has become a new person since he left her.", "", "", "",
-                VerbEntry.TOP_25, VerbEntry.IRREGULAR, 0, 0, "", "convertir", "devenir"));
+                VerbEntry.TOP_25, VerbEntry.IRREGULAR, 0, 0, 0, "", "convertir", "devenir"));
         insertVerb(new Verb(0L, "do", "did", "done", "To come into existance",
                 "He becomes president today.",
                         "Alice became teacher last year.",
                         "He has become a new person since he left her.", "", "", "",
-                VerbEntry.TOP_25, VerbEntry.IRREGULAR, 0, 0, "", "convertir", "devenir"));
+                VerbEntry.TOP_25, VerbEntry.IRREGULAR, 0, 0, 0, "", "convertir", "devenir"));
         insertVerb(new Verb(0L, "feel", "felt", "felt", "To sense something phusically or emotionally",
                 "He becomes president today.",
                         "Alice became teacher last year.",
                         "He has become a new person since he left her.", "", "", "",
-                VerbEntry.TOP_25, VerbEntry.IRREGULAR, 0, 0, "", "convertir", "devenir"));
+                VerbEntry.TOP_25, VerbEntry.IRREGULAR, 0, 0, 0, "", "convertir", "devenir"));
         insertVerb(new Verb(0L, "go", "went", "gone", "To come into existance",
                 "He becomes president today.",
                         "Alice became teacher last year.",
                         "He has become a new person since he left her.", "", "", "",
-                VerbEntry.TOP_100, VerbEntry.IRREGULAR, 0, 0, "", "convertir", "devenir"));
+                VerbEntry.TOP_100, VerbEntry.IRREGULAR, 0, 0, 0, "", "convertir", "devenir"));
         insertVerb(new Verb(0L, "keep", "kept", "kept", "To retain something in our possession",
                 "He becomes president today.",
                         "Alice became teacher last year.",
                         "He has become a new person since he left her.", "", "", "",
-                VerbEntry.OTHER, VerbEntry.IRREGULAR, 0, 0, "", "convertir", "devenir"));
+                VerbEntry.OTHER, VerbEntry.IRREGULAR, 0, 0, 0, "", "convertir", "devenir"));
         insertVerb(new Verb(0L, "missunderstand", "missunderstood", "missunderstood", "To not get the sense of something",
                 "He becomes president today.",
                         "Alice became teacher last year.",
                         "He has become a new person since he left her.", "", "", "",
-                VerbEntry.OTHER, VerbEntry.IRREGULAR, 0, 0, "", "convertir", "devenir"));
+                VerbEntry.OTHER, VerbEntry.IRREGULAR, 0, 0, 0, "", "convertir", "devenir"));
     }
 
     /**

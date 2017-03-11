@@ -77,16 +77,16 @@ public final class VerbContract {
         public final static String COLUMN_ID ="ID";
 
         /** Verb in infinitive form. - Type: TEXT  */
-        public final static String COLUMN_INFINITIVE ="INFINITIVE";
+        public final static String COLUMN_INFINITIVE = "INFINITIVE";
 
         /** Verb in simple past form. - Type: TEXT */
-        public final static String COLUMN_SIMPLE_PAST ="SIMPLE_PAST";
+        public final static String COLUMN_SIMPLE_PAST = "SIMPLE_PAST";
 
         /** Verb in past participle form. - Type: TEXT */
-        public final static String COLUMN_PAST_PARTICIPLE ="PAST_PARTICIPLE";
+        public final static String COLUMN_PAST_PARTICIPLE = "PAST_PARTICIPLE";
 
         /** Common usage of the verb. - Type: INTEGER */
-        public final static String COLUMN_COMMON ="COMMON";
+        public final static String COLUMN_COMMON = "COMMON";
 
         /** Possible values for the common usage of the verb. */
         public static final int TOP_25 = 0;
@@ -109,7 +109,7 @@ public final class VerbContract {
         }
 
         /** Regular verbs end in 'ed'. - Type: INTEGER */
-        public final static String COLUMN_REGULAR ="REGULAR";
+        public final static String COLUMN_REGULAR = "REGULAR";
 
         /** Possible values for regular verbs. */
         public static final int REGULAR = 0;
@@ -127,33 +127,36 @@ public final class VerbContract {
         }
 
         /** Definition of the verb. - Type: TEXT */
-        public final static String COLUMN_DEFINITION ="DEFINITION";
+        public final static String COLUMN_DEFINITION = "DEFINITION";
 
         /** Examples of the verb. - Type: TEXT  */
-        public final static String COLUMN_SAMPLE_1 ="SAMPLE1";
-        public final static String COLUMN_SAMPLE_2 ="SAMPLE2";
-        public final static String COLUMN_SAMPLE_3 ="SAMPLE3";
+        public final static String COLUMN_SAMPLE_1 = "SAMPLE1";
+        public final static String COLUMN_SAMPLE_2 = "SAMPLE2";
+        public final static String COLUMN_SAMPLE_3 = "SAMPLE3";
 
         /** Verb pronunciation in infinitive form. - Type: TEXT  */
-        public final static String COLUMN_PHONETIC_INFINITIVE ="PHONETIC_INFINITIVE";
-        public final static String COLUMN_PHONETIC_SIMPLE_PAST ="PHONETIC_SIMPLE_PAST";
-        public final static String COLUMN_PHONETIC_PAST_PARTICIPLE ="PHONETIC_PAST_PARTICIPLE";
+        public final static String COLUMN_PHONETIC_INFINITIVE = "PHONETIC_INFINITIVE";
+        public final static String COLUMN_PHONETIC_SIMPLE_PAST = "PHONETIC_SIMPLE_PAST";
+        public final static String COLUMN_PHONETIC_PAST_PARTICIPLE = "PHONETIC_PAST_PARTICIPLE";
 
         /** Other information for the verb. - Type: TEXT */
-        public final static String COLUMN_NOTES ="NOTES";
+        public final static String COLUMN_NOTES = "NOTES";
 
         /** Color assigned by the user. - Type: INTEGER */
-        public final static String COLUMN_COLOR ="COLOR";
+        public final static String COLUMN_COLOR = "COLOR";
 
         /** Score assigned by using the exercises or tests. - Type: INTEGER */
-        public final static String COLUMN_SCORE ="SCORE";
+        public final static String COLUMN_SCORE = "SCORE";
+
+        /** Source 0 means application created, 1 user created - Type: INTEGER */
+        public final static String COLUMN_SOURCE = "SOURCE";
 
         /**
          * Translations of the verb into the language.
          * Type: TEXT
          */
-        public final static String COLUMN_TRANSLATION_ES ="TRANSLATION_ES";
-        public final static String COLUMN_TRANSLATION_FR ="TRANSLATION_FR";
+        public final static String COLUMN_TRANSLATION_ES = "TRANSLATION_ES";
+        public final static String COLUMN_TRANSLATION_FR = "TRANSLATION_FR";
 
     }
 

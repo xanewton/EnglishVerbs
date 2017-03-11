@@ -51,6 +51,7 @@ import com.xengar.android.englishverbs.utils.ActivityUtils;
 
 import java.util.Locale;
 
+import static com.xengar.android.englishverbs.data.VerbContract.VerbEntry.COLUMN_ID;
 import static com.xengar.android.englishverbs.utils.Constants.DEMO_MODE;
 import static com.xengar.android.englishverbs.utils.Constants.LOG;
 import static com.xengar.android.englishverbs.utils.Constants.VERB_ID;
@@ -91,6 +92,9 @@ public class DetailsActivity extends AppCompatActivity implements
         verbID = bundle.getLong(VERB_ID, -1);
         String title = bundle.getString(VERB_NAME);
         getSupportActionBar().setTitle(title);
+
+        // Invalidate the options menu, so the "Edit" menu option can be hidden.
+        invalidateOptionsMenu();
 
         //Text
         infinitive = (TextView) findViewById(R.id.infinitive);
@@ -149,6 +153,21 @@ public class DetailsActivity extends AppCompatActivity implements
         return true;
     }
 
+    /**
+     * This method is called after invalidateOptionsMenu(), so that the
+     * menu can be updated (some menu items can be hidden or made visible).
+     */
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        // If this is a new verb, hide the "Edit" menu item for application verbs.
+        if (verbID >= 0) {
+            MenuItem menuItem = menu.findItem(R.id.action_edit);
+            menuItem.setVisible(false);
+        }
+        return true;
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -164,6 +183,10 @@ public class DetailsActivity extends AppCompatActivity implements
 
             case R.id.action_search:
                 ActivityUtils.launchSearchActivity(getApplicationContext());
+                return true;
+
+            case R.id.action_edit:
+                ActivityUtils.launchEditorActivity(getApplicationContext(), verbID);
                 return true;
         }
 
@@ -249,9 +272,11 @@ public class DetailsActivity extends AppCompatActivity implements
         fabAdd = (FloatingActionButton) findViewById(R.id.fab_add);
         fabDel = (FloatingActionButton) findViewById(R.id.fab_minus);
 
-        Cursor cursor = getContentResolver().query(
-            ContentUris.withAppendedId(VerbContract.VerbEntry.CONTENT_FAVORITES_URI, verbID),
-                new String[]{ VerbEntry.COLUMN_ID}, null, null, null);
+        Cursor cursor = getContentResolver().query(VerbEntry.CONTENT_FAVORITES_URI,
+                new String[]{ COLUMN_ID}, //select
+                COLUMN_ID + " = ?" , // where
+                new String[]{Long.toString(verbID)}, //whereArgs
+                null);
         if (cursor != null && cursor.getCount() != 0) {
             fabDel.setVisibility(View.VISIBLE);
         } else {
@@ -273,7 +298,7 @@ public class DetailsActivity extends AppCompatActivity implements
                 Snackbar.make(view, getString(R.string.favorites_add_message), DURATION)
                         .setAction("Action", null).show();
                 ContentValues values = new ContentValues();
-                values.put(VerbEntry.COLUMN_ID, verbID);
+                values.put(COLUMN_ID, verbID);
                 getContentResolver().insert(VerbContract.VerbEntry.CONTENT_FAVORITES_URI, values);
 
                 fabAdd.setVisibility(View.INVISIBLE);
@@ -289,7 +314,7 @@ public class DetailsActivity extends AppCompatActivity implements
                 Snackbar.make(view, getString(R.string.favorites_del_message), DURATION)
                         .setAction("Action", null).show();
                 getContentResolver().delete(VerbContract.VerbEntry.CONTENT_FAVORITES_URI,
-                        VerbEntry.COLUMN_ID + " = ?",
+                        COLUMN_ID + " = ?",
                         new String[]{Long.toString(verbID)} );
 
                 fabAdd.setVisibility(View.VISIBLE);
@@ -305,13 +330,11 @@ public class DetailsActivity extends AppCompatActivity implements
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         String[] projection = ActivityUtils.allVerbColumns();
 
-        // This loader will execute the ContentProvider's query method on a background thread
         return new CursorLoader(this,   // Parent activity context
-                // Query the content URI for the verb id
-                ContentUris.withAppendedId(VerbContract.VerbEntry.CONTENT_URI, verbID),
+                VerbEntry.CONTENT_URI,
                 projection,             // Columns to include in the resulting Cursor
-                null,                   // No selection clause
-                null,                   // No selection arguments
+                COLUMN_ID + " = ?",     // selection clause
+                new String[]{Long.toString(verbID)}, // selection arguments
                 null);                  // Default sort order
     }
 
@@ -319,6 +342,7 @@ public class DetailsActivity extends AppCompatActivity implements
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
         // Bail early if the cursor is null or there is less than 1 row in the cursor
         if (cursor == null || cursor.getCount() < 1) {
+            finish(); // the verb doesn't exist, this should not happen.
             return;
         }
 
@@ -326,6 +350,7 @@ public class DetailsActivity extends AppCompatActivity implements
         // (This should be the only row in the cursor)
         if (cursor.moveToFirst()) {
             verb = ActivityUtils.verbFromCursor(cursor);
+            getSupportActionBar().setTitle(verb.getInfinitive());
             setVerbColor(verb.getColor());
             fillVerbDetails(verb);
             defineClickFavoriteButtons();

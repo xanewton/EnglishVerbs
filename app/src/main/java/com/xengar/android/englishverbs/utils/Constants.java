@@ -64,6 +64,8 @@ public final class Constants {
     public static final String VERB_ID = "verb_id";
     public static final String VERB_NAME = "verb_name";
     public static final String DEMO_MODE = "demo_mode";
+    public static final String DELETED_VERB_ID = "deleted";
+    public static final int REQUEST_CODE = 1;
 
     // Translation languages
     public static final String NONE = "None";

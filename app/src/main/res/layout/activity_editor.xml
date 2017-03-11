@@ -34,7 +34,7 @@
 
         <!-- Label -->
         <TextView
-            android:text="@string/category_overview"
+            android:text="@string/category_forms"
             style="@style/CategoryStyle" />
 
         <!-- Input fields -->
@@ -97,6 +97,15 @@
         </LinearLayout>
     </LinearLayout>
 
+    <!-- Label -->
+    <TextView
+        android:text="@string/definition"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorAccent"
+        android:fontFamily="sans-serif-medium" tools:targetApi="16"
+        android:textAppearance="?android:textAppearanceSmall" />
+
     <!-- Definition field -->
     <EditText
         android:id="@+id/edit_definition"
@@ -104,10 +113,30 @@
         android:inputType="textCapWords"
         style="@style/EditorFieldStyle" />
 
+
+    <TextView
+        android:text="@string/examples"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorAccent"
+        android:fontFamily="sans-serif-medium" tools:targetApi="16"
+        android:textAppearance="?android:textAppearanceSmall" />
     <!-- Samples field -->
     <EditText
-        android:id="@+id/edit_samples"
-        android:hint="@string/hint_samples"
+        android:id="@+id/edit_sample1"
+        android:hint="@string/hint_sample"
+        android:inputType="textCapWords"
+        style="@style/EditorFieldStyle" />
+
+    <EditText
+        android:id="@+id/edit_sample2"
+        android:hint="@string/hint_sample"
+        android:inputType="textCapWords"
+        style="@style/EditorFieldStyle" />
+
+    <EditText
+        android:id="@+id/edit_sample3"
+        android:hint="@string/hint_sample"
         android:inputType="textCapWords"
         style="@style/EditorFieldStyle" />
 

@@ -38,7 +38,7 @@ public class VerbDBHelper extends SQLiteOpenHelper {
     public static final String LOG_TAG = VerbDBHelper.class.getSimpleName();
 
     /** Name of the database file */
-    private static final String DATABASE_NAME = "verbs.db";
+    public static final String DATABASE_NAME = "verbs.db";
 
     /**
      * Database version. If you change the database schema, you must increment the database version.
@@ -91,6 +91,7 @@ public class VerbDBHelper extends SQLiteOpenHelper {
                 + VerbEntry.COLUMN_REGULAR + " INTEGER NOT NULL DEFAULT 0, "
                 + VerbEntry.COLUMN_COLOR + " INTEGER NOT NULL DEFAULT 0, "
                 + VerbEntry.COLUMN_SCORE + " INTEGER NOT NULL DEFAULT 0, "
+                + VerbEntry.COLUMN_SOURCE + " INTEGER NOT NULL DEFAULT 0, "
                 + VerbEntry.COLUMN_DEFINITION + " TEXT NOT NULL, "
                 + VerbEntry.COLUMN_TRANSLATION_ES + " TEXT, "
                 + VerbEntry.COLUMN_TRANSLATION_FR + " TEXT, "
@@ -167,6 +168,7 @@ public class VerbDBHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         final String DEFAULT_COLOR = "" + ContextCompat.getColor(context, R.color.colorBlack);
         final String DEFAULT_SCORE = "0";
+        final String DEFAULT_SOURCE = "0"; // application
         for (int i = 0; i < verbs.length; i++) {
             values.put("_id", i);
             values.put(VerbEntry.COLUMN_ID, verbs[i][0]);
@@ -183,6 +185,7 @@ public class VerbDBHelper extends SQLiteOpenHelper {
             values.put(VerbEntry.COLUMN_REGULAR, verbs[i][11]);
             values.put(VerbEntry.COLUMN_COLOR, DEFAULT_COLOR);
             values.put(VerbEntry.COLUMN_SCORE, DEFAULT_SCORE);
+            values.put(VerbEntry.COLUMN_SOURCE, DEFAULT_SOURCE);
             values.put(VerbEntry.COLUMN_DEFINITION, verbs[i][12]);
             values.put(VerbEntry.COLUMN_TRANSLATION_ES, verbs[i][13]);
             values.put(VerbEntry.COLUMN_TRANSLATION_FR, verbs[i][14]);

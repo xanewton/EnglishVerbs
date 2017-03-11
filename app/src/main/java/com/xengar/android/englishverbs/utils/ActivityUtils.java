@@ -15,13 +15,11 @@
  */
 package com.xengar.android.englishverbs.utils;
 
-import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.media.AudioManager;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
@@ -34,7 +32,6 @@ import android.widget.TextView;
 
 import com.xengar.android.englishverbs.R;
 import com.xengar.android.englishverbs.data.Verb;
-import com.xengar.android.englishverbs.data.VerbContract;
 import com.xengar.android.englishverbs.data.VerbContract.VerbEntry;
 import com.xengar.android.englishverbs.ui.DetailsActivity;
 import com.xengar.android.englishverbs.ui.EditorActivity;
@@ -79,6 +76,20 @@ public class ActivityUtils {
      * @param name name of preference
      * @param value value
      */
+    public static void saveLongToPreferences(final Context context, final String name,
+                                            final long value) {
+        SharedPreferences prefs = context.getSharedPreferences(SHARED_PREF_NAME, 0);
+        SharedPreferences.Editor e = prefs.edit();
+        e.putLong(name, value);
+        e.commit();
+    }
+
+    /**
+     * Saves the variable into Preferences.
+     * @param context context
+     * @param name name of preference
+     * @param value value
+     */
     public static void saveBooleanToPreferences(final Context context, final String name,
                                                 final boolean value) {
         SharedPreferences prefs = context.getSharedPreferences(SHARED_PREF_NAME, 0);
@@ -103,22 +114,16 @@ public class ActivityUtils {
 
     /**
      * Launches the Edit verb activity.
-     * @param context
-     * @param id
+     * @param context Context
+     * @param id long
      */
     public static void launchEditorActivity(final Context context, final long id){
         // Create new intent to go to {@link EditorActivity}
         Intent intent = new Intent(context, EditorActivity.class);
-
-        // Form the content URI that represents the specific verb that was clicked on,
-        // by appending the "id" (passed as input to this method) onto the
-        // {@link VerbEntry#CONTENT_URI}.
-        // For example, the URI would be "content://com.xengar.android.englishverbs/verbs/2"
-        // if the verb with ID 2 was clicked on.
-        Uri currentVerbUri = ContentUris.withAppendedId(VerbContract.VerbEntry.CONTENT_URI, id);
-
-        // Set the URI on the data field of the intent
-        intent.setData(currentVerbUri);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        Bundle bundle = new Bundle();
+        bundle.putLong(VERB_ID, id);
+        intent.putExtras(bundle);
 
         // Launch the {@link EditorActivity} to display the data for the current pet.
         context.startActivity(intent);
@@ -291,6 +296,7 @@ public class ActivityUtils {
                 VerbEntry.COLUMN_REGULAR,
                 VerbEntry.COLUMN_COLOR,
                 VerbEntry.COLUMN_SCORE,
+                VerbEntry.COLUMN_SOURCE,
                 VerbEntry.COLUMN_NOTES,
                 VerbEntry.COLUMN_TRANSLATION_ES,
                 VerbEntry.COLUMN_TRANSLATION_FR };
@@ -319,6 +325,7 @@ public class ActivityUtils {
                 cursor.getInt(cursor.getColumnIndex(VerbEntry.COLUMN_REGULAR)),
                 cursor.getInt(cursor.getColumnIndex(VerbEntry.COLUMN_COLOR)),
                 cursor.getInt(cursor.getColumnIndex(VerbEntry.COLUMN_SCORE)),
+                cursor.getInt(cursor.getColumnIndex(VerbEntry.COLUMN_SOURCE)),
                 cursor.getString(cursor.getColumnIndex(VerbEntry.COLUMN_NOTES)),
                 cursor.getString(cursor.getColumnIndex(VerbEntry.COLUMN_TRANSLATION_ES)),
                 cursor.getString(cursor.getColumnIndex(VerbEntry.COLUMN_TRANSLATION_FR))  );

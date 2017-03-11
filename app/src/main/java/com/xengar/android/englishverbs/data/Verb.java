@@ -37,6 +37,7 @@ public class Verb {
     private int regular = VerbEntry.REGULAR;
     private int color = 0;
     private int score = 0;
+    private int source = 0;
     private String notes = "";
     private String translationES = "";
     private String translationFR = "";
@@ -46,7 +47,7 @@ public class Verb {
                 String definition, String sample1, String sample2, String sample3,
                 String phoneticInfinitive, String phoneticSimplePast,
                 String phoneticPastParticiple,
-                int common, int regular, int color, int score, String notes,
+                int common, int regular, int color, int score, int source, String notes,
                 String translationES, String translationFR){
         this.id = id;
         this.infinitive = infinitive;
@@ -63,6 +64,7 @@ public class Verb {
         this.regular = regular;
         this.color = color;
         this.score = score;
+        this.source = source;
         this.notes = notes;
         this.translationES = translationES;
         this.translationFR = translationFR;
@@ -107,6 +109,9 @@ public class Verb {
 
     public int getScore() { return score; }
     public void setScore(int score) { this.score = score; }
+
+    public int getSource() { return source; }
+    public void setSource(int source) { this.source = source; }
 
     public String getNotes() { return notes; }
     public void setNotes(String notes) { this.notes = notes; }
