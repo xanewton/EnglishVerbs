@@ -1,8 +1,9 @@
 English Verbs
 =============
 
-![Scheme](/readmeImages/Screenshot_1481839252.png)
-![Scheme](/readmeImages/Screenshot_1481839259.png)
+![Scheme](/readmeImages/device-2017-03-11-172715.png)
+![Scheme](/readmeImages/device-2017-03-11-172808.png)
+![Scheme](/readmeImages/device-2017-03-11-172852.png)
 
 
 Android application to learn english verb tenses.
