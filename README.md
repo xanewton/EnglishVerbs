@@ -1,6 +1,8 @@
 English Verbs
 =============
 
+<a href='https://play.google.com/store/apps/details?id=com.xengar.android.englishverbs'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png' height=90px/></a>
+
 ![Scheme](/readmeImages/device-2017-03-11-172715.png)
 ![Scheme](/readmeImages/device-2017-03-11-172808.png)
 ![Scheme](/readmeImages/device-2017-03-11-172852.png)
